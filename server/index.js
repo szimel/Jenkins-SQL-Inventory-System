@@ -2,9 +2,10 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const mysql = require('mysql');
-const Validation = require('./controllers/validation');
-const sqlDB = require('./controllers/sqlDB');
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const mainRoutes = require('./main');
+
 require('./auth');
 require('dotenv').config()
 
@@ -19,9 +20,18 @@ const db = mysql.createPool({
 
 const app = express();
 
-function isLoggedIn(req, res, next) {
-  req.user ? next() : res.sendStatus(401);
-};
+//for cors and json setup
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(cors());
+
+// function isLoggedIn(req, res, next) {
+//   req.user ? next() : res.sendStatus(401);
+// };
 
 app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
@@ -42,9 +52,12 @@ app.get( '/auth/google/callback',
   })
 );
 
-app.get('/protected', isLoggedIn, Validation.validation);
+// app.get('/protected', isLoggedIn, Validation.validation);
 
-app.get('/test', sqlDB.test)
+// app.get('/test', (req, res) => {
+//   console.log('got here from the server.js');
+//   res.send('bliffy isnt that stiffy rn');
+// })
 
 //stores logout and sql db routes
 mainRoutes(app)
