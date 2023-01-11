@@ -5,7 +5,7 @@ exports.validation = function(req, res, next) {
 
 //logout endpoint
 exports.logout = function(req, res, next) {
-  console.log('got here')
+  console.log('got to logout')
   req.logout();
   req.session.destroy();
   res.send('Goodbye!');

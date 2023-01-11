@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const mysql = require('mysql');
+const Validation = require('./controllers/validation');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mainRoutes = require('./main');
@@ -10,12 +11,12 @@ require('./auth');
 require('dotenv').config()
 
 //creates db for mysql?
-const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'jenkinsdb'
-})
+// const db = mysql.createPool({
+//   host: 'localhost',
+//   user: 'root',
+//   password: 'password',
+//   database: 'jenkinsdb'
+// })
 
 
 const app = express();
@@ -29,9 +30,6 @@ app.use(
 );
 app.use(cors());
 
-// function isLoggedIn(req, res, next) {
-//   req.user ? next() : res.sendStatus(401);
-// };
 
 app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
@@ -44,6 +42,11 @@ app.get('/auth/google',
   passport.authenticate('google', { scope: [ 'email', 'profile' ] }
 ));
 
+function isLoggedIn(req, res, next) {
+  console.log('got to middleware on index')
+  req.user ? next() : res.sendStatus(401);
+};
+
 //call from auth.js goes here 
 app.get( '/auth/google/callback',
   passport.authenticate( 'google', {
@@ -52,26 +55,11 @@ app.get( '/auth/google/callback',
   })
 );
 
-// app.get('/protected', isLoggedIn, Validation.validation);
+app.get('/protected', Validation.validation);
 
-// app.get('/test', (req, res) => {
-//   console.log('got here from the server.js');
-//   res.send('bliffy isnt that stiffy rn');
-// })
 
 //stores logout and sql db routes
 mainRoutes(app)
 
-//this could be turned into a route
-// app.get('/logout', (req, res) => {
-//   req.logout();
-//   req.session.destroy();
-//   res.send('Goodbye!');
-// });
-
-//this could be turned into a route
-// app.get('/auth/google/failure', (req, res) => {
-//   res.send('Failed to authenticate...');
-// });
 
 app.listen(5000, () => console.log('listening on port: 5000'));
