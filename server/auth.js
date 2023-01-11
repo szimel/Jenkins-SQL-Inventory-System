@@ -12,10 +12,10 @@ passport.use(new GoogleStrategy({
   passReqToCallback: true,
 },
 function(request, accessToken, refreshToken, profile, done) {
-  console.log('request is: ' + request);
-  console.log('access token is:' + accessToken);
-  console.log('refresh token is:' + refreshToken);
-  console.log('profile is:' + profile)
+  // console.log('request is: ' + request);
+  // console.log('access token is:' + accessToken);
+  // console.log('refresh token is:' + refreshToken);
+  // console.log('profile is:' + profile)
   return done(null, profile);
 }));
 

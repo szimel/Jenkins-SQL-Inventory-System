@@ -8,12 +8,17 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import store from './reducers/store';
+import Inventory from './components/inventory';
 
 const router = createBrowserRouter ([
   {
     path: '/',
     element: <App />
   },
+  {
+    path: '/inventory',
+    element: <Inventory />
+  }
 ])
 
 ReactDOM.createRoot(document.getElementById("root")).render(

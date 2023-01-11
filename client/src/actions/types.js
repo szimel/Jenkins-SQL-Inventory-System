@@ -1,0 +1,1 @@
+export const VALID_EMAIL = 'valid_email';
