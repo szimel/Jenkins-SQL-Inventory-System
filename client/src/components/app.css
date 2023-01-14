@@ -1,5 +1,65 @@
-#password-container {
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@300&display=swap');
+
+/* font for app */
+* {
+  font-family: 'Sofia Sans', sans-serif;
+  font-size: 20px;
+}
+
+/* login/signup css boiler plate made with flexbox */
+.password-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+.auth-container{
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+.auth-container p {
+  font-size: 17px;
+  font-style: italic;
+  color: red;
+}
+.auth-container .input-field {
+  font-size: 17px;
+  flex: 1;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 15vw;
+  min-width: 150px;
+  height: 35px;
+}
+.auth-container .show-password {
+  height: 36px;
+  width: 36px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.auth-container .auth-button {
+  min-height: 45px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.auth-button :active {
+  background-color: rgba(204, 204, 204, 0.742);
+}
+/* Login/signup boiler plate with flexbox design */
+
+
+
+
+
+
+
+
+
+
+
+

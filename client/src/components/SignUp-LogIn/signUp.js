@@ -42,31 +42,49 @@ const SignUp = () => {
     };
   };
 
-  return(
-    <div className='row mt-5 pt-5 '>
-      <div className="offset-4 col-md-3">
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <div className='form-group row col-8 offset-md-2 mt-2'>
-            <label>Email</label>
-            <input
-              className='form-control '
-              {...register('email', {required: true})}>
-            </input>
-              {errors.email?.message}
-          </div>
-          <div className="form-group row col-8 offset-md-2">
-            <label>Password</label>
-            <input 
-              className="form-control"
-              {...register('password', {required: true})}></input>
-              {errors.password?.message}
-          </div>
+  //showing password
+  const handlePassword = (e) => {
+    e.preventDefault();
+    const password = document.getElementById('password');
+    const img = document.getElementById('img');
 
-          <button className="btn btn-outline-secondary mt-2 offset-md-2 mb-2" type="submit">Submit</button>
-          {error && <p>{error}</p>}
-        </form>
+    //correctly swich password and eye on seen and unseen
+    if(password.type === 'password') {
+      password.setAttribute('type', 'text');
+      img.setAttribute('src', 'https://i.stack.imgur.com/waw4z.png');
+    } else {
+      password.setAttribute('type', 'password');
+      img.setAttribute('src', 'https://i.stack.imgur.com/Oyk1g.png');
+    }
+  }
+
+  return(
+    <div className="auth-container">
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
+      <div className=''>
+        <label>Email</label>
+        <input
+          className='input-field'
+          {...register('email', {required: true})}>
+        </input>
+        <p>{errors.email?.message}</p>
       </div>
-    </div>  
+
+      <label>Password</label>
+      <div id='' className="password-container">
+        <input 
+          className="input-field"
+          {...register('password', {required: true})}
+          type="password" id='password'></input>
+        <button type='button' className="show-password" onClick={(e) => handlePassword(e)}>
+          <img src="https://i.stack.imgur.com/Oyk1g.png" id="img"/>
+        </button>
+      </div>
+      <p>{errors.password?.message}</p>
+      <button className="btn btn-dark" type="submit">Submit</button>
+      {error && <p>{error}</p>}
+    </form>
+  </div>
   )
 };
 

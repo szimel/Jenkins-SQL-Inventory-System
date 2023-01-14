@@ -11,6 +11,7 @@ import store from './reducers/store';
 import Inventory from './components/inventory';
 import SignUp from './components/SignUp-LogIn/signUp';
 import LogIn from './components/SignUp-LogIn/logIn';
+import './components/app.css';
 
 const router = createBrowserRouter ([
   {

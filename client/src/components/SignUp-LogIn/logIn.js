@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { handleLogIn, handleSignup } from '../../actions';
 import { useState } from 'react';
 
+
 //yup schema
 const userSchema = Yup.object().shape({
   email: Yup.string().email().required(),
@@ -23,52 +24,68 @@ const LogIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-    //async so it can wait on axios call 
-    const handleFormSubmit = async (data, event) => {
-      event.preventDefault();
+  //async so it can wait on axios call 
+  const handleFormSubmit = async (data, event) => {
+    event.preventDefault();
 
-      //handleLogIn action returns values of backend call
-      const logInResult = await handleLogIn(data, dispatch);
+    //handleLogIn action returns values of backend call
+    const logInResult = await handleLogIn(data, dispatch);
 
-      if(logInResult === 201) {
-        return navigate("/", { replace: true });
-  
-      } else if(logInResult === 401) {
-        return setError('Incorrect email or password');
-  
-      } else {
-        return setError('An unexpected error occured');
-      };
+    if(logInResult === 201) {
+      return navigate("/", { replace: true });
+
+    } else if(logInResult === 401) {
+      return setError('Incorrect email or password');
+
+    } else {
+      return setError('An unexpected error occured');
+    };
+  }
+
+  //showing password
+  const handlePassword = (e) => {
+    e.preventDefault();
+    const password = document.getElementById('password');
+    const img = document.getElementById('img');
+
+    //correctly swich password and eye on seen and unseen
+    if(password.type === 'password') {
+      password.setAttribute('type', 'text');
+      img.setAttribute('src', 'https://i.stack.imgur.com/waw4z.png');
+    } else {
+      password.setAttribute('type', 'password');
+      img.setAttribute('src', 'https://i.stack.imgur.com/Oyk1g.png');
     }
+  }
+
+  
   return (
-    <div className='row mt-5 pt-5 '>
-      <div className="offset-4 col-md-3">
+      <div className="auth-container">
         <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <div className='form-group row col-8 offset-md-2 mt-2'>
+          <div className=''>
             <label>Email</label>
             <input
-              className='form-control '
+              className='input-field'
               {...register('email', {required: true})}>
             </input>
-              {errors.email?.message}
+            <p>{errors.email?.message}</p>
           </div>
 
-          <div id='password-container' className="form-group row col-8 offset-md-2 d-flex ">
-            <label>Password</label>
+          <label>Password</label>
+          <div id='' className="password-container">
             <input 
-              className="form-control mr-2"
+              className="input-field"
               {...register('password', {required: true})}
               type="password" id='password'></input>
-            <button>
-              <img src="https://i.stack.imgur.com/Oyk1g.png" id="EYE"/>
+            <button type='button' className="show-password" onClick={(e) => handlePassword(e)}>
+              <img src="https://i.stack.imgur.com/Oyk1g.png" id="img"/>
             </button>
-            
           </div>
-          <button className="btn btn-outline-secondary mt-2 offset-md-2 mb-2" type="submit">Submit</button>
+          <p>{errors.password?.message}</p>
+          <button className="btn btn-dark" type="submit">Submit</button>
           {error && <p>{error}</p>}
         </form>
       </div>
-    </div> 
   );
 }
 
