@@ -6,10 +6,10 @@ import { backendTest } from "../actions";
 
 const Inventory =() => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(backendTest());
-    // axios.get('http://localhost:5000/test');
-  }, [])
+  // useEffect(() => {
+  //   dispatch(backendTest());
+  //   // axios.get('http://localhost:5000/test');
+  // }, [])
   let state = useSelector(state => state);
 
   function run() {

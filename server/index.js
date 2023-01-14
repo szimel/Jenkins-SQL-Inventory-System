@@ -1,22 +1,15 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
-const mysql = require('mysql');
 const Validation = require('./controllers/validation');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mainRoutes = require('./main');
 
-require('./auth');
+// require('./auth');
 require('dotenv').config()
 
-//creates db for mysql?
-// const db = mysql.createPool({
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'password',
-//   database: 'jenkinsdb'
-// })
+
 
 
 const app = express();
@@ -37,29 +30,30 @@ app.use(passport.session());
 
 
 //call from front end goes here 
-app.get('/auth/google',
-  //this calls to auth.js
-  passport.authenticate('google', { scope: [ 'email', 'profile' ] }
-));
+// app.get('/auth/google',
+//   //this calls to auth.js
+//   passport.authenticate('google', { scope: [ 'email', 'profile' ] }
+// ));
 
-function isLoggedIn(req, res, next) {
-  console.log('got to middleware on index')
-  req.user ? next() : res.sendStatus(401);
-};
+// function isLoggedIn(req, res, next) {
+//   console.log('got to middleware on index')
+//   req.user ? next() : res.sendStatus(401);
+// };
 
-//call from auth.js goes here 
-app.get( '/auth/google/callback',
-  passport.authenticate( 'google', {
-    successRedirect: 'http://localhost:3000/inventory',
-    failureRedirect: '/auth/google/failure'
-  })
-);
+// //call from auth.js goes here 
+// app.get( '/auth/google/callback',
+//   passport.authenticate( 'google', {
+//     successRedirect: 'http://localhost:3000/inventory',
+//     failureRedirect: '/auth/google/failure'
+//   })
+// );
 
-app.get('/protected', Validation.validation);
+// app.get('/protected', Validation.validation);
 
 
-//stores logout and sql db routes
+//stores routes
 mainRoutes(app)
+
 
 
 app.listen(5000, () => console.log('listening on port: 5000'));

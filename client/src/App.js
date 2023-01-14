@@ -11,8 +11,8 @@ function App() {
   
   return (
     <div className="App">
-      <a href='http://localhost:5000/auth/google' onClick={() => console.log('click')}>Authenticate with Google</a>
-      <p onClick={run}>rerun hore</p>
+      
+      <p onClick={run}>home ig</p>
     </div>
   );
 }
