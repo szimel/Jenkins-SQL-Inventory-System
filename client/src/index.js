@@ -10,6 +10,7 @@ import {
 import store from './reducers/store';
 import Inventory from './components/inventory';
 import SignUp from './components/SignUp-LogIn/signUp';
+import LogIn from './components/SignUp-LogIn/logIn';
 
 const router = createBrowserRouter ([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter ([
   {
     path: '/signup',
     element: <SignUp />
+  },
+  {
+    path: '/login',
+    element: <LogIn />
   }
 ])
 

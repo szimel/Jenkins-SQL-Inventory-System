@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { handleSignup } from '../../actions';
+import { handleLogIn, handleSignup } from '../../actions';
 import { useState } from 'react';
 
 //yup schema
@@ -12,11 +12,10 @@ const userSchema = Yup.object().shape({
   password: Yup.string().required()
 });
 
-
-const SignUp = () => {
+const LogIn = () => {
   const [error, setError] = useState(null);
 
-  //basic yup setup
+    //basic yup setup
   const { register, handleSubmit, formState: { errors }} = useForm({
     resolver: yupResolver(userSchema)
   });
@@ -24,25 +23,24 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //async so it can wait on axios call 
-  const handleFormSubmit = async (data, event) => {
-    event.preventDefault();
+    //async so it can wait on axios call 
+    const handleFormSubmit = async (data, event) => {
+      event.preventDefault();
 
-    //handleLogIn action returns values of backend call
-    const signUpResult = await handleSignup(data, dispatch)
+      //handleLogIn action returns values of backend call
+      const logInResult = await handleLogIn(data, dispatch);
 
-    if(signUpResult === 201) {
-      return navigate("/", { replace: true });
-
-    } else if(signUpResult === 409) {
-      return setError('User already exists');
-
-    } else {
-      return setError('An unexpected error occured');
-    };
-  };
-
-  return(
+      if(logInResult === 201) {
+        return navigate("/", { replace: true });
+  
+      } else if(logInResult === 409) {
+        return setError('Incorrect email or password');
+  
+      } else {
+        return setError('An unexpected error occured');
+      };
+    }
+  return (
     <div className='row mt-5 pt-5 '>
       <div className="offset-4 col-md-3">
         <form onSubmit={handleSubmit(handleFormSubmit)}>
@@ -66,11 +64,8 @@ const SignUp = () => {
           {error && <p>{error}</p>}
         </form>
       </div>
-    </div>  
-  )
-};
+    </div> 
+  );
+}
 
-
-
-
-export default SignUp;
+export default LogIn;

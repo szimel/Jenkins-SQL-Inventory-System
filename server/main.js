@@ -2,6 +2,9 @@ const Auth = require("./controllers/authorization")
 const sqlDB = require('./controllers/sqlDB');
 const passport = require('passport');
 
+
+console.log(passport._strategies);
+
 //middleware to check if logged in user
 const requireAuth = passport.authenticate('local', { session: false })
 
@@ -12,3 +15,5 @@ module.exports = function(app) {
   // app.get('/auth/google/failure', Validation.failure);
   // app.get('/test', sqlDB.test)
 }
+
+

@@ -43,14 +43,13 @@ exports.signUp = async (req, res) => {
           [email, hashedPassword]
       );
       const token = jwt.sign({ sub: req.user }, 'secret', { expiresIn: '1h' });
-      // console.log('worked@@@@')
       res.status(200).json({ message: 'User created', token });
   } catch (err) {
       res.status(500).json({ message: err.message });
   }
 };
 
-exports.logIn = function (req, res) {
+exports.logIn = async (req, res) => {
   // Generate JWT
   const token = jwt.sign({ sub: req.user.id }, 'secret', { expiresIn: '1h' });
 
