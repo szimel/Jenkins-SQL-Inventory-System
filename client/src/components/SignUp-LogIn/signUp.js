@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { signUp } from '../../actions';
-import { useState } from 'react';
+import { handleSignup, signUp } from '../../actions';
+import { useEffect, useState } from 'react';
 
 
 const userSchema = Yup.object().shape({
@@ -14,7 +14,7 @@ const userSchema = Yup.object().shape({
 
 
 const SignUp = () => {
-
+  const [error, setError] = useState(null);
 
 
   const { register, handleSubmit, formState: { errors }} = useForm({
@@ -24,13 +24,20 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function handleFormSubmit(e) {
-    dispatch(signUp(e, () => {
-      navigate("/", { replace: true });
-    }))
-  }
+  const handleFormSubmit = async (data, event) => {
+    event.preventDefault();
+    const signUpResult = await handleSignup(data, dispatch)
 
-  const [error, setError] = useState(null);
+    if(signUpResult === 201) {
+      return navigate("/", { replace: true });
+
+    } else if(signUpResult === 409) {
+      return setError('User already exists');
+
+    } else {
+      return setError('An unexpected error occured');
+    };
+  };
 
   return(
     <div className='row mt-5 pt-5 '>
@@ -53,7 +60,7 @@ const SignUp = () => {
         </div>
 
         <button className="btn btn-outline-secondary mt-2 offset-md-2 mb-2" type="submit">Submit</button>
-        {this.state.error && <p>{this.state.error}</p>}
+        {error && <p>{error}</p>}
       </form>
     </div>
   </div>  
@@ -61,4 +68,6 @@ const SignUp = () => {
 };
 
 
-export default SignUp
+
+
+export default SignUp;
