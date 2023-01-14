@@ -33,7 +33,7 @@ const LogIn = () => {
       if(logInResult === 201) {
         return navigate("/", { replace: true });
   
-      } else if(logInResult === 409) {
+      } else if(logInResult === 401) {
         return setError('Incorrect email or password');
   
       } else {
@@ -52,14 +52,18 @@ const LogIn = () => {
             </input>
               {errors.email?.message}
           </div>
-          <div className="form-group row col-8 offset-md-2">
+
+          <div id='password-container' className="form-group row col-8 offset-md-2 d-flex ">
             <label>Password</label>
             <input 
-              className="form-control"
-              {...register('password', {required: true})}></input>
-              {errors.password?.message}
+              className="form-control mr-2"
+              {...register('password', {required: true})}
+              type="password" id='password'></input>
+            <button>
+              <img src="https://i.stack.imgur.com/Oyk1g.png" id="EYE"/>
+            </button>
+            
           </div>
-
           <button className="btn btn-outline-secondary mt-2 offset-md-2 mb-2" type="submit">Submit</button>
           {error && <p>{error}</p>}
         </form>

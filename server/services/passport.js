@@ -13,60 +13,74 @@ const pool = mysql.createPool({
 
 passport.use(new LocalStrategy(
   {
-  usernameField: 'email',
-  passwordField: 'password'
+    usernameField: 'email',
+    passwordField: 'password'
   },
   async (email, password, done) => {
     try {
-
-      pool.query('SELECT * FROM users WHERE email = ?', [email], (err, result) => {
+      pool.query('SELECT * FROM users WHERE email = ?', [email], 
+      async (err, result) => {
         if (err) {
           return done(err);
         }
         const user = result[0];
 
         if (!user) {
-          return done(null, false, { message: 'Invalid credentials' });
+          return done(null, false, { status: 401, message: 'Invalid credentials' });
         }
 
         // Compare the password
-        const isValid = bcrypt.compare(password, user.password);
+        const isValid = await bcrypt.compare(password, user.password);
 
         // If the password is invalid
         if (!isValid) {
-            return done(null, false, { message: 'Invalid credentials' });
+            return done(null, false, { status: 401, message: 'Invalid credentials' });
         }
 
         // Otherwise, return the user
         return done(null, user);
       });
-
-        // Find the user with the email
-        // const [user] = await pool.query(
-        //     'SELECT * FROM users WHERE email = ?',
-        //     [email]
-        // );
-
-        // If no user is found with the email
-        // if (!user) {
-        //     return done(null, false, { message: 'Invalid credentials' });
-        // }
-
-        // // Compare the password
-        // const isValid = await bcrypt.compare(password, user.password);
-
-        // // If the password is invalid
-        // if (!isValid) {
-        //     return done(null, false, { message: 'Invalid credentials' });
-        // }
-
-        // // Otherwise, return the user
-        // return done(null, user);
     } catch (err) {
         return done(err);
     }
   }
 ));
+
+
+// passport.use(new LocalStrategy(
+//   {
+//   usernameField: 'email',
+//   passwordField: 'password'
+//   },
+//   async (email, password, done) => {
+//     try {
+
+//       pool.query('SELECT * FROM users WHERE email = ?', [email], (err, result) => {
+//         if (err) {
+//           return done(err);
+//         }
+//         const user = result[0];
+
+//         if (!user) {
+//           return done(null, false, { status: 401, message: 'Invalid credentials' });
+//         }
+
+//         // Compare the password
+//         const isValid = await bcrypt.compare(password, user.password);
+
+//         // If the password is invalid
+//         if (!isValid) {
+//           return done(null, false, { status: 401, message: 'Invalid credentials' });
+//       }      
+
+//         // Otherwise, return the user
+//         return done(null, user);
+//       })
+//     } catch (err) {
+//         return done(err);
+//     }
+//   }
+// ));
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);

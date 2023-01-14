@@ -10,28 +10,20 @@ const pool = mysql.createPool({
   password: 's0mu3l',
   database: 'jenkinsdb'
 });
-//creates user table first time only ig
-// pool.execute(
-//   `CREATE TABLE IF NOT EXISTS users (
-//       id INT AUTO_INCREMENT PRIMARY KEY,
-//       email VARCHAR(255) NOT NULL UNIQUE,
-//       password VARCHAR(255) NOT NULL
-//   )`
-// );
 
 
 exports.signUp = async (req, res) => {
   const { email, password } = req.body;
   // Search for the user with the email
-  const [rows, fields] = await pool.query(
+  const [rows] = await pool.query(
     'SELECT * FROM users WHERE email = ?',
     [email]
-  );
+);
+
 
   if(rows.length>0) {
     return res.status(409).json({error: 'User already exists'});
   };
-
 
   try {
       // Hash the password
