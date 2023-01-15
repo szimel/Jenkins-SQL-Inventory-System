@@ -55,19 +55,95 @@
 /* Header CSS */
 .header-container {
   background-color: rgba(0, 0, 0, 0.888);
-  color:rgba(204, 204, 204, 0.742)
+  color:rgba(204, 204, 204, 0.742);
+  height: 8vh;
+  min-height: 55px;
 }
+.header-container p {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  height: 8vh;
+  min-height: 55px;
+  width: 7vw;
+  min-width: 65px;
+  font-size: 1rem;
+  margin: 0px;
+  display: flex;
+  align-items: center; /* This centers the text vertically */
+  justify-content: center; /* This centers the text horizontally */
+}
+.header-container p:hover {
+  background-color: #ccc;
+  color: black;
+}
+.header-container .search,
+.header-container .pay,
 .header-container .database {
   display: flex;
-  justify-content: flex-end;
+  align-items: center; /* This centers the text vertically */
+  justify-content: center; /* This centers the text horizontally */
 }
-.header-container .inventory {
+.header-container .home {
   display: flex;
-  justify-content: center;
+  align-items: center; /* This centers the text vertically */
+  justify-content: flex-start; /* This aligns the text to the left */
 }
 .header-container .logout {
   display: flex;
-  justify-content: flex-end;
+  align-items: center; /* This centers the text vertically */
+  justify-content: flex-end; /* This aligns the text to the right */
+}
+/* Header css */
+
+
+
+/* ALL MEDIA QUERY CODE BELOW */
+
+/* Tablet meda query */
+@media (max-width: 1080px) {
+  /* header css */
+  .header-container {
+    background-color: rgba(0, 0, 0, 0.888);
+    color:rgba(204, 204, 204, 0.742);
+    height: 6vh;
+    min-height: 55px;
+  }
+  .header-container p {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    height: 6vh;
+    min-height: 55px;
+    width: 7vw;
+    font-size: 0.8rem;
+    min-width: 52px;
+    margin: 0px;
+    display: flex;
+    align-items: center; /* This centers the text vertically */
+    justify-content: center; /* This centers the text horizontally */
+  }
+}
+
+/* mobile */
+@media (max-width: 630px) {
+
+  /* Header CSS */
+  .header-container {
+    background-color: rgba(0, 0, 0, 0.888);
+    color:rgba(204, 204, 204, 0.742);
+    height: 4vh;
+  }
+  .header-container p {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    height: 4vh;
+    font-size: 0.5rem;
+    min-width: 32px;
+    width: 7vw;
+    margin: 0px;
+    display: flex;
+    align-items: center; /* This centers the text vertically */
+    justify-content: center; /* This centers the text horizontally */
+  }
 }
 
 

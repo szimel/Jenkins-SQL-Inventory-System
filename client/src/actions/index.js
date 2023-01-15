@@ -1,9 +1,19 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { VALID_EMAIL, AUTH_USER } from './types';
+import { VALID_EMAIL, AUTH_USER, CURRENT_USER } from './types';
 
 export const isLoggedIn = () => dispatch => {
-
+  const config = {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
+  }
+  axios.get('http://localhost:5000/user', config)
+    .then(function (response) {
+      dispatch({ type: CURRENT_USER, payload: response.data });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 
 //for signing up
@@ -50,6 +60,7 @@ export async function handleLogIn(data, dispatch) {
 export const handleSignOut = (callback) => dispatch =>{
   localStorage.removeItem('token');
 
+  //let redux state know there isn't a user
   dispatch({ type: AUTH_USER, payload: '' });
-  callback()
+  callback();
 }
