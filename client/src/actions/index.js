@@ -2,13 +2,9 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { VALID_EMAIL, AUTH_USER } from './types';
 
-export const backendTest = () => dispatch => {
-  console.log('axios call');
-  axios.get('http://localhost:5000/protected')
-  .then(function (response) {
-    dispatch({type: VALID_EMAIL, payload: response.data})
-  });
-};
+export const isLoggedIn = () => dispatch => {
+
+}
 
 //for signing up
 export async function handleSignup(data, dispatch) {
@@ -30,6 +26,7 @@ export async function handleSignup(data, dispatch) {
   }
 }
 
+//login async function
 export async function handleLogIn(data, dispatch) {
   try {
       const response = await axios.post('http://localhost:5000/login', data);
@@ -47,4 +44,12 @@ export async function handleLogIn(data, dispatch) {
   } catch (err) {
     return err.response.status;
   }
+}
+
+//signout logic
+export const handleSignOut = (callback) => dispatch =>{
+  localStorage.removeItem('token');
+
+  dispatch({ type: AUTH_USER, payload: '' });
+  callback()
 }

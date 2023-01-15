@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import Header from "./components/header";
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
   
   return (
     <div className="App">
+      <Header />
       
       <p onClick={run}>home ig</p>
     </div>

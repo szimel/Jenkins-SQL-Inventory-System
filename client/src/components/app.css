@@ -52,6 +52,24 @@
 }
 /* Login/signup boiler plate with flexbox design */
 
+/* Header CSS */
+.header-container {
+  background-color: rgba(0, 0, 0, 0.888);
+  color:rgba(204, 204, 204, 0.742)
+}
+.header-container .database {
+  display: flex;
+  justify-content: flex-end;
+}
+.header-container .inventory {
+  display: flex;
+  justify-content: center;
+}
+.header-container .logout {
+  display: flex;
+  justify-content: flex-end;
+}
+
 
 
 
