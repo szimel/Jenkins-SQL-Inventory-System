@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { handleLogIn, handleSignup } from '../../actions';
-import { useState } from 'react';
+import { handleLogIn } from '../../actions';
+import { useEffect, useState } from 'react';
+import Header from '../header';
+import useValidation from '../validation-hook';
 
 
 //yup schema
@@ -15,14 +17,33 @@ const userSchema = Yup.object().shape({
 
 const LogIn = () => {
   const [error, setError] = useState(null);
+  const [onLoad, setOnLoad] = useState(false);
 
-    //basic yup setup
+  //basic yup setup
   const { register, handleSubmit, formState: { errors }} = useForm({
     resolver: yupResolver(userSchema)
   });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
+
+  //checks user auth w hook only once window loads
+  useEffect(() => {
+    console.log('got here')
+    setTimeout(function () {
+      setOnLoad(true);
+    }, 1000)
+  }, []);
+
+  while(onLoad === true) {
+    console.log('ghawef')
+    let authCheck = useValidation();
+    if(authCheck) return navigate('/', {replace: true})
+  }
+
+
 
   //async so it can wait on axios call 
   const handleFormSubmit = async (data, event) => {
@@ -60,6 +81,8 @@ const LogIn = () => {
 
   
   return (
+    <div>
+      <Header />
       <div className="auth-container">
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <div className=''>
@@ -86,6 +109,7 @@ const LogIn = () => {
           {error && <p>{error}</p>}
         </form>
       </div>
+    </div>
   );
 }
 

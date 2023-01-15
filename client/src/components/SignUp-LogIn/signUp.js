@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { handleSignup } from '../../actions';
 import { useState } from 'react';
+import Header from '../header';
 
 //yup schema
 const userSchema = Yup.object().shape({
@@ -59,31 +60,34 @@ const SignUp = () => {
   }
 
   return(
-    <div className="auth-container">
-    <form onSubmit={handleSubmit(handleFormSubmit)}>
-      <div className=''>
-        <label>Email</label>
-        <input
-          className='input-field'
-          {...register('email', {required: true})}>
-        </input>
-        <p>{errors.email?.message}</p>
-      </div>
+    <div>
+      <Header />
+      <div className="auth-container">
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <div className=''>
+          <label>Email</label>
+          <input
+            className='input-field'
+            {...register('email', {required: true})}>
+          </input>
+          <p>{errors.email?.message}</p>
+        </div>
 
-      <label>Password</label>
-      <div id='' className="password-container">
-        <input 
-          className="input-field"
-          {...register('password', {required: true})}
-          type="password" id='password'></input>
-        <button type='button' className="show-password" onClick={(e) => handlePassword(e)}>
-          <img src="https://i.stack.imgur.com/Oyk1g.png" id="img"/>
-        </button>
-      </div>
-      <p>{errors.password?.message}</p>
-      <button className="btn btn-dark" type="submit">Submit</button>
-      {error && <p>{error}</p>}
-    </form>
+        <label>Password</label>
+        <div id='' className="password-container">
+          <input 
+            className="input-field"
+            {...register('password', {required: true})}
+            type="password" id='password'></input>
+          <button type='button' className="show-password" onClick={(e) => handlePassword(e)}>
+            <img src="https://i.stack.imgur.com/Oyk1g.png" id="img"/>
+          </button>
+        </div>
+        <p>{errors.password?.message}</p>
+        <button className="btn btn-dark" type="submit">Submit</button>
+        {error && <p>{error}</p>}
+      </form>
+    </div>
   </div>
   )
 };
