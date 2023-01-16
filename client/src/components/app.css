@@ -96,6 +96,21 @@
 }
 /* Header css */
 
+/* home page instruction box */
+.container-home {
+  background-color: #f2f2f2;
+  margin-top: 20vh;
+  width: 40vw;
+  box-shadow: 0 15px 75px rgba(0, 0, 0, 1);
+  border-radius: 1em;
+}
+.container-home p {
+  padding: 10px;
+}
+.container-home ul {
+  padding-bottom: 10px;
+}
+
 
 
 /* ALL MEDIA QUERY CODE BELOW */
@@ -122,6 +137,16 @@
     align-items: center; /* This centers the text vertically */
     justify-content: center; /* This centers the text horizontally */
   }
+  /* Header css */
+
+  /* home page instructions */
+  .container-home {
+    margin-top: 20vh;
+    width: 60vw;
+    box-shadow: 0 15px 75px rgba(0, 0, 0, 1);
+    border-radius: 1em;
+  }
+  /* Home page instructions */
 }
 
 /* mobile */
@@ -145,6 +170,16 @@
     align-items: center; /* This centers the text vertically */
     justify-content: center; /* This centers the text horizontally */
   }
+  /* Header CSS */
+
+  /* Home page instructions */
+  .container-home {
+    margin-top: 20vh;
+    width: 80vw;
+    box-shadow: 0 15px 75px rgba(0, 0, 0, 1);
+    border-radius: 1em;
+  }
+  /* Home page instruction */
 }
 
 

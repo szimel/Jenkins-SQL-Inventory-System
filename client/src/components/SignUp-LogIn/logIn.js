@@ -30,18 +30,18 @@ const LogIn = () => {
 
 
   //checks user auth w hook only once window loads
-  useEffect(() => {
-    console.log('got here')
-    setTimeout(function () {
-      setOnLoad(true);
-    }, 1000)
-  }, []);
+  // useEffect(() => {
+  //   console.log('got here')
+  //   setTimeout(function () {
+  //     setOnLoad(true);
+  //   }, 1000)
+  // }, []);
 
-  while(onLoad === true) {
-    console.log('ghawef')
-    let authCheck = useValidation();
-    if(authCheck) return navigate('/', {replace: true})
-  }
+  // while(onLoad === true) {
+  //   console.log('ghawef')
+  //   let authCheck = useValidation();
+  //   if(authCheck) return navigate('/', {replace: true})
+  // }
 
 
 

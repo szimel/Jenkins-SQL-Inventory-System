@@ -1,42 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from './components/home';
 import "bootstrap/dist/css/bootstrap.css";
 import { Provider } from 'react-redux'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
 import store from './reducers/store';
-import Inventory from './components/inventory';
-import SignUp from './components/SignUp-LogIn/signUp';
-import LogIn from './components/SignUp-LogIn/logIn';
 import './components/app.css';
+import { AuthProvider } from './components/auth/authProvider';
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 
-const router = createBrowserRouter ([
-  {
-    path: '/',
-    element: <App />
-  },
-  {
-    path: '/inventory',
-    element: <Inventory />
-  },
-  {
-    path: '/signup',
-    element: <SignUp />
-  },
-  {
-    path: '/login',
-    element: <LogIn />
-  }
-])
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <RouterProvider
-      router={router}
-    />
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AuthProvider>
+            <Routes>
+              <Route path='/' element={<App />} />
+            </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
 );
 
