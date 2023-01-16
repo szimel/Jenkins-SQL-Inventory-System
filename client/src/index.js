@@ -6,7 +6,9 @@ import { Provider } from 'react-redux'
 import store from './reducers/store';
 import './components/app.css';
 import { AuthProvider } from './components/auth/authProvider';
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Unauthorized from './components/auth/unauthorized';
+import ProtectedRoutes from './components/auth/protectedRoutes';
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -16,7 +18,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <AuthProvider>
             <Routes>
               <Route path='/' element={<App />} />
+              <Route path='/unauthorized' element={<Unauthorized />} />
             </Routes>
+            <ProtectedRoutes />
         </AuthProvider>
       </BrowserRouter>
     </Provider>
