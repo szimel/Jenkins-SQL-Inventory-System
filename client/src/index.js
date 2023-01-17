@@ -20,9 +20,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Routes>
             <Route path='/' element={<App />} />
             <Route path='/unauthorized' element={<Unauthorized />} />
-            <Route path='login' element={<LogIn />} />
+            <Route path='/login' element={<LogIn />} />
           </Routes>
-          <ProtectedRoutes />
+            <ProtectedRoutes />
         </AuthProvider>
       </BrowserRouter>
     </Provider>

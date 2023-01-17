@@ -10,9 +10,6 @@ function App() {
 
   let state = useSelector(state => state);
 
-  function run() {
-    console.log(state);
-  };
   
   return (
     <div className="">
@@ -30,7 +27,19 @@ function App() {
           </ul>
         </div>
       ) : (
-        <div>Logged In!</div>
+        <div className="container container-home">
+          <ul>
+            <li>
+              Click on <a href="/search"><u>Search</u></a> to lookup inventory and see current stock
+            </li>
+            <li>
+              Click on <a href="/pay"><u>Pay</u></a> to see receipts and inventory that needs to be paid
+            </li>
+            <li>
+              Click on <a href="add"><u>Add</u></a> if you're an alpha big dog and are authorized for it
+            </li>
+          </ul>
+        </div>
       )}
     </div>
   );
