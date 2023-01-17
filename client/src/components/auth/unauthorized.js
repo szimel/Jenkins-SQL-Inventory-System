@@ -1,8 +1,16 @@
+import Header from "../header";
 
 
 const Unauthorized = () => {
   return (
-    <div>You aren't authorized</div>
+    <>
+      <Header />
+      <div className="container-fluid container-unauthorized" >
+        <h5>
+          Sorry, you aren't authorized to view this page.
+        </h5>
+      </div>
+    </>
   )
 };
 

@@ -10,10 +10,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  // useEffect(() => {
-  //   dispatch(isLoggedIn())
-  // }, [])
+
 
   //sign the user out
   function userSignOut() {
@@ -54,13 +51,13 @@ const Header = () => {
             <div className="col-4 home">
               <p>Home</p>
             </div>
-            <div className="col-1 database" onClick={()=>navigateTo('search')}>
+            <div className="col-1 database" onClick={()=>navigateTo('add')}>
               <p>Add</p>
             </div>
-            <div className="col-1 search" onClick={()=>navigateTo('search')}>
+            <div className="col-1 search" onClick={()=>navigateTo('inventory')}>
               <p>Search</p>
             </div>
-            <div className="col-1 pay" onClick={()=>navigateTo('accounting')}>
+            <div className="col-1 pay" onClick={()=>navigateTo('pay')}>
               <p>Pay</p>
             </div>
             <div className="col-5 logout" onClick={userSignOut}>

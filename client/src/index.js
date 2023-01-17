@@ -7,9 +7,6 @@ import store from './reducers/store';
 import './components/app.css';
 import { AuthProvider } from './components/auth/authProvider';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Unauthorized from './components/auth/unauthorized';
-import ProtectedRoutes from './components/protected routes/protectedRoutes';
-import LogIn from './components/SignUp-LogIn/logIn';
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(

@@ -6,6 +6,14 @@
   font-size: 20px;
 }
 
+/* unauthorized */
+.container-unauthorized {
+  margin-top: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* login/signup css boiler plate made with flexbox */
 .password-container {
   display: flex;

@@ -1,12 +1,10 @@
-import { useContext } from "react";
-import AuthContext from "./components/auth/authProvider";
 import ClearanceProvider from "./components/auth/clearanceProvider";
 import Unauthorized from "./components/auth/unauthorized";
 import Home from "./components/home";
 import Pay from "./components/protected routes/pay";
-// import ProtectedRoutes from "./components/protected routes/protectedRoutes";
 import LogIn from "./components/SignUp-LogIn/logIn";
 import SignUp from "./components/SignUp-LogIn/signUp";
+import Search from "./components/protected routes/inventory.js";
 
 const { Routes, Route } = require("react-router-dom")
 
@@ -31,7 +29,9 @@ const App = () => {
         <Route element={<ClearanceProvider allowedRoles={[roles.pay]}/>}>
           <Route path='/pay' element={<Pay />} />
         </Route>
-
+        <Route>
+          <Route path='/inventory' element={<Search />} />
+        </Route>
       </Routes>
     </>
 
