@@ -34,10 +34,10 @@ const Header = () => {
             <div className="col-5 home">
               <p>Home</p>
             </div>
-            <div className="col-1 database" onClick={()=>navigateTo('login')}>
+            <div className="col-2 database" onClick={()=>navigateTo('login')}>
               <p>Log In</p>
             </div>
-            <div className="col-1 search" onClick={()=>navigateTo('signup')}>
+            <div className="col-2 search" onClick={()=>navigateTo('signup')}>
               <p>Sign Up</p>
             </div>
           </div>
@@ -47,20 +47,20 @@ const Header = () => {
       <React.Fragment>
         <div className="container-fluid header-container">
           <div className="row">
-            {/* responsive design on boostrap means this is always 25% of screen */}
-            <div className="col-4 home">
+            {/* responsive design not using col so i cant change width on media query*/}
+            <div className="home">
               <p>Home</p>
             </div>
-            <div className="col-1 database" onClick={()=>navigateTo('add')}>
+            <div className="database" onClick={()=>navigateTo('add')}>
               <p>Add</p>
             </div>
-            <div className="col-1 search" onClick={()=>navigateTo('inventory')}>
+            <div className="search" onClick={()=>navigateTo('inventory')}>
               <p>Search</p>
             </div>
-            <div className="col-1 pay" onClick={()=>navigateTo('pay')}>
+            <div className="pay" onClick={()=>navigateTo('pay')}>
               <p>Pay</p>
             </div>
-            <div className="col-5 logout" onClick={userSignOut}>
+            <div className="logout" onClick={userSignOut}>
               <p>Logout</p>
             </div>
           </div>
@@ -68,32 +68,6 @@ const Header = () => {
       </React.Fragment>
     )
   )
-
-
-  
-  // return (
-    // container fluid sets width to max. 
-    // <div className="container-fluid header-container">
-    //   <div className="row">
-    //     {/* responsive design on boostrap means this is always 25% of screen */}
-    //     <div className="col-4 home">
-    //       <p>Home</p>
-    //     </div>
-    //     <div className="col-1 database" onClick={()=>navigateTo('search')}>
-    //       <p>Add</p>
-    //     </div>
-    //     <div className="col-1 search" onClick={()=>navigateTo('search')}>
-    //       <p>Search</p>
-    //     </div>
-    //     <div className="col-1 pay" onClick={()=>navigateTo('accounting')}>
-    //       <p>Pay</p>
-    //     </div>
-    //     <div className="col-5 logout" onClick={userSignOut}>
-    //       <p>Logout</p>
-    //     </div>
-    //   </div>
-    // </div>
-  // )
 };
 
 export default Header;

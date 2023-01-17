@@ -88,16 +88,19 @@
 .header-container .search,
 .header-container .pay,
 .header-container .database {
+  width: 8.33vw;
   display: flex;
   align-items: center; /* This centers the text vertically */
   justify-content: center; /* This centers the text horizontally */
 }
 .header-container .home {
+  width: 37.5vw;
   display: flex;
   align-items: center; /* This centers the text vertically */
   justify-content: flex-start; /* This aligns the text to the left */
 }
 .header-container .logout {
+  width: 37.5vw;
   display: flex;
   align-items: center; /* This centers the text vertically */
   justify-content: flex-end; /* This aligns the text to the right */
@@ -119,6 +122,8 @@
   padding-bottom: 10px;
 }
 
+/* Header css */
+
 
 
 /* ALL MEDIA QUERY CODE BELOW */
@@ -129,13 +134,13 @@
   .header-container {
     background-color: rgba(0, 0, 0, 0.888);
     color:rgba(204, 204, 204, 0.742);
-    height: 6vh;
+    height: 8vh;
     min-height: 55px;
   }
   .header-container p {
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
-    height: 6vh;
+    height: 8vh;
     min-height: 55px;
     width: 7vw;
     font-size: 0.8rem;
@@ -144,6 +149,26 @@
     display: flex;
     align-items: center; /* This centers the text vertically */
     justify-content: center; /* This centers the text horizontally */
+  }
+  .header-container .search,
+  .header-container .pay,
+  .header-container .database {
+    width: 10vw;
+    display: flex;
+    align-items: center; /* This centers the text vertically */
+    justify-content: center; /* This centers the text horizontally */
+  }
+  .header-container .home {
+    width: 35vw;
+    display: flex;
+    align-items: center; /* This centers the text vertically */
+    justify-content: flex-start; /* This aligns the text to the left */
+  }
+  .header-container .logout {
+    width: 35vw;
+    display: flex;
+    align-items: center; /* This centers the text vertically */
+    justify-content: flex-end; /* This aligns the text to the right */
   }
   /* Header css */
 
@@ -170,13 +195,36 @@
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
     height: 4vh;
-    font-size: 0.5rem;
+    font-size: .8rem;
     min-width: 32px;
-    width: 7vw;
+    width: 15vw;
     margin: 0px;
     display: flex;
     align-items: center; /* This centers the text vertically */
     justify-content: center; /* This centers the text horizontally */
+  }
+  .header-container .search,
+  .header-container .pay,
+  .header-container .database {
+    padding: 0;
+    width: 20vw;
+    display: flex;
+    align-items: center; /* This centers the text vertically */
+    justify-content: center; /* This centers the text horizontally */
+  }
+  .header-container .home {
+    padding: 0;
+    width: 20vw;
+    display: flex;
+    align-items: center; /* This centers the text vertically */
+    justify-content: flex-start; /* This aligns the text to the left */
+  }
+  .header-container .logout {
+    width: 20vw;
+    display: flex;
+    align-items: center; /* This centers the text vertically */
+    justify-content: flex-end; /* This aligns the text to the right */
+    padding: 0;
   }
   /* Header CSS */
 
