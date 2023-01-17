@@ -11,10 +11,6 @@ const { Routes, Route } = require("react-router-dom")
 
 
 const App = () => {
-  const { auth, updateAuth } = useContext(AuthContext);
-  updateAuth('');
-  console.log(auth);
-
   const roles = {
     'search': 0,
     'pay': 1000,
