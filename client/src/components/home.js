@@ -32,7 +32,6 @@ function App() {
       ) : (
         <div>Logged In!</div>
       )}
-      <p onClick={run}>home ig</p>
     </div>
   );
 }

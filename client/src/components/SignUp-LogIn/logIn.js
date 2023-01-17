@@ -4,9 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { handleLogIn } from '../../actions';
-import { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Header from '../header';
-import useValidation from '../validation-hook';
+import AuthContext from '../auth/authProvider';
 
 
 //yup schema
@@ -16,8 +16,12 @@ const userSchema = Yup.object().shape({
 });
 
 const LogIn = () => {
+  //set state of authProvider
+  const { setAuth, auth } = useContext(AuthContext);
+
+
   const [error, setError] = useState(null);
-  const [onLoad, setOnLoad] = useState(false);
+  // const [onLoad, setOnLoad] = useState(false);
 
   //basic yup setup
   const { register, handleSubmit, formState: { errors }} = useForm({
@@ -28,31 +32,21 @@ const LogIn = () => {
   const navigate = useNavigate();
 
 
-
-  //checks user auth w hook only once window loads
-  // useEffect(() => {
-  //   console.log('got here')
-  //   setTimeout(function () {
-  //     setOnLoad(true);
-  //   }, 1000)
-  // }, []);
-
-  // while(onLoad === true) {
-  //   console.log('ghawef')
-  //   let authCheck = useValidation();
-  //   if(authCheck) return navigate('/', {replace: true})
-  // }
-
-
-
   //async so it can wait on axios call 
   const handleFormSubmit = async (data, event) => {
     event.preventDefault();
+
+
+    //so a logged in user can't resubmit
+    if(auth) {
+      return navigate('/', {replace: true});
+    }
 
     //handleLogIn action returns values of backend call
     const logInResult = await handleLogIn(data, dispatch);
 
     if(logInResult === 201) {
+      setAuth(true);
       return navigate("/", { replace: true });
 
     } else if(logInResult === 401) {

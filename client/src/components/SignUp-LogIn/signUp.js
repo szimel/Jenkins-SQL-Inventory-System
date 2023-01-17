@@ -4,8 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { handleSignup } from '../../actions';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Header from '../header';
+import AuthContext from '../auth/authProvider';
 
 //yup schema
 const userSchema = Yup.object().shape({
@@ -15,6 +16,10 @@ const userSchema = Yup.object().shape({
 
 
 const SignUp = () => {
+  //set state of authProvider
+  const { setAuth, auth } = useContext(AuthContext);
+
+
   const [error, setError] = useState(null);
 
   //basic yup setup
@@ -29,10 +34,17 @@ const SignUp = () => {
   const handleFormSubmit = async (data, event) => {
     event.preventDefault();
 
+    //logged in user can't make new user
+    if(auth) {
+      alert('Please log out before making a new user');
+      return navigate('/', {replace: true});
+    };
+
     //handleLogIn action returns values of backend call
     const signUpResult = await handleSignup(data, dispatch)
 
     if(signUpResult === 201) {
+      setAuth(true)
       return navigate("/", { replace: true });
 
     } else if(signUpResult === 409) {

@@ -5,6 +5,10 @@ import { handleSignOut, isLoggedIn } from '../actions';
 import AuthContext from './auth/authProvider';
 
 const Header = () => {
+    //set state of auth from authProvider
+    const { setAuth } = useContext(AuthContext);
+
+
   //grab state of auth from authProvider
   const { auth } = useContext(AuthContext);
 
@@ -18,6 +22,7 @@ const Header = () => {
   //sign the user out
   function userSignOut() {
     dispatch(handleSignOut(() => {
+      setAuth(false);
       navigate('/', {replace: true});
     }));
   }

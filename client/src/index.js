@@ -8,7 +8,8 @@ import './components/app.css';
 import { AuthProvider } from './components/auth/authProvider';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Unauthorized from './components/auth/unauthorized';
-import ProtectedRoutes from './components/auth/protectedRoutes';
+import ProtectedRoutes from './components/protected routes/protectedRoutes';
+import LogIn from './components/SignUp-LogIn/logIn';
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -16,11 +17,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <BrowserRouter>
         <AuthProvider>
-            <Routes>
-              <Route path='/' element={<App />} />
-              <Route path='/unauthorized' element={<Unauthorized />} />
-            </Routes>
-            <ProtectedRoutes />
+          <Routes>
+            <Route path='/' element={<App />} />
+            <Route path='/unauthorized' element={<Unauthorized />} />
+            <Route path='login' element={<LogIn />} />
+          </Routes>
+          <ProtectedRoutes />
         </AuthProvider>
       </BrowserRouter>
     </Provider>
