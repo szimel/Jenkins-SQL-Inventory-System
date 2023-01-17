@@ -17,7 +17,7 @@ const userSchema = Yup.object().shape({
 
 const SignUp = () => {
   //set state of authProvider
-  const { setAuth, auth } = useContext(AuthContext);
+  const { updateAuth, auth } = useContext(AuthContext);
 
 
   const [error, setError] = useState(null);
@@ -44,7 +44,7 @@ const SignUp = () => {
     const signUpResult = await handleSignup(data, dispatch)
 
     if(signUpResult === 201) {
-      setAuth(true)
+      updateAuth(true);
       return navigate("/", { replace: true });
 
     } else if(signUpResult === 409) {

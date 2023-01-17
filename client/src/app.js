@@ -6,6 +6,7 @@ import Home from "./components/home";
 import Pay from "./components/protected routes/pay";
 // import ProtectedRoutes from "./components/protected routes/protectedRoutes";
 import LogIn from "./components/SignUp-LogIn/logIn";
+import SignUp from "./components/SignUp-LogIn/signUp";
 
 const { Routes, Route } = require("react-router-dom")
 
@@ -24,11 +25,13 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/unauthorized' element={<Unauthorized />} />
         <Route path='/login' element={<LogIn />} />
+        <Route path='/signup' element={<SignUp />} />
 
       {/* Protected routes */}
         <Route element={<ClearanceProvider allowedRoles={[roles.pay]}/>}>
           <Route path='/pay' element={<Pay />} />
         </Route>
+
       </Routes>
     </>
 

@@ -8,8 +8,6 @@ function Home() {
   //grab state of auth from authProvider
   const { auth } = useContext(AuthContext);
 
-  console.log(auth);
-
   
   return (
     <div className="">

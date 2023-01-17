@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token') || undefined;
 
     if (!token) {
-      console.log('no token false');
+      // console.log('no token false');
       setAuth(false);
     } else {
       try {
@@ -23,18 +23,18 @@ export const AuthProvider = ({ children }) => {
         const currentTime = Date.now() / 1000;
 
         if (exp < currentTime) {
-          console.log('session false');
+          // console.log('session false');
           setAuth(false);
         } else {
           //gives global auth state clearance and user
-          console.log('set true');
+          // console.log('set true');
           setAuth({
             clearance: decoded.clearance,
             user: decoded.user
           });
         }
       } catch (err) {
-        console.log(err, 'error false');
+        console.log(err)
         setAuth(false);
       }
     }
