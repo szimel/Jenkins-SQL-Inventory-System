@@ -4,11 +4,11 @@ import AuthContext from "./auth/authProvider";
 import Header from "./header";
 
 
-function App() {
+function Home() {
   //grab state of auth from authProvider
   const { auth } = useContext(AuthContext);
 
-  let state = useSelector(state => state);
+  console.log(auth);
 
   
   return (
@@ -45,4 +45,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;

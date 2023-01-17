@@ -55,12 +55,14 @@ const jwtOptions = {
   secretOrKey: process.env.secret
 };
 
+
+//for login
 passport.use(new JWTStrategy(jwtOptions, (payload, done) => {
   pool.query('SELECT * FROM users WHERE id = ?', [payload.sub], (error, results) => {
     if (error) return done(error);
 
     const user = results[0];
-    
+
     if (!user) return done(null, false);
     
     return done(null, user);

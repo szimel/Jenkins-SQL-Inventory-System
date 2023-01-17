@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/home';
+import App from './app';
 import "bootstrap/dist/css/bootstrap.css";
 import { Provider } from 'react-redux'
 import store from './reducers/store';
@@ -18,14 +18,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route path='/' element={<App />} />
-            <Route path='/unauthorized' element={<Unauthorized />} />
-            <Route path='/login' element={<LogIn />} />
+            <Route path="/*" element={<App />} />
           </Routes>
-            <ProtectedRoutes />
         </AuthProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
+
 
