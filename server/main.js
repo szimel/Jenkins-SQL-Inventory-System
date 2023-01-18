@@ -10,7 +10,8 @@ const checkToken = passport.authenticate('jwt', { session: false })
 module.exports = function(app) {
   app.post('/signup', Auth.signUp);
   app.post('/login', requireAuth, Auth.logIn);
-  app.get('/user', checkToken, Auth.currentUser)
+  app.get('/user', checkToken, Auth.currentUser);
+  app.post('/product', checkToken, sqlDB.newProduct);
 }
 
 

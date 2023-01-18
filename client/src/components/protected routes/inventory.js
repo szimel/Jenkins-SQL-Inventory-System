@@ -1,10 +1,18 @@
+import Header from "../header";
+
+
 
 
 const Search = () => {
+
   return(
-    <div>
-      working bababbyy
-    </div>
+    <>
+      <Header />
+      <div>
+        working bababbyy
+      </div>
+    </>
+
   )
 };
 

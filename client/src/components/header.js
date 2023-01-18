@@ -31,7 +31,7 @@ const Header = () => {
         <div className="container-fluid header-container">
           <div className="row">
             {/* responsive design on boostrap means this is always 25% of screen */}
-            <div className="col-5 home">
+            <div className="col-5 home" onClick={()=>navigateTo('')}>
               <p>Home</p>
             </div>
             <div className="col-2 database" onClick={()=>navigateTo('login')}>
@@ -48,7 +48,7 @@ const Header = () => {
         <div className="container-fluid header-container">
           <div className="row">
             {/* responsive design not using col so i cant change width on media query*/}
-            <div className="home">
+            <div className="home" onClick={()=>navigateTo('')}>
               <p>Home</p>
             </div>
             <div className="database" onClick={()=>navigateTo('add')}>

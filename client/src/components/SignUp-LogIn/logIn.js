@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { handleLogIn } from '../../actions';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Header from '../header';
 import AuthContext from '../auth/authProvider';
 
@@ -79,7 +79,7 @@ const LogIn = () => {
       <Header />
       <div className="auth-container">
         <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <div className=''>
+          <div>
             <label>Email</label>
             <input
               className='input-field'

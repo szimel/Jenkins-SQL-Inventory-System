@@ -5,6 +5,12 @@ import { Navigate, Outlet } from "react-router-dom";
 const ClearanceProvider = ({ allowedRoles }) => {
   //auth from authContext always false (idky) so checking using local storage instead
   const Token = localStorage.getItem('token');
+
+  //for if a logged out user tries to get to authorized page
+  if(!Token) {
+    return <Navigate to="/unauthorized" replace={true} />;
+  }
+
   const token = jwtDecode(Token);
 
   //if clearance exists on auth, check if it is greater than role
