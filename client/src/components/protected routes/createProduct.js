@@ -1,8 +1,7 @@
-import Header from "../header";
 import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { UNSAFE_DataRouterStateContext, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useContext } from "react";
 import AuthContext from "../auth/authProvider";
@@ -25,11 +24,9 @@ const userSchema = Yup.object().shape({
 
 
 const CreateProduct = () => {
-  //so axios can use dispatch
-  const dispatch = useDispatch();
   const navigate = useNavigate()
 
-
+  //so user auth can be checked before submit
   const { updateAuth, auth } = useContext(AuthContext);
 
   //basic yup setup
@@ -45,6 +42,7 @@ const CreateProduct = () => {
     };
 
     //prevent expired token users from submitting
+    updateAuth('');
     if(!auth) {
       return navigate('/', {replace: true});
     };
@@ -52,7 +50,7 @@ const CreateProduct = () => {
     //backend call w await so status can be handled
     const submitResult = await createProduct(data);
 
-    if (submitResult === 201) {
+    if (submitResult === 200) {
       console.log('success');
     } else {
       console.log(submitResult);

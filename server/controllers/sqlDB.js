@@ -8,10 +8,23 @@ const pool = mysql.createPool({
   database: 'jenkinsdb'
 });
 
+//add jobsite to db
+exports.newJobsite = function(req, res) {
+  //data to insert
+  const data = req.body;
+  console.log(data);
+
+  //add data to db
+  pool.query('INSERT INTO jobs SET ?', data, function(error, results, fields) {
+    if (error) res.status(500).json({ message: error });
+    return res.status(200).json({ data: results });
+  });
+}
+
+//add product to db
 exports.newProduct = function(req, res) {
   // data to insert
   const data = req.body;
-  console.log(data);
 
 
   //add data to db
