@@ -8,7 +8,7 @@
 
 /* add css */
 .container-add {
-  margin-top: 20vh;
+  margin-top: 10vh;
   text-align: center;
   /* border-bottom: 2px solid #ccc; */
 }
@@ -18,6 +18,7 @@
   background-color: #ccc;
   height: 2px;
   width: 100vw;
+  max-width: 100%;
 }
 .container-add p {
   border-top: 2px #ccc solid;
@@ -31,22 +32,21 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   padding-bottom: 30px;
+  font-size: 19px;
 }
 #white1{
-  left: 38.12vw;
+  left: 37.59vw;
   height: 2px;
   background-color: white;
-  width: 11.79vw;
+  width: 11.85vw;
   position: absolute;
-
 }
 #white2{
-  left: 50.12vw;
+  left: 50.14vw;
   height: 2px;
   background-color: white;
-  width: 11.78vw;
+  width: 11.75vw;
   position: absolute;
-
 }
 /* add css */
 
@@ -215,6 +215,36 @@
 
 /* Tablet meda query */
 @media (max-width: 1080px) {
+  /* add page css */
+  .container-add p {
+    border-top: 2px #ccc solid;
+    border-left: 2px #ccc solid;
+    border-right: 2px #ccc solid;
+    display: inline-block;
+    width: 21vw;
+    height: 29px;
+    background-color: white;
+    margin-bottom: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding-bottom: 30px;
+  }
+  #white1{
+    left: 28.3vw;
+    height: 2px;
+    background-color: white;
+    width: 20.75vw;
+    position: absolute;
+  }
+  #white2{
+    left: 50.14vw;
+    height: 2px;
+    background-color: white;
+    width: 20.75vw;
+    position: absolute;
+  }
+  /* add css */
+
   /* product page  page css */
   .add-container {
     margin-top: 15vh;
@@ -280,6 +310,37 @@
 
 /* mobile */
 @media (max-width: 630px) {
+  /* add page css */
+  .container-add p {
+    border-top: 2px #ccc solid;
+    border-left: 2px #ccc solid;
+    border-right: 2px #ccc solid;
+    display: inline-block;
+    width: 30vw;
+    height: 29px;
+    background-color: white;
+    margin-bottom: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding-bottom: 30px;
+    font-size: .8rem;
+  }
+  #white1{
+    left: 20.3vw;
+    height: 2px;
+    background-color: white;
+    width: 29.75vw;
+    position: absolute;
+  }
+  #white2{
+    left: 50.14vw;
+    height: 2px;
+    background-color: white;
+    width: 29.75vw;
+    position: absolute;
+  }
+  /* add css */
+
   /* product pagepage css */
   .add-container {
     margin-top: 15vh;

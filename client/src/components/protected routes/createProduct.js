@@ -60,7 +60,6 @@ const CreateProduct = () => {
   };
   return (
     <>
-      <Header />
       <div className="container add-container">
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <h3>Add Product to Inventory</h3>
