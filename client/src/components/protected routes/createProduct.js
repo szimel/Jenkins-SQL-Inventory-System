@@ -68,10 +68,8 @@ const CreateProduct = () => {
 
   //backend call to retrieve all jobsites
   const jobsites = async () => {
-    console.log('called');
     try {
       const response = await getJobsites();
-
       return response.jobsites[0];
     } catch (error) {
       console.error(error);

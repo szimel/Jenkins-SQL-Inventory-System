@@ -16,6 +16,7 @@ const userSchema = Yup.object().shape({
 });
 
 const LogIn = () => {
+  console.log('asdf')
   //set state of authProvider
   const { updateAuth, auth } = useContext(AuthContext);
 

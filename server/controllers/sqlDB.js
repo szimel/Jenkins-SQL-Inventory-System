@@ -34,7 +34,6 @@ exports.newProduct = function(req, res) {
 }
 
 exports.getJobsites = function(req, res) {
-  console.log('got to function')
   //grabs all rows in jobs
   pool.query('SELECT * FROM jobs')
   .then((results) => {

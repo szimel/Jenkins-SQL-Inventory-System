@@ -11,8 +11,9 @@ const Add = () => {
 
   //handles clicks on <p> and also sets page state so it renders correct jsx
   function handleClick(click) {
+    console.log('clicl');
     setSelected(click.target.innerHTML);
-} 
+  } 
   return (
     <>
       <Header />

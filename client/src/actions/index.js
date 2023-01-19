@@ -59,6 +59,7 @@ export async function createJobsite (data) {
   };
 }
 
+//grabs all active jobsites
 export async function getJobsites() {
   //auth headers for backend verification
   const config = {
@@ -70,7 +71,7 @@ export async function getJobsites() {
     //await backend response
     const response = await axios.get('http://localhost:5000/jobsite', config);
     return response.data;
-    
+
   } catch (err) {
     return err.response.status;
   };
