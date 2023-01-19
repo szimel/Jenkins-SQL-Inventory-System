@@ -5,48 +5,28 @@ import CreateProduct from "./createProduct";
 
 
 const Add = () => {
-  //create ref to be clicked on
-  const firstClick = React.createRef();
-
   //for rendering correct jsx
-  const [product, setProduct] = useState(true);
+  const [selected, setSelected] = useState("Create Product");
 
-  //so correct <p> is clicked on load of page
-  useEffect(() => {
-    firstClick.current.click();
-  },[]);
 
-  //handles clicks on <p> and also sets page state so it renders correct jsx 
+  //handles clicks on <p> and also sets page state so it renders correct jsx
   function handleClick(click) {
-    const whiteSpace = document.getElementsByName('whiteSpace');
-    console.log(whiteSpace);
-
-    if(click.target.innerHTML === 'Create Product') {
-      //places white space in correct position
-      whiteSpace[0].setAttribute('id', 'white1');
-
-      //sets product so jsx renders corect file
-      setProduct(true);
-
-    } else {
-      whiteSpace[0].setAttribute('id', 'white2')
-      setProduct(false);
-    }
-  }
+    setSelected(click.target.innerHTML);
+} 
   return (
     <>
       <Header />
       <div className="container container-add">
-        <p ref={firstClick} onClick={(e) => handleClick(e)}>Create Product</p>
+        <p onClick={(e) => handleClick(e)}>Create Product</p>
         <p onClick={(e) => handleClick(e)}>Create Jobsite</p>
       </div>
 
       {/* makes it look like one of them is clicked by whiting out bottom*/}
       <div style={{position: 'relative'}}>
-        <div id="white1" name='whiteSpace'></div>
+        <div id={selected === 'Create Product' ? 'white1' : 'white2'}></div>
       </div>
       <div className="margin" />
-      {product ? (
+      {selected === "Create Product" ? (
         <React.Fragment>
           <CreateProduct />
         </React.Fragment>
@@ -55,6 +35,7 @@ const Add = () => {
           <CreateJobSite />
         </React.Fragment>
       )}
+
     </>
   )
 };

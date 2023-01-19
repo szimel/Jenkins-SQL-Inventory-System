@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../auth/authProvider";
-import { createProduct } from "../../actions";
+import { createProduct, getJobsites } from "../../actions";
+import { nothing } from 'immer';
 
 
 //yup setup
@@ -25,6 +26,14 @@ const userSchema = Yup.object().shape({
 
 const CreateProduct = () => {
   const navigate = useNavigate()
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    jobsites().then(res => setData(res));
+  }, []);
+
+
 
   //so user auth can be checked before submit
   const { updateAuth, auth } = useContext(AuthContext);
@@ -56,6 +65,37 @@ const CreateProduct = () => {
       console.log(submitResult);
     };
   };
+
+  //backend call to retrieve all jobsites
+  const jobsites = async () => {
+    console.log('called');
+    try {
+      const response = await getJobsites();
+
+      return response.jobsites[0];
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function run() {
+    console.log(data);
+  }
+  
+  function displayJobs() {
+    while(data.length === 0) {
+      return null;
+    };
+    return (
+      <>
+        <label>Job: </label>
+        <select {...register('job_id', {required: true})} className='input-field'>
+          {data.map(row => <option key={row.idjobs} value={row.idjobs}>{row.name}</option>)}
+        </select>
+      </>
+    );
+  }
+  
   return (
     <>
       <div className="container add-container">
@@ -97,13 +137,14 @@ const CreateProduct = () => {
             <p className="yup-errors">{errors.status?.message}</p>
 
             {/* GRAB all jobs from table and render them here */}
-            <label>Job:</label>
+            {displayJobs()}
+            {/* <label>Job:</label>
             <select {...register('job_id', {required: true})}
             className='input-field'>
               <option value="0">dummy data</option>
               <option value="1">idk what to put</option>
             </select>
-            <p className="yup-errors">{errors.job_id?.message}</p>
+            <p className="yup-errors">{errors.job_id?.message}</p> */}
 
             <label>Paid:</label>
             <select {...register('paid', {required: true})}
@@ -131,6 +172,7 @@ const CreateProduct = () => {
           <button type="submit" className="btn btn-dark">Create</button>
         </form>
       </div>
+      <div onClick={run}>asdf</div>
     </>
   )
 };

@@ -26,11 +26,22 @@ exports.newProduct = function(req, res) {
   // data to insert
   const data = req.body;
 
-
   //add data to db
   pool.query('INSERT INTO products SET ?', data, function(error, results, fields) {
     if (error) res.status(500).json({ message: error });
     return res.status(200).json({ data: results });
   });
+}
 
+exports.getJobsites = function(req, res) {
+  console.log('got to function')
+  //grabs all rows in jobs
+  pool.query('SELECT * FROM jobs')
+  .then((results) => {
+      return res.status(200).json({jobsites: results})
+  })
+  .catch(error => {
+      throw error;
+  });
+  
 }

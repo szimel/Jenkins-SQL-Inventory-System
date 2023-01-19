@@ -59,6 +59,24 @@ export async function createJobsite (data) {
   };
 }
 
+export async function getJobsites() {
+  //auth headers for backend verification
+  const config = {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
+  }
+  try {
+    //await backend response
+    const response = await axios.get('http://localhost:5000/jobsite', config);
+    return response.data;
+    
+  } catch (err) {
+    return err.response.status;
+  };
+}
+
+
 //creates product on backend
 export async function createProduct(data) {
   //auth headers for backend verification
