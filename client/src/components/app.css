@@ -33,18 +33,18 @@
   padding-bottom: 30px;
 }
 #white1{
-  left: 38vw;
+  left: 38.12vw;
   height: 2px;
-  background-color: aqua;
-  width: 12vw;
+  background-color: white;
+  width: 11.79vw;
   position: absolute;
 
 }
 #white2{
-  left: 50.195vw;
+  left: 50.12vw;
   height: 2px;
-  background-color: aqua;
-  width: 11.69vw;
+  background-color: white;
+  width: 11.78vw;
   position: absolute;
 
 }
