@@ -36,6 +36,28 @@ export async function handleSignup(data, dispatch) {
   }
 }
 
+export async function createProduct(data) {
+    //auth headers for backend verification
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }
+    }
+
+  try {
+    const response = await axios.post('http://localhost:5000/product', data, config);
+
+    //if success, return success code
+    if(!response.data.error) {
+      return 200;
+    }
+
+  //any kind of err returned to add.js
+  } catch (err) {
+  return err.response.status;
+  }
+}
+
 //login async function
 export async function handleLogIn(data, dispatch) {
   try {

@@ -43,7 +43,6 @@ exports.signUp = async (req, res) => {
 };
 
 exports.logIn = async (req, res) => {
-  console.log(req.user);
   // Generate JWT
   const token = jwt.sign({ sub: req.user.id, clearance: req.user.clearance, user: req.user.email }, process.env.secret, { expiresIn: '1h' });
 

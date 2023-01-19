@@ -22,6 +22,7 @@ const Header = () => {
 
   //code to send to right click
   function navigateTo(link) {
+    updateAuth('');
     return navigate(`/${link}`, {replace: true});
   }
 

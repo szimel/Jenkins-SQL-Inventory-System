@@ -6,6 +6,50 @@
   font-size: 20px;
 }
 
+/* add css */
+.container-add {
+  margin-top: 20vh;
+  text-align: center;
+  /* border-bottom: 2px solid #ccc; */
+}
+.margin{
+  margin: 0;
+  color: black;
+  background-color: #ccc;
+  height: 2px;
+  width: 100vw;
+}
+.container-add p {
+  border-top: 2px #ccc solid;
+  border-left: 2px #ccc solid;
+  border-right: 2px #ccc solid;
+  display: inline-block;
+  width: 12vw;
+  height: 29px;
+  background-color: white;
+  margin-bottom: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding-bottom: 30px;
+}
+#white1{
+  left: 38vw;
+  height: 2px;
+  background-color: aqua;
+  width: 12vw;
+  position: absolute;
+
+}
+#white2{
+  left: 50.195vw;
+  height: 2px;
+  background-color: aqua;
+  width: 11.69vw;
+  position: absolute;
+
+}
+/* add css */
+
 /* unauthorized */
 .container-unauthorized {
   margin-top: 30vh;
@@ -14,20 +58,46 @@
   justify-content: center;
 }
 
-/* Add page css */
+/* product page page css */
 .add-container {
   margin-top: 15vh;
-  width: 65vw;
+  width: 25vw;
   box-shadow: 0 15px 75px rgba(0, 0, 0, 1);
   border-radius: 1em;
   display: flex;
   justify-content: space-between;
 }
+.add-container h3 {
+  padding: 8px;
+  margin-top: 5px;
+}
+.add-container label {
+  margin-left: 8px;
+}
 .add-container .input-field {
+  padding-left: 5px;
+  margin: 0 0 0 8px;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+.add-container .yup-errors {
+  font-style: italic;
+  margin: 0 0 10px 8px;
+  color: red;
+  font-size: 18px;
+}
+.add-container p {
+  margin: 0 0 0 8px;
+}
+.add-container p em {
+  font-size: .8rem;
+}
+.add-container button {
+  width: 100px;
+  margin: 10px 0;
+}
+/* product page page css */
 
 /* login/signup css boiler plate made with flexbox */
 .password-container {
@@ -76,7 +146,7 @@
 }
 /* Login/signup boiler plate with flexbox design */
 
-/* Header CSS */
+/* Header CSS  & boilerplate made w flexbox*/
 .header-container {
   background-color: rgba(0, 0, 0, 0.888);
   color:rgba(204, 204, 204, 0.742);
@@ -109,13 +179,13 @@
   justify-content: center; /* This centers the text horizontally */
 }
 .header-container .home {
-  width: 37.5vw;
+  width: 36.5vw;
   display: flex;
   align-items: center; /* This centers the text vertically */
   justify-content: flex-start; /* This aligns the text to the left */
 }
 .header-container .logout {
-  width: 37.5vw;
+  width: 36.5vw;
   display: flex;
   align-items: center; /* This centers the text vertically */
   justify-content: flex-end; /* This aligns the text to the right */
@@ -145,6 +215,17 @@
 
 /* Tablet meda query */
 @media (max-width: 1080px) {
+  /* product page  page css */
+  .add-container {
+    margin-top: 15vh;
+    width: 42vw;
+    box-shadow: 0 15px 75px rgba(0, 0, 0, 1);
+    border-radius: 1em;
+    display: flex;
+    justify-content: space-between;
+  }
+  /* product page page css */
+
   /* header css */
   .header-container {
     background-color: rgba(0, 0, 0, 0.888);
@@ -174,13 +255,13 @@
     justify-content: center; /* This centers the text horizontally */
   }
   .header-container .home {
-    width: 35vw;
+    width: 33.5vw;
     display: flex;
     align-items: center; /* This centers the text vertically */
     justify-content: flex-start; /* This aligns the text to the left */
   }
   .header-container .logout {
-    width: 35vw;
+    width: 33.5vw;
     display: flex;
     align-items: center; /* This centers the text vertically */
     justify-content: flex-end; /* This aligns the text to the right */
@@ -199,6 +280,16 @@
 
 /* mobile */
 @media (max-width: 630px) {
+  /* product pagepage css */
+  .add-container {
+    margin-top: 15vh;
+    width: 67vw;
+    box-shadow: 0 15px 75px rgba(0, 0, 0, 1);
+    border-radius: 1em;
+    display: flex;
+    justify-content: space-between;
+  }
+  /* product page css */
 
   /* Header CSS */
   .header-container {
@@ -229,13 +320,13 @@
   }
   .header-container .home {
     padding: 0;
-    width: 20vw;
+    width: 18vw;
     display: flex;
     align-items: center; /* This centers the text vertically */
     justify-content: flex-start; /* This aligns the text to the left */
   }
   .header-container .logout {
-    width: 20vw;
+    width: 18vw;
     display: flex;
     align-items: center; /* This centers the text vertically */
     justify-content: flex-end; /* This aligns the text to the right */
