@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../header";
-import CreateJobSite from "./createJobSite";
-import CreateProduct from "./createProduct";
+import CreateJobSite from "../create and search/createJobSite";
+import CreateProduct from "../create and search/createProduct";
 
 
 const Add = () => {
@@ -11,7 +11,6 @@ const Add = () => {
 
   //handles clicks on <p> and also sets page state so it renders correct jsx
   function handleClick(click) {
-    console.log('clicl');
     setSelected(click.target.innerHTML);
   } 
   return (

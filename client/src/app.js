@@ -25,7 +25,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/unauthorized' element={<Unauthorized />} />
         <Route path='/login' element={<LogIn />} />
-        <Route path='/signup' element={<SignUp />} />
+        {/* <Route path='/signup' element={<SignUp />} /> */}
 
       {/* Protected routes */}
         <Route element={<ClearanceProvider allowedRoles={[roles.pay]}/>}>

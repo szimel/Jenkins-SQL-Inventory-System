@@ -70,6 +70,9 @@ const CreateProduct = () => {
   const jobsites = async () => {
     try {
       const response = await getJobsites();
+      if(response.jobsite[0] === undefined) {
+        return null;
+      }
       return response.jobsites[0];
     } catch (error) {
       console.error(error);
@@ -93,6 +96,8 @@ const CreateProduct = () => {
       </>
     );
   }
+
+  // category: organize by electrical, plumbing, pool, tile, wood, appliances - dropdown
   
   return (
     <>
@@ -116,6 +121,7 @@ const CreateProduct = () => {
             <p className="yup-errors">{errors.shape?.message}</p>
 
             <label>Size:</label>
+            {/* select lineal ft vs square ft then user input*/}
             <input className="input-field" placeholder="'3'x5'x10''"
             {...register('size', {required: true})} />
             <p className="yup-errors">{errors.size?.message}</p>
@@ -136,6 +142,7 @@ const CreateProduct = () => {
 
             {/* GRAB all jobs from table and render them here */}
             {displayJobs()}
+            <p className="yup-errors">{errors.job_id?.message}</p>
             {/* <label>Job:</label>
             <select {...register('job_id', {required: true})}
             className='input-field'>

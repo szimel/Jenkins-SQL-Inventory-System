@@ -5,6 +5,32 @@
   font-family: 'Sofia Sans', sans-serif;
   font-size: 20px;
 }
+/* change scroll bar to overlay when rendered */
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+background-color: #000000;
+}
+body {
+  overflow: overlay;
+}
+
+/* Search css */
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 10vh;
+}
+.search-container p {
+  font-style: italic;
+  font-size: 17px;
+  color: red;
+}
+/* Search css */
 
 /* add css */
 .container-add {
@@ -35,14 +61,14 @@
   font-size: 19px;
 }
 #white1{
-  left: 37.59vw;
+  left: 38.12vw;
   height: 2px;
   background-color: white;
-  width: 11.85vw;
+  width: 11.75vw;
   position: absolute;
 }
 #white2{
-  left: 50.14vw;
+  left: 50.12vw;
   height: 2px;
   background-color: white;
   width: 11.75vw;
@@ -230,17 +256,17 @@
     padding-bottom: 30px;
   }
   #white1{
-    left: 28.3vw;
-    height: 2px;
+    left: 29.16vw;
+    height: 4px;
     background-color: white;
-    width: 20.75vw;
+    width: 20.66vw;
     position: absolute;
   }
   #white2{
-    left: 50.14vw;
-    height: 2px;
+    left: 50.16vw;
+    height: 4px;
     background-color: white;
-    width: 20.75vw;
+    width: 20.66vw;
     position: absolute;
   }
   /* add css */
@@ -326,17 +352,17 @@
     font-size: .8rem;
   }
   #white1{
-    left: 20.3vw;
-    height: 2px;
+    left: 20.4vw;
+    height: 4px;
     background-color: white;
-    width: 29.75vw;
+    width: 29.2vw;
     position: absolute;
   }
   #white2{
-    left: 50.14vw;
-    height: 2px;
+    left: 50.4vw;
+    height: 4px;
     background-color: white;
-    width: 29.75vw;
+    width: 29.2vw;
     position: absolute;
   }
   /* add css */

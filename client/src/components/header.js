@@ -32,15 +32,15 @@ const Header = () => {
         <div className="container-fluid header-container">
           <div className="row">
             {/* responsive design on boostrap means this is always 25% of screen */}
-            <div className="col-5 home" onClick={()=>navigateTo('')}>
+            <div className="col-2 home" onClick={()=>navigateTo('')}>
               <p>Home</p>
             </div>
-            <div className="col-2 database" onClick={()=>navigateTo('login')}>
+            <div className="col-1 database" onClick={()=>navigateTo('login')}>
               <p>Log In</p>
             </div>
-            <div className="col-2 search" onClick={()=>navigateTo('signup')}>
+            {/* <div className="col-2 search" onClick={()=>navigateTo('signup')}>
               <p>Sign Up</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </React.Fragment>

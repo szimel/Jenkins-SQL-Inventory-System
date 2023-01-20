@@ -10,7 +10,7 @@ const pool = mysql.createPool({
 
 //add jobsite to db
 exports.newJobsite = function(req, res) {
-  //data to insert
+  //data to insert 
   const data = req.body;
   console.log(data);
 

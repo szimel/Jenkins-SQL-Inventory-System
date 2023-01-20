@@ -35,7 +35,7 @@ exports.signUp = async (req, res) => {
           'INSERT INTO users (email, password) VALUES (?, ?)',
           [email, hashedPassword]
       );
-      const token = jwt.sign({ sub: req.user, clearance: null, user: email}, process.env.secret, { expiresIn: '1h' });
+      const token = jwt.sign({ sub: req.user.id, clearance: 0, user: req.user.email }, process.env.secret, { expiresIn: '1h' });
       res.status(200).json({ message: 'User created', token });
   } catch (err) {
       res.status(500).json({ message: err.message });
