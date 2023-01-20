@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import AuthContext from "../auth/authProvider";
 import SearchJobsite from "../create and search/searchJobsite";
 import Header from "../header";
 
@@ -8,6 +9,12 @@ import Header from "../header";
 const Search = () => {
   //for rendering correct jsx
   const [selected, setSelected] = useState("Jobsite");
+
+    //runs authProvider on page load
+    const { updateAuth } = useContext(AuthContext);
+    useEffect(() => {
+      updateAuth('');
+    });
 
   //handles clicks on <p> and also sets page state so it renders correct jsx
   function handleClick(click) {

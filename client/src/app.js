@@ -3,6 +3,7 @@ import Unauthorized from "./components/auth/unauthorized";
 import Home from "./components/home";
 import Pay from "./components/protected routes/pay";
 import LogIn from "./components/SignUp-LogIn/logIn";
+import NotExist from "./components/404";
 import SignUp from "./components/SignUp-LogIn/signUp";
 import Search from "./components/protected routes/inventory.js";
 import Add from "./components/protected routes/add";
@@ -25,6 +26,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/unauthorized' element={<Unauthorized />} />
         <Route path='/login' element={<LogIn />} />
+        <Route path='/*' element={<NotExist />} />
         {/* <Route path='/signup' element={<SignUp />} /> */}
 
       {/* Protected routes */}

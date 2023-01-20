@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../header";
 import CreateJobSite from "../create and search/createJobSite";
 import CreateProduct from "../create and search/createProduct";
+import AuthContext from "../auth/authProvider";
 
 
 const Add = () => {
   //for rendering correct jsx
   const [selected, setSelected] = useState("Create Product");
+    //set state of authProvider
+    const { updateAuth } = useContext(AuthContext);
+
+    useEffect(() => {
+      updateAuth('');
+    });
 
 
   //handles clicks on <p> and also sets page state so it renders correct jsx

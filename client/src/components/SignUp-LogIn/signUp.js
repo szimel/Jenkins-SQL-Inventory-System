@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { handleSignup } from '../../actions';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Header from '../header';
 import AuthContext from '../auth/authProvider';
 
@@ -16,8 +16,11 @@ const userSchema = Yup.object().shape({
 
 
 const SignUp = () => {
-  //set state of authProvider
+  //run authProvider on page load
   const { updateAuth, auth } = useContext(AuthContext);
+  useEffect(() => {
+    updateAuth('');
+  });
 
 
   const [error, setError] = useState(null);

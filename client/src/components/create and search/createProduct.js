@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../auth/authProvider";
 import { createProduct, getJobsites } from "../../actions";
-import { nothing } from 'immer';
 
 
 //yup setup
@@ -70,7 +69,8 @@ const CreateProduct = () => {
   const jobsites = async () => {
     try {
       const response = await getJobsites();
-      if(response.jobsite[0] === undefined) {
+      console.log(response)
+      if(response.jobsites === undefined) {
         return null;
       }
       return response.jobsites[0];
@@ -84,13 +84,14 @@ const CreateProduct = () => {
   }
   
   function displayJobs() {
-    while(data.length === 0) {
+    while(data === null) {
       return null;
     };
     return (
       <>
         <label>Job: </label>
         <select {...register('job_id', {required: true})} className='input-field'>
+          <option value={''} >Select from below</option>
           {data.map(row => <option key={row.idjobs} value={row.idjobs}>{row.name}</option>)}
         </select>
       </>

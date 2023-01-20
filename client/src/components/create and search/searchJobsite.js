@@ -6,7 +6,7 @@ import { getJobsites } from '../../actions';
 
 const searchSchema = Yup.object().shape({
   jobsite: Yup.string().required('This is a required field'),
-  query: Yup.string().required('This is a required field')
+  // query: Yup.string().required('This is a required field')
 });
 
 const SearchJobsite = () => {
@@ -15,6 +15,7 @@ const SearchJobsite = () => {
     resolver: yupResolver(searchSchema)
   });
 
+  // gets data from backend
   const handleFormSubmit = async(data, event) => {
     event.preventDefault();
     console.log(data);
@@ -52,7 +53,7 @@ const SearchJobsite = () => {
       <>
         <label>Job: </label>
         <select {...register('jobsite', {required: true})} className='form-control'>
-          <option value={''} >Select</option>
+          <option value={''} >Select from below</option>
           {data.map(row => <option key={row.idjobs} value={row.idjobs}>{row.name}</option>)}
         </select>
       </>
