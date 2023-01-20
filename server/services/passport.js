@@ -58,7 +58,9 @@ const jwtOptions = {
 
 //for login and token authorization
 passport.use(new JWTStrategy(jwtOptions, (payload, done) => {
+  // console.log(jwtOptions);
   pool.query('SELECT * FROM users WHERE id = ?', [payload.sub], (error, results) => {
+    // console.log(payload.sub);
     if (error) return done(error);
 
     const user = results[0];

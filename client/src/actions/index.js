@@ -67,9 +67,28 @@ export async function getJobsites() {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     }
   }
+
   try {
     //await backend response
     const response = await axios.get('http://localhost:5000/jobsite', config);
+    return response.data;
+
+  } catch (err) {
+    return err.response.status;
+  };
+}
+
+export async function getJobsiteProducts(data) {
+  //auth headers for backend verification
+  const config = {
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
+  }
+
+  try {
+    //await backend response
+    const response = await axios.post('http://localhost:5000/jobsite/products', data, config);
     return response.data;
 
   } catch (err) {

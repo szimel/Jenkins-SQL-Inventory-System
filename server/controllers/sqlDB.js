@@ -34,13 +34,49 @@ exports.newProduct = function(req, res) {
 }
 
 exports.getJobsites = function(req, res) {
-  //grabs all rows in jobs
+  console.log(req.body);
+
+  //returns all jobsites
   pool.query('SELECT * FROM jobs')
-  .then((results) => {
+    .then((results) => {
       return res.status(200).json({jobsites: results})
   })
   .catch(error => {
       throw error;
   });
-  
+};
+
+exports.getJobsiteProds = function(req, res) {
+  console.log('got here');
+  console.log(req.body)
+
+  //grabs correct products for jobsite
+  pool.query('SELECT * FROM products WHERE job_id = ?', [req.body.jobsite])
+  .then((results) => {
+    return res.status(200).json({jobsites: results})
+  })
+  .catch(error => {
+    return res.status(401).json({message: error});
+  });
 }
+
+// if(Object.keys(req.body).length === 0) {
+//   pool.query('SELECT * FROM jobs')
+//     .then((results) => {
+//       return res.status(200).json({jobsites: results})
+//   })
+//   .catch(error => {
+//       throw error;
+//   });
+// } else {
+//   const jobId = req.body.job_id;
+//   pool.query('SELECT * FROM products WHERE job_id = ?', [jobId])
+//     .then((results) => {
+//       return res.status(200).json({jobsites: results})
+//     })
+//     .catch(error => {
+//       throw error;
+//     });
+// }
+
+

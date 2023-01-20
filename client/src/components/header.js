@@ -32,11 +32,11 @@ const Header = () => {
         <div className="container-fluid header-container">
           <div className="row">
             {/* responsive design on boostrap means this is always 25% of screen */}
-            <div className="col-2 home" onClick={()=>navigateTo('')}>
-              <p>Home</p>
+            <div className="col-2 home">
+              <p onClick={()=>navigateTo('')}>Home</p>
             </div>
-            <div className="col-1 database" onClick={()=>navigateTo('login')}>
-              <p>Log In</p>
+            <div className="col-1 database" >
+              <p onClick={()=>navigateTo('login')}>Log In</p>
             </div>
             {/* <div className="col-2 search" onClick={()=>navigateTo('signup')}>
               <p>Sign Up</p>
@@ -49,20 +49,20 @@ const Header = () => {
         <div className="container-fluid header-container">
           <div className="row">
             {/* responsive design not using col so i cant change width on media query*/}
-            <div className="home" onClick={()=>navigateTo('')}>
-              <p>Home</p>
+            <div className="home">
+              <p onClick={()=>navigateTo('')}>Home</p>
             </div>
-            <div className="database" onClick={()=>navigateTo('add')}>
-              <p>Add</p>
+            <div className="database">
+              <p onClick={()=>navigateTo('add')}>Add</p>
             </div>
-            <div className="search" onClick={()=>navigateTo('inventory')}>
-              <p>Search</p>
+            <div className="search">
+              <p onClick={()=>navigateTo('inventory')}>Search</p>
             </div>
-            <div className="pay" onClick={()=>navigateTo('pay')}>
-              <p>Pay</p>
+            <div className="pay">
+              <p onClick={()=>navigateTo('pay')}>Pay</p>
             </div>
-            <div className="logout" onClick={userSignOut}>
-              <p>Logout</p>
+            <div className="logout">
+              <p onClick={userSignOut}>Logout</p>
             </div>
           </div>
         </div>

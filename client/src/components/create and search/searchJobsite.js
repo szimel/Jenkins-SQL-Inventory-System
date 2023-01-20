@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
-import { getJobsites } from '../../actions';
+import { getJobsites, getJobsiteProducts } from '../../actions';
 
 const searchSchema = Yup.object().shape({
   jobsite: Yup.string().required('This is a required field'),
@@ -19,10 +19,14 @@ const SearchJobsite = () => {
   const handleFormSubmit = async(data, event) => {
     event.preventDefault();
     console.log(data);
+    const response = await getJobsiteProducts(data);
+    //catch if bad req
+    setJobsite(response[0]);
   }
 
   // grab jobsite data after load and set it global
   const [data, setData] = useState([]);
+  const [jobsiteData, setJobsite] = useState([]);
   useEffect(() => {
     jobsites().then(res => setData(res));
   }, []);
@@ -41,8 +45,8 @@ const SearchJobsite = () => {
       return response.jobsites[0];
     } catch (error) {
       console.error(error);
-    }
-  }
+    };
+  };
 
   //function that returns jsx of jobsites
   function displayJobs() {
@@ -53,11 +57,22 @@ const SearchJobsite = () => {
       <>
         <label>Job: </label>
         <select {...register('jobsite', {required: true})} className='form-control'>
-          <option value={''} >Select from below</option>
+          <option value={''} >Click me</option>
           {data.map(row => <option key={row.idjobs} value={row.idjobs}>{row.name}</option>)}
         </select>
       </>
     );
+  }
+
+  //function that returns jsx of jobsite products 
+  function formatJobsiteData() {
+    if(jobsiteData === null) {
+      return <div>There was a server error. Please log out and in.</div>
+    };
+
+    
+
+
   }
   
 
@@ -67,16 +82,10 @@ const SearchJobsite = () => {
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           {displayJobs()}
           <p className="">{errors.jobsite?.message}</p>
-          {/* <input 
-            {...register("query", {required: true})}
-            type="text" 
-            className="form-control" 
-            placeholder="Search..." 
-          />
-          <p className="">{errors.query?.message}</p> */}
           <button type='submit' className='btn btn-dark'>Search</button>
         </form>
       </div>
+      {formatJobsiteData()}
     </>
   );
 };
