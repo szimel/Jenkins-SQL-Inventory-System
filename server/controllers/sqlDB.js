@@ -58,7 +58,7 @@ exports.getJobsiteProds = function(req, res) {
   .catch(error => {
     return res.status(401).json({message: error});
   });
-}
+} //you up haha lmao lol ??
 
 // if(Object.keys(req.body).length === 0) {
 //   pool.query('SELECT * FROM jobs')
