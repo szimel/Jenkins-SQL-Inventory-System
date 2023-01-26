@@ -60,6 +60,8 @@ exports.getJobsiteProds = function(req, res) {
   });
 } //you up haha lmao lol ??
 
+//this is a needed git push
+
 // if(Object.keys(req.body).length === 0) {
 //   pool.query('SELECT * FROM jobs')
 //     .then((results) => {
