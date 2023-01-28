@@ -45,7 +45,7 @@ exports.getJobsites = function(req, res) {
       throw error;
   });
 };
-//needed
+//needed for the thing
 
 exports.getJobsiteProds = function(req, res) {
   console.log('got here');
