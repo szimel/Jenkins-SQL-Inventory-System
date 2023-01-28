@@ -66,20 +66,20 @@ const SearchJobsite = () => {
   }
 
   //function that returns jsx of jobsite products 
-  function formatJobsiteData() {
+  function productCards() {
     if(jobsiteData === null) {
       return <div>There was a server error. Please log out and in.</div>
     } else if (jobsiteData === false) return null
 
     const productElements = jobsiteData.map((product) => {
       return (
-          <div className="product-container" key={product.name}>
-            <h2>{product.name}</h2>
-            <p>Size: {product.size}</p>
-            <p>Shape: {product.shape}</p>
-            <p>Status: {product.status}</p>
-            <p>Quantity: {product.quantity}</p>
-            <p>Recieved On: {product['recieved on']}</p>
+          <div className="products" key={product.name}>
+            <h4>{product.name}</h4>
+            <p><b>Size: </b>{product.size}</p>
+            <p><b>Shape: </b>{product.shape}</p>
+            <p><b>Status: </b>{product.status}</p>
+            <p><b>Quantity: </b>{product.quantity}</p>
+            <p><b>Recieved On: </b>{product['recieved on']}</p>
           </div>
       );
     });
@@ -96,8 +96,10 @@ const SearchJobsite = () => {
           <button type='submit' className='btn btn-dark'>Search</button>
         </form>
       </div>
-      <div className='container '>
-        {formatJobsiteData()}
+      <div className='container-fluid'>
+        <div className='container-products'>
+          {productCards()}
+        </div>
       </div>
 
     </>
