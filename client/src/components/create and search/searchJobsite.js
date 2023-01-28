@@ -21,12 +21,13 @@ const SearchJobsite = () => {
     console.log(data);
     const response = await getJobsiteProducts(data);
     //catch if bad req
-    setJobsite(response[0]);
+    setJobsite(response.jobsites[0]);
+    console.log(response.jobsites[0]);
   }
 
   // grab jobsite data after load and set it global
   const [data, setData] = useState([]);
-  const [jobsiteData, setJobsite] = useState([]);
+  const [jobsiteData, setJobsite] = useState(false);
   useEffect(() => {
     jobsites().then(res => setData(res));
   }, []);
@@ -51,7 +52,7 @@ const SearchJobsite = () => {
   //function that returns jsx of jobsites
   function displayJobs() {
     if(data === null) {
-      return <div>There was a server error. Please log out and in.</div>
+      return null;
     };
     return (
       <>
@@ -68,11 +69,21 @@ const SearchJobsite = () => {
   function formatJobsiteData() {
     if(jobsiteData === null) {
       return <div>There was a server error. Please log out and in.</div>
-    };
+    } else if (jobsiteData === false) return null
 
-    
-
-
+    const productElements = jobsiteData.map((product) => {
+      return (
+          <div className="product-container" key={product.name}>
+            <h2>{product.name}</h2>
+            <p>Size: {product.size}</p>
+            <p>Shape: {product.shape}</p>
+            <p>Status: {product.status}</p>
+            <p>Quantity: {product.quantity}</p>
+            <p>Recieved On: {product['recieved on']}</p>
+          </div>
+      );
+    });
+    return productElements;
   }
   
 
@@ -85,7 +96,10 @@ const SearchJobsite = () => {
           <button type='submit' className='btn btn-dark'>Search</button>
         </form>
       </div>
-      {formatJobsiteData()}
+      <div className='container '>
+        {formatJobsiteData()}
+      </div>
+
     </>
   );
 };

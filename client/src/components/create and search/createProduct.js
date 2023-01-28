@@ -2,10 +2,12 @@ import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../auth/authProvider";
 import { createProduct, getJobsites } from "../../actions";
+
+//library that makes setting date easy
+const moment = require('moment');
 
 
 //yup setup
@@ -45,9 +47,22 @@ const CreateProduct = () => {
   const handleFormSubmit = async(data, event) => {
     event.preventDefault();
 
+    //if picked up wasnt filled out
     if(data['picked up'] === '') {
       data['picked up'] = null
+
+      //if picked up was filled out, set format of date for db
+    } else {
+      let dateString = data['picked up'];
+      let date = moment(dateString).format("MM/DD/YYYY");
+      data['picked up'] = date;
     };
+
+    //set format of recieved on for db using moment
+    let dateString = data['recieved on'];
+    let date = moment(dateString).format("MM/DD/YYYY");
+    data['recieved on'] = date;
+
 
     //prevent expired token users from submitting
     updateAuth('');
@@ -144,13 +159,6 @@ const CreateProduct = () => {
             {/* GRAB all jobs from table and render them here */}
             {displayJobs()}
             <p className="yup-errors">{errors.job_id?.message}</p>
-            {/* <label>Job:</label>
-            <select {...register('job_id', {required: true})}
-            className='input-field'>
-              <option value="0">dummy data</option>
-              <option value="1">idk what to put</option>
-            </select>
-            <p className="yup-errors">{errors.job_id?.message}</p> */}
 
             <label>Paid:</label>
             <select {...register('paid', {required: true})}
@@ -178,7 +186,7 @@ const CreateProduct = () => {
           <button type="submit" className="btn btn-dark">Create</button>
         </form>
       </div>
-      <div onClick={run}>asdf</div>
+      {/* <div onClick={run}>asdf</div> */}
     </>
   )
 };
