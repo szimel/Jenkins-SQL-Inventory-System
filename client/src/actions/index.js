@@ -46,7 +46,7 @@ export const isLoggedIn = () => dispatch => {
     headers: {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     }
-  }
+  };
   axios.get('http://localhost:5000/user', config)
     .then(function (response) {
       dispatch({ type: CURRENT_USER, payload: response.data });
@@ -92,7 +92,7 @@ export async function createJobsite (data, dispatch, navigate) {
   //any kind of err returned to add.js
   } catch (err) {
     return err.response.status;
-  };
+  }
 }
 
 //grabs all active jobsites
@@ -107,7 +107,7 @@ export async function getJobsites(dispatch, navigate) {
 
   } catch (err) {
     return err.response.status;
-  };
+  }
 }
 
 export async function getJobsiteProducts(data, dispatch, navigate) {
@@ -121,7 +121,7 @@ export async function getJobsiteProducts(data, dispatch, navigate) {
 
   } catch (err) {
     return err.response.status;
-  };
+  }
 }
 
 

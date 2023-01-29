@@ -1,10 +1,12 @@
 import * as Yup from 'yup';
+import React from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getJobsites, getJobsiteProducts } from '../../actions';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../auth/authProvider';
 
 const searchSchema = Yup.object().shape({
   jobsite: Yup.string().required('This is a required field'),
@@ -12,6 +14,10 @@ const searchSchema = Yup.object().shape({
 });
 
 const SearchJobsite = () => {
+  const { clearance } = useContext(AuthContext);
+
+  console.log(clearance);
+
   //for axios token check
   const dispatch = useDispatch();
   const navigate = useNavigate();

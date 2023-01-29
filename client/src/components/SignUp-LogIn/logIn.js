@@ -16,7 +16,6 @@ const userSchema = Yup.object().shape({
 });
 
 const LogIn = () => {
-  console.log('asdf')
   //run authProvider on page load
   const { updateAuth, auth } = useContext(AuthContext);
   useEffect(() => {
@@ -58,7 +57,7 @@ const LogIn = () => {
 
     } else {
       return setError('An unexpected error occured');
-    };
+    }
   }
 
   //showing password

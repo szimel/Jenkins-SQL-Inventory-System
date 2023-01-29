@@ -10,6 +10,9 @@ export const AuthProvider = ({ children }) => {
   //sets auth state for other components
   const [auth, setAuth] = useState(false);
 
+  //so i can render edit buttons for high clearance users
+  const[clearance, setClearance] = useState(false);
+
   //so other code like login can re render the useEffect
   const [Auth, updateAuth] = useState('');
 
@@ -30,13 +33,17 @@ export const AuthProvider = ({ children }) => {
         const decoded = jwt_decode(token);
         const exp = decoded.exp;
         const currentTime = Date.now() / 1000;
+        
+        //sets clearance to true so jsx files render edit button
+        decoded?.clearance >= 6900 ? setClearance(true) : null;
+
 
         if (exp < currentTime) {
           // console.log('session false');
           setAuth(false);
           //removes token from storage and updates redux store - empty callback function(hacky fix)
           dispatch(handleSignOut(() => {return null}));
-          return navigate('/unauthorized', {replace: true})
+          return navigate('/unauthorized', {replace: true});
 
         } else {
           //gives global auth state clearance and user
@@ -55,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 
   //gives children of <authProvider> access to updateAuth and auth
   return (
-    <AuthContext.Provider value={{ updateAuth, auth }}>
+    <AuthContext.Provider value={{ updateAuth, auth, clearance }}>
         {children}
     </AuthContext.Provider>
   )

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable react/react-in-jsx-scope */
 import ClearanceProvider from "./components/auth/clearanceProvider";
 import Unauthorized from "./components/auth/unauthorized";
 import Home from "./components/home";
