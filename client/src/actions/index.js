@@ -1,5 +1,45 @@
 import axios from "axios";
-import { VALID_EMAIL, AUTH_USER, CURRENT_USER } from './types';
+import { AUTH_USER, CURRENT_USER } from './types';
+import jwt_decode from 'jwt-decode';
+
+
+//runs before protected backend reqs. Catches token misshaps
+//to be run on all protected axios backend reqs
+const checkToken = (dispatch, navigate) => {
+  let config = {};
+  const token = localStorage.getItem('token') || undefined;
+  //if no token 
+  if (!token) {
+    navigate('/', {replace: true});
+    throw new Error('Session not found');
+  }
+
+  //check if token has expired
+  try {
+    const decoded = jwt_decode(token);
+    const exp = decoded.exp;
+    const currentTime = Date.now() / 1000;
+
+    if (exp < currentTime) {
+      dispatch(handleSignOut(() => {return null}));
+      navigate('/login', {replace: true});
+      throw new Error('Session expired');
+    }
+    //sets config so it can be returned to const in another axios funct
+    config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      }
+    }
+  } catch (err) {
+    dispatch(handleSignOut(() => {return null}));
+    navigate('/unauthorized', {replace: true});
+    throw err;
+  }
+  //gives config value to this function
+  return config;
+};
+
 
 export const isLoggedIn = () => dispatch => {
   const config = {
@@ -36,17 +76,13 @@ export async function handleSignup(data, dispatch) {
   }
 }
 
-export async function createJobsite (data) {
-  //auth headers for backend verification
-  const config = {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    }
-  }
+export async function createJobsite (data, dispatch, navigate) {
+  //auth headers for backend verification - checks token 
+  const wrappedConfig = checkToken(dispatch, navigate);
 
   try {
     //awaits backend response
-    const response = await axios.post('http://localhost:5000/jobsite', data, config);
+    const response = await axios.post('http://localhost:5000/jobsite', data, wrappedConfig);
 
     //if success, return success code
     if(!response.data.error) {
@@ -60,17 +96,13 @@ export async function createJobsite (data) {
 }
 
 //grabs all active jobsites
-export async function getJobsites() {
+export async function getJobsites(dispatch, navigate) {
   //auth headers for backend verification
-  const config = {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    }
-  }
+  const wrappedConfig = checkToken(dispatch, navigate);
 
   try {
     //await backend response
-    const response = await axios.get('http://localhost:5000/jobsite', config);
+    const response = await axios.get('http://localhost:5000/jobsite', wrappedConfig);
     return response.data;
 
   } catch (err) {
@@ -78,17 +110,13 @@ export async function getJobsites() {
   };
 }
 
-export async function getJobsiteProducts(data) {
+export async function getJobsiteProducts(data, dispatch, navigate) {
   //auth headers for backend verification
-  const config = {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    }
-  }
+  const wrappedConfig = checkToken(dispatch, navigate);
 
   try {
     //await backend response
-    const response = await axios.post('http://localhost:5000/jobsite/products', data, config);
+    const response = await axios.post('http://localhost:5000/jobsite/products', data, wrappedConfig);
     return response.data;
 
   } catch (err) {
@@ -98,16 +126,12 @@ export async function getJobsiteProducts(data) {
 
 
 //creates product on backend
-export async function createProduct(data) {
+export async function createProduct(data, dispatch, navigate) {
   //auth headers for backend verification
-  const config = {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    }
-  }
+  const wrappedConfig = checkToken(dispatch, navigate);
 
   try {
-    const response = await axios.post('http://localhost:5000/product', data, config);
+    const response = await axios.post('http://localhost:5000/product', data, wrappedConfig);
 
     //if success, return success code
     if(!response.data.error) {

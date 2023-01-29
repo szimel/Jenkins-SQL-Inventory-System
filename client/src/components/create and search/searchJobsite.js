@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { getJobsites, getJobsiteProducts } from '../../actions';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const searchSchema = Yup.object().shape({
   jobsite: Yup.string().required('This is a required field'),
@@ -10,6 +12,10 @@ const searchSchema = Yup.object().shape({
 });
 
 const SearchJobsite = () => {
+  //for axios token check
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   //basic yup setup
   const { register, handleSubmit, formState: { errors }} = useForm({
     resolver: yupResolver(searchSchema)
@@ -19,7 +25,9 @@ const SearchJobsite = () => {
   const handleFormSubmit = async(data, event) => {
     event.preventDefault();
     console.log(data);
-    const response = await getJobsiteProducts(data);
+
+    const response = await getJobsiteProducts(data, dispatch, navigate);
+    
     //catch if bad req
     setJobsite(response.jobsites[0]);
     console.log(response.jobsites[0]);
@@ -35,7 +43,7 @@ const SearchJobsite = () => {
   //backend call to retrieve all jobsites
   const jobsites = async () => {
     try {
-      const response = await getJobsites();
+      const response = await getJobsites(dispatch, navigate);
 
       //catches re renders of page 
       if(response.jobsites === undefined) {

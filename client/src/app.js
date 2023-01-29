@@ -4,11 +4,10 @@ import Home from "./components/home";
 import Pay from "./components/protected routes/pay";
 import LogIn from "./components/SignUp-LogIn/logIn";
 import NotExist from "./components/404";
-import SignUp from "./components/SignUp-LogIn/signUp";
 import Search from "./components/protected routes/inventory.js";
 import Add from "./components/protected routes/add";
 
-const { Routes, Route, useNavigate } = require("react-router-dom")
+const { Routes, Route, } = require("react-router-dom")
 
 
 const App = () => {

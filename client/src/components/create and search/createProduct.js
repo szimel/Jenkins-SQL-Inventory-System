@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../auth/authProvider";
 import { createProduct, getJobsites } from "../../actions";
+import { useDispatch } from 'react-redux';
 
 //library that makes setting date easy
 const moment = require('moment');
@@ -26,7 +27,8 @@ const userSchema = Yup.object().shape({
 
 
 const CreateProduct = () => {
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [data, setData] = useState([]);
 
@@ -71,7 +73,7 @@ const CreateProduct = () => {
     };
 
     //backend call w await so status can be handled
-    const submitResult = await createProduct(data);
+    const submitResult = await createProduct(data, dispatch, navigate);
 
     if (submitResult === 200) {
       console.log('success');
@@ -83,7 +85,7 @@ const CreateProduct = () => {
   //backend call to retrieve all jobsites
   const jobsites = async () => {
     try {
-      const response = await getJobsites();
+      const response = await getJobsites(dispatch, navigate);
       console.log(response)
       if(response.jobsites === undefined) {
         return null;

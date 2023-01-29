@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import AuthContext from '../auth/authProvider';
 import { createJobsite } from '../../actions';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const jobSchema = Yup.object().shape({
   name: Yup.string().max(89).required('This is a required field'),
@@ -17,6 +18,7 @@ const CreateJobSite = () => {
     resolver: yupResolver(jobSchema)
   });
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //so user auth can be checked before submit
@@ -32,7 +34,7 @@ const CreateJobSite = () => {
     };
 
     //backend call awaiting status from backend
-    const submitResult = await createJobsite(data);
+    const submitResult = await createJobsite(data, dispatch, navigate);
 
     //what to do w status
     if (submitResult === 200) {
