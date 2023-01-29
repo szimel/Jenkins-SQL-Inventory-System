@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         const currentTime = Date.now() / 1000;
         
         //sets clearance to true so jsx files render edit button
-        decoded?.clearance >= 6900 ? setClearance(true) : null;
+        decoded?.clearance >= 6900 ? setClearance(true) : setClearance(false);
 
 
         if (exp < currentTime) {

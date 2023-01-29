@@ -2,12 +2,12 @@ import { configureStore } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
 import authReducer from './auth';
 import currentUserReducer from './current-user';
-import validationReducer from './validation';
+import jobsiteProductReducer from './jobsiteProductReducer';
 
 
 export default configureStore({
   reducer: {
-    validation: validationReducer,
+    products: jobsiteProductReducer,
     auth: authReducer,
     currentUser: currentUserReducer,
   },

@@ -49,7 +49,10 @@ exports.getJobsiteProds = function(req, res) {
   //grabs correct products for jobsite
   pool.query('SELECT * FROM products WHERE job_id = ?', [req.body.jobsite])
   .then((results) => {
-    return res.status(200).json({jobsites: results})
+    
+    //formatting for redux store
+    const result = results[0];
+    return res.status(200).json({result});
   })
   .catch(error => {
     return res.status(401).json({message: error});

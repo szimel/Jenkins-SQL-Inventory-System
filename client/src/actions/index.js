@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AUTH_USER, CURRENT_USER } from './types';
+import { AUTH_USER, CURRENT_USER, JOBSITE_PRODUCTS } from './types';
 import jwt_decode from 'jwt-decode';
 
 
@@ -110,18 +110,17 @@ export async function getJobsites(dispatch, navigate) {
   }
 }
 
-export async function getJobsiteProducts(data, dispatch, navigate) {
+//returns specified jobsite products to redux store
+export const getJobsiteProducts = (data, dispatch, navigate) => Dispatch => {
   //auth headers for backend verification
   const wrappedConfig = checkToken(dispatch, navigate);
 
-  try {
-    //await backend response
-    const response = await axios.post('http://localhost:5000/jobsite/products', data, wrappedConfig);
-    return response.data;
-
-  } catch (err) {
-    return err.response.status;
-  }
+  axios.post('http://localhost:5000/jobsite/products', data, wrappedConfig)
+    .then(function (response) {
+      Dispatch({ type: JOBSITE_PRODUCTS, payload: response.data });
+    }).catch(function (error) {
+    return new Error (error);
+  });
 }
 
 

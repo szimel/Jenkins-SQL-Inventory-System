@@ -27,9 +27,12 @@ body {
   border-radius: 5px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "name button";
   grid-gap: 1vw;
-  color: white
+  color: white;
 }
+
 .products p {
   font-size: .8rem;
 }
@@ -42,6 +45,12 @@ body {
   grid-area: name;
   grid-row: 1 / 2;
   grid-column: 1 / -1;
+}
+.products button {
+  grid-area: edit;
+  grid-row: 1 / 2;
+  grid-column: -1;
+  align-self: center;
 }
 .container-products {
   display: grid;
