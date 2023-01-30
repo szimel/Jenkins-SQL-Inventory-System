@@ -67,7 +67,7 @@ const ProductCards = () => {
     <>
       {productCards()}
       {showModal && (
-        <div className="modal-backdrop">
+        <div className="modal-backdrop"onClick={() => setShowModal(false)}>
           <div id="modal">
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <h3>Edit Product</h3>
