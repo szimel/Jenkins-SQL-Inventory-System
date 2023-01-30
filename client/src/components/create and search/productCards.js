@@ -45,11 +45,11 @@ const ProductCards = () => {
               setShowModal(true);
               setSelectedProduct(product);
             }}>Edit</button>}
-            <p><b>Size: </b>{product.size}</p>
-            <p><b>Shape: </b>{product.shape}</p>
-            <p><b>Status: </b>{product.status}</p>
-            <p><b>Quantity: </b>{product.quantity}</p>
-            <p><b>Recieved On: </b>{product['recieved on']}</p>
+            <p grid-area='size'><b>Size: </b>{product.size}</p>
+            <p grid-area='shape'><b>Shape: </b>{product.shape}</p>
+            <p grid-area='status'><b>Status: </b>{product.status}</p>
+            <p grid-area='quantity'><b>Quantity: </b>{product.quantity}</p>
+            <p grid-area='recievedon'><b>Recieved On: </b>{product['recieved on']}</p>
           </div>
         );
       });
@@ -61,13 +61,13 @@ const ProductCards = () => {
     return null;
   }
 
-  console.log(selectedProduct)
+  console.log(selectedProduct);
 
   return (
     <>
       {productCards()}
       {showModal && (
-        <div className="modal-backdrop"onClick={() => setShowModal(false)}>
+        <div className="modal-backdrop">
           <div id="modal">
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <h3>Edit Product</h3>
@@ -75,44 +75,48 @@ const ProductCards = () => {
               <label>Name:</label>
               <input className="input-field" placeholder="'pvc pipes'"
               value={selectedProduct.name}
-              {...register('name', {required: true})} />
+              {...register('name', {required: true})}/>
               <p className="yup-errors">{errors.name?.message}</p>
 
               <label>Recieved On:</label>
               <input type="date" className="input-field" datepicker='datepicker' 
-              defaultValue={selectedProduct['recieved on']}
+              value={selectedProduct['recieved on']}
               {...register('recieved on', {required: true})} />
               <p className="yup-errors">{errors.recieved_on?.message}</p>
 
               <label>Shape:</label>
               <input className="input-field" placeholder="'cube'"
-              value={selectedProduct.shape}
+              defaultValue={selectedProduct.shape}
               {...register('shape', {required: true})} />
               <p className="yup-errors">{errors.shape?.message}</p>
 
               <label>Size:</label>
               {/* select lineal ft vs square ft then user input*/}
               <input className="input-field" placeholder="'3'x5'x10''"
-              value={selectedProduct.size}
+              defaultValue={selectedProduct.size}
               {...register('size', {required: true})} />
               <p className="yup-errors">{errors.size?.message}</p>
 
               <label>Quantity:</label>
               <input className="input-field" placeholder="'45'"
-              value={selectedProduct.quantity}
+              defaultValue={selectedProduct.quantity}
               {...register('quantity', {required: true})} />
               <p className="yup-errors">{errors.quantity?.message}</p>
 
               <label>Status:</label>
               <select {...register('status', {required: true})}
               className='input-field'>
-                <option value="Pending">Pending</option>
-                <option value="Warehouse">At Warehouse</option>
-                <option value='at site'>At Job Site</option>
+                <option defaultValue="Pending">Pending</option>
+                <option defaultValue="Warehouse">At Warehouse</option>
+                <option defaultValue='at site'>At Job Site</option>
               </select>
               <p className="yup-errors">{errors.status?.message}</p>
             </div>
-          <button type='submit' className='btn btn-dark'onClick={() => setShowModal(false)}>Close</button>
+          <button type='submit' className='btn btn-dark'onClick={() => {
+            console.log(selectedProduct)
+            setShowModal(false)
+            setSelectedProduct({});
+          }}>Close</button>
         </form>
           </div>
         </div>
