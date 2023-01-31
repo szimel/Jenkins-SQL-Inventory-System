@@ -52,18 +52,7 @@ const CreateProduct = () => {
     //if picked up wasnt filled out
     if(data['picked up'] === '') {
       data['picked up'] = null
-
-      //if picked up was filled out, set format of date for db
-    } else {
-      let dateString = data['picked up'];
-      let date = moment(dateString).format("MM/DD/YYYY");
-      data['picked up'] = date;
-    };
-
-    //set format of recieved on for db using moment
-    let dateString = data['recieved on'];
-    let date = moment(dateString).format("MM/DD/YYYY");
-    data['recieved on'] = date;
+    } 
 
 
     //prevent expired token users from submitting
