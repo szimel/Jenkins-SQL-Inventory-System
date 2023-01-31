@@ -2,13 +2,10 @@ import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import AuthContext from "../auth/authProvider";
 import { createProduct, getJobsites } from "../../actions";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import DisplayJobs from './displayJobs';
 
-//library that makes setting date easy
-const moment = require('moment');
 
 
 //yup setup
@@ -20,7 +17,6 @@ const userSchema = Yup.object().shape({
   quantity: Yup.number('Has to be a number').required('This is a required field'),
   extra_id: Yup.string(),
   status: Yup.string().required('This is a required field'),
-  job_id: Yup.string().required('This is a required field'),
   paid: Yup.string().required('This is a required field'),
   'picked up': Yup.string()
 });
@@ -30,36 +26,25 @@ const CreateProduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    jobsites().then(res => setData(res));
-  }, []);
-
-
-
-  //so user auth can be checked before submit
-  const { updateAuth, auth } = useContext(AuthContext);
-
   //basic yup setup
   const { register, handleSubmit, formState: { errors }} = useForm({
     resolver: yupResolver(userSchema)
   });
 
+  //sets jobsite from jsx file
+  const selectedJobsite = useSelector(state => state);
+
   const handleFormSubmit = async(data, event) => {
-    event.preventDefault();
+    event.preventDefault()
+    console.log(data);
 
     //if picked up wasnt filled out
     if(data['picked up'] === '') {
       data['picked up'] = null
-    } 
-
-
-    //prevent expired token users from submitting
-    updateAuth('');
-    if(!auth) {
-      return navigate('/', {replace: true});
     };
+
+    //sets jobsite from other jsx file
+    data.job_id = selectedJobsite.jobsite.id;
 
     //backend call w await so status can be handled
     const submitResult = await createProduct(data, dispatch, navigate);
@@ -68,41 +53,8 @@ const CreateProduct = () => {
       console.log('success');
     } else {
       console.log(submitResult);
-    };
-  };
-
-  //backend call to retrieve all jobsites
-  const jobsites = async () => {
-    try {
-      const response = await getJobsites(dispatch, navigate);
-      console.log(response)
-      if(response.jobsites === undefined) {
-        return null;
-      }
-      return response.jobsites[0];
-    } catch (error) {
-      console.error(error);
     }
-  }
-
-  function run() {
-    console.log(data);
-  }
-  
-  function displayJobs() {
-    while(data === null) {
-      return null;
-    };
-    return (
-      <>
-        <label>Job: </label>
-        <select {...register('job_id', {required: true})} className='input-field'>
-          <option value={''} >Select from below</option>
-          {data.map(row => <option key={row.idjobs} value={row.idjobs}>{row.name}</option>)}
-        </select>
-      </>
-    );
-  }
+  };
 
   // category: organize by electrical, plumbing, pool, tile, wood, appliances - dropdown
   
@@ -148,8 +100,7 @@ const CreateProduct = () => {
             <p className="yup-errors">{errors.status?.message}</p>
 
             {/* GRAB all jobs from table and render them here */}
-            {displayJobs()}
-            <p className="yup-errors">{errors.job_id?.message}</p>
+            <DisplayJobs />
 
             <label>Paid:</label>
             <select {...register('paid', {required: true})}
@@ -174,10 +125,9 @@ const CreateProduct = () => {
             {...register('picked up')} />
             <p className="yup-errors">{errors.picked_up?.message}</p>
           </div>
-          <button type="submit" className="btn btn-dark">Create</button>
+          <button type="submit" className="btn btn-dark" >Create</button>
         </form>
       </div>
-      {/* <div onClick={run}>asdf</div> */}
     </>
   )
 };

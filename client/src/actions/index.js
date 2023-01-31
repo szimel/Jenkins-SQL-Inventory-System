@@ -134,11 +134,13 @@ export async function createProduct(data, dispatch, navigate) {
 
     //if success, return success code
     if(!response.data.error) {
+      debugger
       return 200;
     }
 
   //any kind of err returned to add.js
   } catch (err) {
+    debugger
   return err.response.status;
   }
 }
