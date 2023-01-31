@@ -41,9 +41,8 @@ const ProductCards = () => {
         return (
           <div className="products" key={product.name}>
             <h4 grid-area="name">{product.name}</h4>
-            {clearance && <button grid-area="edit" type="button" onClick={() => {
-              setShowModal(true);
-              setSelectedProduct(product);
+            {clearance && <button grid-area="edit" type="button" onClick={(e) => {
+              handleEditClick(e, product);
             }}>Edit</button>}
             <p grid-area='size'><b>Size: </b>{product.size}</p>
             <p grid-area='shape'><b>Shape: </b>{product.shape}</p>
@@ -61,7 +60,54 @@ const ProductCards = () => {
     return null;
   }
 
-  console.log(selectedProduct);
+
+  const [formData, setFormData] = useState({});
+
+function handleEditClick(e, product) {
+  e.target.click();
+  setFormData({
+    name: product.name,
+    recievedOn: product["recieved on"],
+    shape: product.shape,
+    size: product.size,
+    quantity: product.quantity,
+    status: product.status
+  });
+  setShowModal(true);
+}
+
+// return (
+//   <>
+//   {productCards()}
+//   {showModal && (
+//     <form onSubmit={handleSubmit(handleFormSubmit)}>
+//       <h3>Edit Product</h3>
+//       <div>
+//         <label>Name:</label>
+//         <input className="input-field" placeholder="'pvc pipes'"
+//           value={formData.name}
+//           onChange={(e) => setFormData({...formData, name: e.target.value})}
+//           {...register('name', {required: true})} />
+//         <p className="yup-errors">{errors.name?.message}</p>
+
+//         <label>Recieved On:</label>
+//         <input type="date" className="input-field" datepicker='datepicker' 
+//           value={formData.recievedOn}
+//           onChange={(e) => setFormData({...formData, recievedOn: e.target.value})}
+//           {...register('recieved on', {required: true})} />
+//         <p className="yup-errors">{errors.recieved_on?.message}</p>
+
+//         {/* ... */}
+//       </div>
+//       <button type='submit' className='btn btn-dark'onClick={() => {
+//         setShowModal(false);
+//         setFormData(formData);
+//       }}>Close</button>
+//     </form>
+//   )}
+//   </>
+// );
+
 
   return (
     <>
@@ -72,34 +118,39 @@ const ProductCards = () => {
           <form onSubmit={handleSubmit(handleFormSubmit)}>
             <h3>Edit Product</h3>
             <div>
-              <label>Name:</label>
-              <input className="input-field" placeholder="'pvc pipes'"
-              value={selectedProduct.name}
-              {...register('name', {required: true})}/>
-              <p className="yup-errors">{errors.name?.message}</p>
+            <label>Name:</label>
+            <input className="input-field" placeholder="'pvc pipes'"
+              value={formData.name}
+              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              {...register('name', {required: true})} />
+            <p className="yup-errors">{errors.name?.message}</p>
 
               <label>Recieved On:</label>
               <input type="date" className="input-field" datepicker='datepicker' 
-              value={selectedProduct['recieved on']}
+              value={formData['recieved on']}
+              onChange={(e) => setFormData({...formData, recievedOn: e.target.value})}
               {...register('recieved on', {required: true})} />
               <p className="yup-errors">{errors.recieved_on?.message}</p>
 
               <label>Shape:</label>
               <input className="input-field" placeholder="'cube'"
-              defaultValue={selectedProduct.shape}
+              value={formData.shape}
+              onChange={(e) => setFormData({...formData, shape: e.target.value})}
               {...register('shape', {required: true})} />
               <p className="yup-errors">{errors.shape?.message}</p>
 
               <label>Size:</label>
               {/* select lineal ft vs square ft then user input*/}
               <input className="input-field" placeholder="'3'x5'x10''"
-              defaultValue={selectedProduct.size}
+              defaultValue={formData.size}
+              onChange={(e) => setFormData({...formData, size: e.target.value})}
               {...register('size', {required: true})} />
               <p className="yup-errors">{errors.size?.message}</p>
 
               <label>Quantity:</label>
               <input className="input-field" placeholder="'45'"
-              defaultValue={selectedProduct.quantity}
+              defaultValue={formData.quantity}
+              onChange={(e) => setFormData({...formData, quantity: e.target.value})}
               {...register('quantity', {required: true})} />
               <p className="yup-errors">{errors.quantity?.message}</p>
 
@@ -113,9 +164,8 @@ const ProductCards = () => {
               <p className="yup-errors">{errors.status?.message}</p>
             </div>
           <button type='submit' className='btn btn-dark'onClick={() => {
-            console.log(selectedProduct)
             setShowModal(false)
-            setSelectedProduct({});
+            setFormData(formData);
           }}>Close</button>
         </form>
           </div>
