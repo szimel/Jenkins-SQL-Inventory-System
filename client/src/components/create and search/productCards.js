@@ -36,15 +36,16 @@ const ProductCards = () => {
 
   function productCards() {
     if(product.products.result) {
-      //format of cards 
 
+      //format of cards 
       const productElements = product.products.result.map((product) => {
         return (
           <div className="products" key={product.name}>
             <h4 grid-area="name">{product.name}</h4>
             {clearance && <button grid-area="edit" type="button" onClick={(e) => {
-              handleEditClick(e, product);
-              
+              setShowModal(true);
+              //sets selectedProduct to clicked product
+              setSelectedProduct(product);
             }}>Edit</button>}
             <p grid-area='size'><b>Size: </b>{product.size}</p>
             <p grid-area='shape'><b>Shape: </b>{product.shape}</p>
@@ -58,25 +59,11 @@ const ProductCards = () => {
     } else return null;
   }
 
-  function handleFormSubmit() {
-    return null;
+  function handleFormSubmit(values) {
+    //so backend knows which product to edit
+    values.id = selectedProduct.idproducts;
   }
 
-
-  const [formData, setFormData] = useState({});
-
-  function handleEditClick(e, product) {
-    e.target.click();
-    setFormData({
-      name: product.name,
-      recievedOn: product["recieved on"],
-      shape: product.shape,
-      size: product.size,
-      quantity: product.quantity,
-      status: product.status
-    });
-    setShowModal(true);
-  }
   
   return(
     <>
@@ -84,20 +71,23 @@ const ProductCards = () => {
       {showModal && (
         <div className="modal-backdrop">
           <div id="modal">
+            <h5>Edit Product</h5>
             <Formik
+            // Sets the values of form
               initialValues={{ 
-                name: formData.name, 
-                shape: formData.shape, 
-                size: formData.size,
-                'recieved on': formData['recieved on'],
-                quantity: formData.quantity,
-                status: formData.status,
-                job_id: formData.job_id
+                name: selectedProduct.name, 
+                shape: selectedProduct.shape, 
+                size: selectedProduct.size,
+                'recieved on': selectedProduct['recieved on'],
+                quantity: selectedProduct.quantity,
+                status: selectedProduct.status,
+                job_id: selectedProduct.job_id
               }}
               validationSchema={editSchema}
               onSubmit={(values, actions) => {
-                console.log(values);
                 actions.setSubmitting(false);
+                //backend function call
+                handleFormSubmit(values);
               }}
             >
               {({ handleSubmit, isSubmitting, errors, touched }) => (
@@ -139,14 +129,16 @@ const ProductCards = () => {
 
                   <div>
                     <label>Status:</label>
-                    <Field as='select' name='status'>
+                    <Field as='select' name='status' className='input-field'>
                       <option defaultValue="Warehouse">At Warehouse</option>
                       <option defaultValue='at site'>At Job Site</option> 
                     </Field>
+                    {errors.status && touched.status ? <div>{errors.status}</div> : null}
                   </div>
 
                   <button type="submit" className='btn btn-dark' disabled={isSubmitting} 
-                  onClick={() => {setShowModal(false)}}>
+                  // onClick={() => {setShowModal(false)}}
+                  >
                     Submit
                   </button>
                 </Form>
