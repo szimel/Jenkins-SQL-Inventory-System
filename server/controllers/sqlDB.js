@@ -8,6 +8,27 @@ const pool = mysql.createPool({
   database: 'jenkinsdb'
 });
 
+
+exports.deleteProduct = function(req, res) {
+  const productId = req.body.id;
+
+
+  pool.query(
+    'DELETE FROM products WHERE idproducts = ?',
+    [productId],
+    function(error, results, fields) {
+      console.log(results);
+      if (error) {
+        return res.status(500).send({ error: error });
+      }
+      console.log('worked')
+      res.status(200).send({ message: 'Product deleted successfully' });
+    }
+  );
+}
+
+
+//edits a product
 exports.editProduct = function(req, res) {
   console.log('hot here ')
   //sets values to update db with 

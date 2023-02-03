@@ -157,6 +157,27 @@ export async function createProduct(data, dispatch, navigate) {
 
 // }
 
+export async function deleteProduct(productId, dispatch, navigate) {
+  const wrappedConfig = checkToken(dispatch, navigate);
+
+  productId = {
+    id: productId
+  };
+
+  try{
+    const response = await axios.post('http://localhost:5000/product/delete', productId, wrappedConfig);
+
+    if(response.status === 200) {
+      return 200;
+    } else {
+      return alert('Something went wrong, please refresh page');
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export async function editProduct(values, dispatch, navigate) {
   const wrappedConfig = checkToken(dispatch, navigate);
 
@@ -164,12 +185,12 @@ export async function editProduct(values, dispatch, navigate) {
     const response = await axios.post('http://localhost:5000/product/edit', values, wrappedConfig);
 
     if (response.status === 200) {
-      return 200
+      return 200;
     } else {
-      // Handle error response, for example by dispatching an error action
+      return alert('Something went wrong, please refresh page');
     }
   } catch (error) {
-    // Handle error, for example by dispatching an error action
+    console.log(error)
   }
 }
 

@@ -4,7 +4,7 @@ import AuthContext from "../auth/authProvider";
 import * as Yup from 'yup';
 
 import { Formik, Form, Field } from 'formik';
-import { editProduct } from "../../actions";
+import { deleteProduct, editProduct } from "../../actions";
 import { useNavigate } from "react-router-dom";
 import DisplayJobs from "./displayJobs";
 
@@ -78,18 +78,23 @@ const ProductCards = () => {
       .then(setReRender(true));
   };
 
-  // function run() {
-  //   setRenderProductCard('asdf');
-  //   console.log(renderProductCard);
-  //   setTest(true)
-  //   console.log(test)
-  // }
+
+  async function handleDelete() {
+    const productId = selectedProduct.idproducts;
+
+    await deleteProduct(productId, dispatch, navigate)
+      .then(() => {
+        //closes modal
+        setShowModal(false)
+        //re renders product cards
+        setReRender(true);
+      });
+  }
 
   
   return(
     <>
       {productCards()}
-      {/* <div onClick={() => run()}>asdf  asdf</div> */}
       {showModal && (
         <div className="modal-backdrop">
           <div id="modal">
@@ -136,10 +141,6 @@ const ProductCards = () => {
                   </div>
 
                   <div>
-                    <DisplayJobs />
-                  </div>
-
-                  <div>
                     <label>Quantity: </label>
                     <Field name="quantity" type="text" placeholder="'45" 
                     className='input-field'/>
@@ -167,6 +168,7 @@ const ProductCards = () => {
                   >
                     Submit
                   </button>
+                  <button className="btn btn-danger" disabled={isSubmitting} onClick={() => handleDelete()}>Delete</button>
                 </Form>
               )}
             </Formik>
