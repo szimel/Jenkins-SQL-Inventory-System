@@ -16,6 +16,10 @@ export const AuthProvider = ({ children }) => {
   //so other code like login can re render the useEffect
   const [Auth, updateAuth] = useState('');
 
+  //so edit button can re render product cards
+  // const [renderProductCards, setRenderProductCard] = useState('asdf');
+  const [reRender, setReRender] = useState('');
+
   //so an expired token is removed from local storage
   const dispatch = useDispatch();
   //so I can send logged out users to home page
@@ -62,7 +66,15 @@ export const AuthProvider = ({ children }) => {
 
   //gives children of <authProvider> access to updateAuth and auth
   return (
-    <AuthContext.Provider value={{ updateAuth, auth, clearance }}>
+    <AuthContext.Provider value={{
+       updateAuth, 
+       auth, 
+       clearance, 
+      //  renderProductCards, 
+      //  setRenderProductCard,
+       reRender,
+       setReRender
+       }}>
         {children}
     </AuthContext.Provider>
   )

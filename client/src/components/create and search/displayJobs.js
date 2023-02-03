@@ -12,14 +12,28 @@ const DisplayJobs = () => {
 
   useEffect(() => {
     //calls jobsites and sets global var
-    jobsites().then(res => setData(res));
+    jobsites().then(res => setData(res))
+      // .then(() => {
+      //   //sets first item in jobsite list in the redux store
+      //   while(data === null) {
+      //     return null;
+      //   }
+      //   let onLoad = {
+      //     id: data[0].idjobs,
+      //     name: data[0].name
+      //   }
+      //   dispatch({
+      //     type: SELECTED_JOBSITES,
+      //     payload: onLoad
+      //   });
+      // });
+
   }, []);
 
   //makes a backend call and returns data
   const jobsites = async () => {
     try {
       const response = await getJobsites(dispatch, navigate);
-      console.log(response)
       if(response.jobsites === undefined) {
         return null;
       }
@@ -52,7 +66,7 @@ const DisplayJobs = () => {
       <>
         <label>Job: </label>
         <select className='input-field' onChange={e => handleSelect(e, dispatch)}>
-          {/* <option value={''} >Select from below</option> */}
+          <option value={''} >Select from below</option>
           {data.map(row => <option key={row.idjobs} value={row.idjobs}>{row.name}</option>)}
         </select>
       </>

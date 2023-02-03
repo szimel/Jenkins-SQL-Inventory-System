@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import AuthContext from "../auth/authProvider";
 import * as Yup from 'yup';
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
+
 import { Formik, Form, Field } from 'formik';
+import { editProduct } from "../../actions";
+import { useNavigate } from "react-router-dom";
 
 //yup setup
 const editSchema = Yup.object().shape({
@@ -18,12 +19,12 @@ const editSchema = Yup.object().shape({
 });
 
 const ProductCards = () => {
-  //basic yup setup
-  // const { register, handleSubmit, formState: { errors }} = useForm({
-  //   resolver: yupResolver(editSchema)
-  // });
-  
-  let product = useSelector(state => state);
+  //from authProvider - lets this file and searchJobsite communicate
+  const { setReRender} = useContext(AuthContext);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  let Product = useSelector(state => state);
 
   //checks current use Auth level 
   const { clearance } = useContext(AuthContext);
@@ -35,14 +36,15 @@ const ProductCards = () => {
   const [selectedProduct, setSelectedProduct] = useState({});
 
   function productCards() {
-    if(product.products.result) {
+    if(Product.products.result) {
 
       //format of cards 
-      const productElements = product.products.result.map((product) => {
+      const productElements = Product.products.result.map((product) => {
         return (
           <div className="products" key={product.name}>
             <h4 grid-area="name">{product.name}</h4>
             {clearance && <button grid-area="edit" type="button" onClick={(e) => {
+              setReRender(false);
               setShowModal(true);
               //sets selectedProduct to clicked product
               setSelectedProduct(product);
@@ -59,15 +61,34 @@ const ProductCards = () => {
     } else return null;
   }
 
-  function handleFormSubmit(values) {
+
+  //function called on modal submit
+  async function handleFormSubmit(values) {
     //so backend knows which product to edit
     values.id = selectedProduct.idproducts;
-  }
+    values.extra_id = selectedProduct.extra_id;
+    values.paid = selectedProduct.paid;
+
+    //closes modal
+    setShowModal(false);
+
+    //backend call to db to update product then rerenders productcards 
+    await editProduct(values, dispatch, navigate)
+      .then(setReRender(true));
+  };
+
+  // function run() {
+  //   setRenderProductCard('asdf');
+  //   console.log(renderProductCard);
+  //   setTest(true)
+  //   console.log(test)
+  // }
 
   
   return(
     <>
       {productCards()}
+      {/* <div onClick={() => run()}>asdf  asdf</div> */}
       {showModal && (
         <div className="modal-backdrop">
           <div id="modal">
@@ -137,7 +158,7 @@ const ProductCards = () => {
                   </div>
 
                   <button type="submit" className='btn btn-dark' disabled={isSubmitting} 
-                  // onClick={() => {setShowModal(false)}}
+                  // onClick={() => {}}
                   >
                     Submit
                   </button>

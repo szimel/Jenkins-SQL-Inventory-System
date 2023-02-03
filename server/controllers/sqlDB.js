@@ -8,6 +8,37 @@ const pool = mysql.createPool({
   database: 'jenkinsdb'
 });
 
+exports.editProduct = function(req, res) {
+  console.log('hot here ')
+  //sets values to update db with 
+  const data = req.body;
+  const productId = data.id;
+  const newValues = {
+    name: data.name,
+    shape: data.shape,
+    size: data.size,
+    'recieved on': data['recieved on'],
+    paid: data.paid, //
+    quantity: data.quantity,
+    extra_id: data.extra_id,//
+    status: data.status,
+    job_id: data.job_id,
+    'picked up': data['picked up'],
+  };
+
+  pool.query(
+      'UPDATE products SET ? WHERE idproducts = ?',
+      [newValues, productId],
+      function(error, results, fields) {
+        console.log(results);
+        if (error) {
+          return res.status(500).send({ error: error });
+        }
+        res.status(200).send({ message: 'Product updated successfully' });
+      }
+    );
+}
+
 //add jobsite to db
 exports.newJobsite = function(req, res) {
   //data to insert 

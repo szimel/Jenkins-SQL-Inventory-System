@@ -134,14 +134,42 @@ export async function createProduct(data, dispatch, navigate) {
 
     //if success, return success code
     if(!response.data.error) {
-      debugger
       return 200;
     }
 
   //any kind of err returned to add.js
   } catch (err) {
-    debugger
   return err.response.status;
+  }
+}
+
+// export function editProduct(data, dispatch, navigate) {
+//   //auth headers for backend verification
+//   const wrappedConfig = checkToken(dispatch, navigate);
+
+//   axios.post('http://localhost:5000/product/edit', data, wrappedConfig)
+//     .then(response => {
+//       return response;
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+
+// }
+
+export async function editProduct(values, dispatch, navigate) {
+  const wrappedConfig = checkToken(dispatch, navigate);
+
+  try {
+    const response = await axios.post('http://localhost:5000/product/edit', values, wrappedConfig);
+
+    if (response.status === 200) {
+      return 200
+    } else {
+      // Handle error response, for example by dispatching an error action
+    }
+  } catch (error) {
+    // Handle error, for example by dispatching an error action
   }
 }
 

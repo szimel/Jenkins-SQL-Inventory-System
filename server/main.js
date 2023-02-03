@@ -15,6 +15,7 @@ module.exports = function(app) {
   app.post('/jobsite', checkToken, sqlDB.newJobsite);
   app.get('/jobsite', checkToken, sqlDB.getJobsites);
   app.post('/jobsite/products', checkToken, sqlDB.getJobsiteProds);
+  app.post('/product/edit', checkToken, sqlDB.editProduct);
 }
 
 
