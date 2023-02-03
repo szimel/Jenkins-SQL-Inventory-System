@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { editProduct } from "../../actions";
 import { useNavigate } from "react-router-dom";
+import DisplayJobs from "./displayJobs";
 
 //yup setup
 const editSchema = Yup.object().shape({
@@ -132,6 +133,10 @@ const ProductCards = () => {
                     <Field name="size" type="text" placeholder="4'x5'x5'" 
                     className='input-field'/>
                     {errors.size && touched.size ? <div>{errors.size}</div> : null}
+                  </div>
+
+                  <div>
+                    <DisplayJobs />
                   </div>
 
                   <div>

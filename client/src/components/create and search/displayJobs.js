@@ -5,29 +5,19 @@ import { getJobsites } from "../../actions";
 import { SELECTED_JOBSITES } from "../../actions/types";
 
 
-const DisplayJobs = () => { 
+const DisplayJobs = (props) => { 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
 
+
+  //lets you display what jobsite based of jobsite Id in database from parent
+  let selected = props;
+
+
   useEffect(() => {
     //calls jobsites and sets global var
     jobsites().then(res => setData(res))
-      // .then(() => {
-      //   //sets first item in jobsite list in the redux store
-      //   while(data === null) {
-      //     return null;
-      //   }
-      //   let onLoad = {
-      //     id: data[0].idjobs,
-      //     name: data[0].name
-      //   }
-      //   dispatch({
-      //     type: SELECTED_JOBSITES,
-      //     payload: onLoad
-      //   });
-      // });
-
   }, []);
 
   //makes a backend call and returns data
@@ -54,7 +44,7 @@ const DisplayJobs = () => {
       type: SELECTED_JOBSITES,
       payload: selected
     });
-  }
+  };
 
 
   //hanldes displaying the UI of jobsites
@@ -65,7 +55,7 @@ const DisplayJobs = () => {
     return (
       <>
         <label>Job: </label>
-        <select className='input-field' onChange={e => handleSelect(e, dispatch)}>
+        <select className='input-field' defaultValue={selected} onChange={e => handleSelect(e, dispatch) }>
           <option value={''} >Select from below</option>
           {data.map(row => <option key={row.idjobs} value={row.idjobs}>{row.name}</option>)}
         </select>
