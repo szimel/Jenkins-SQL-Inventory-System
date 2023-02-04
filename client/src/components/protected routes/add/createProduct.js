@@ -48,8 +48,13 @@ const CreateProduct = () => {
     //sets jobsite from other jsx file
     data.job_id = selectedJobsite.jobsite.id;
 
+    function callback() {
+      console.log('callback');
+      navigate('/add/confirm', {replace: true});
+    }
+
     //backend call w await so status can be handled
-    const submitResult = await createProduct(data, dispatch, navigate);
+    const submitResult = await createProduct(data, dispatch, navigate, callback);
 
     if (submitResult === 200) {
       console.log('success');
@@ -58,16 +63,12 @@ const CreateProduct = () => {
     }
   };
 
-  function run() {
-    console.log(test);
-  }
 
   // category: organize by electrical, plumbing, pool, tile, wood, appliances - dropdown
   
   return (
     <>
       <div className="container add-container">
-        <div onClick={() => run()}>adsf</div>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <h3>Add Product to Inventory</h3>
           <div>

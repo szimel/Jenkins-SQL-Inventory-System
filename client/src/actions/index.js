@@ -125,17 +125,18 @@ export const getJobsiteProducts = (data, dispatch, navigate) => Dispatch => {
 
 
 //creates product on backend
-export async function createProduct(data, dispatch, navigate) {
+export async function createProduct(data, dispatch, navigate, callback) {
   //auth headers for backend verification
   const wrappedConfig = checkToken(dispatch, navigate);
 
   try {
-    const response = await axios.post('http://localhost:5000/product', data, wrappedConfig);
+    axios.post('http://localhost:5000/product', data, wrappedConfig)
+      .then(callback());
 
-    //if success, return success code
-    if(!response.data.error) {
-      return 200;
-    }
+    // //if success, return success code
+    // if(!response.data.error) {
+    //   return 200;
+    // }
 
   //any kind of err returned to add.js
   } catch (err) {
