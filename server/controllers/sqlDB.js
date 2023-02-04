@@ -84,6 +84,7 @@ exports.newProduct = function(req, res) {
   });
 }; 
 
+//grabs all jobsites and send to front end
 exports.getJobsites = function(req, res) {
 
   //returns all jobsites
@@ -95,6 +96,18 @@ exports.getJobsites = function(req, res) {
       throw error;
   });
 };
+
+exports.getProduct = function(req, res) {
+  pool.query(`SELECT * FROM products ORDER BY idproducts DESC LIMIT 1`)
+    .then(rows => {
+      res.send(rows[0]);
+    })
+    .catch(error => {
+      console.error(error);
+      res.send(500, error);
+    });
+};
+
 
 exports.getJobsiteProds = function(req, res) {
 

@@ -12,6 +12,7 @@ module.exports = function(app) {
   app.post('/login', requireAuth, Auth.logIn);
   app.get('/user', checkToken, Auth.currentUser);
   app.post('/product', checkToken, sqlDB.newProduct);
+  app.get('/product', checkToken, sqlDB.getProduct);
   app.post('/jobsite', checkToken, sqlDB.newJobsite);
   app.get('/jobsite', checkToken, sqlDB.getJobsites);
   app.post('/jobsite/products', checkToken, sqlDB.getJobsiteProds);

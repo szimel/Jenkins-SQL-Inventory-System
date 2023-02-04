@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AuthContext from "../../auth/authProvider";
 import * as Yup from 'yup';
@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { deleteProduct, editProduct } from "../../../actions";
 import { useNavigate } from "react-router-dom";
-import DisplayJobs from "../displayJobs";
 
 //yup setup
 const editSchema = Yup.object().shape({
@@ -78,7 +77,7 @@ const ProductCards = () => {
       .then(setReRender(true));
   };
 
-
+  // logic for delete button
   async function handleDelete() {
     const productId = selectedProduct.idproducts;
 

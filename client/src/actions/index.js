@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AUTH_USER, CURRENT_USER, JOBSITE_PRODUCTS } from './types';
+import { AUTH_USER, CURRENT_USER, JOBSITE_PRODUCTS, PRODUCT } from './types';
 import jwt_decode from 'jwt-decode';
 
 
@@ -95,6 +95,18 @@ export async function createJobsite (data, dispatch, navigate) {
   }
 }
 
+//get latest product
+export async function getProduct(dispatch, navigate) {
+  const wrappedConfig = checkToken(dispatch, navigate);
+
+  try {
+    const response = await axios.get('http://localhost:5000/product', wrappedConfig);
+    return response.data;
+  } catch (err) {
+    return err.response.status;
+  };
+};
+
 //grabs all active jobsites
 export async function getJobsites(dispatch, navigate) {
   //auth headers for backend verification
@@ -107,8 +119,8 @@ export async function getJobsites(dispatch, navigate) {
 
   } catch (err) {
     return err.response.status;
-  }
-}
+  };
+};
 
 //returns specified jobsite products to redux store
 export const getJobsiteProducts = (data, dispatch, navigate) => Dispatch => {
@@ -133,12 +145,7 @@ export async function createProduct(data, dispatch, navigate, callback) {
     axios.post('http://localhost:5000/product', data, wrappedConfig)
       .then(callback());
 
-    // //if success, return success code
-    // if(!response.data.error) {
-    //   return 200;
-    // }
-
-  //any kind of err returned to add.js
+  //any kind of err from backend 
   } catch (err) {
   return err.response.status;
   }

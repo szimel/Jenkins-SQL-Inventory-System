@@ -17,7 +17,7 @@ const DisplayJobs = (props) => {
 
   useEffect(() => {
     //calls jobsites and sets global var
-    jobsites().then(res => setData(res))
+    jobsites().then(res => setData(res));
   }, []);
 
   //makes a backend call and returns data
