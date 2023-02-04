@@ -2,15 +2,16 @@ import * as Yup from 'yup';
 import React, { useContext, useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { getJobsiteProducts } from '../../actions';
+import { getJobsiteProducts } from '../../../actions';
 import { useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ProductCards from './productCards';
-import DisplayJobs from './displayJobs';
-import AuthContext from '../auth/authProvider';
+import DisplayJobs from '../displayJobs';
+import AuthContext from '../../auth/authProvider';
 
 const searchSchema = Yup.object().shape({
-  jobsite: Yup.string()
+  jobsite: Yup.string(),
+  query: Yup.string().max(50),
   // query: Yup.string().required('This is a required field')
 });
 
@@ -53,8 +54,10 @@ const SearchJobsite = () => {
       <div className="container-fluid search-container">
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <DisplayJobs />
-          {/* {displayJobs()} */}
           <p>{errors.jobsite?.message}</p>
+
+          {/* <input placeholder='This is optional'/>
+          <p>{errors.query?.message}</p> */}
           <button type='submit' className='btn btn-dark'>Search</button>
         </form>
       </div>

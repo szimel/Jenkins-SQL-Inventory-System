@@ -2,9 +2,9 @@ import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from "react-router-dom";
-import { createProduct, getJobsites } from "../../actions";
+import { createProduct, getJobsites } from "../../../actions";
 import { useDispatch, useSelector } from 'react-redux';
-import DisplayJobs from './displayJobs';
+import DisplayJobs from '../displayJobs';
 
 
 
@@ -23,6 +23,8 @@ const userSchema = Yup.object().shape({
 
 
 const CreateProduct = () => {
+
+  let test = useSelector(state => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -56,11 +58,16 @@ const CreateProduct = () => {
     }
   };
 
+  function run() {
+    console.log(test);
+  }
+
   // category: organize by electrical, plumbing, pool, tile, wood, appliances - dropdown
   
   return (
     <>
       <div className="container add-container">
+        <div onClick={() => run()}>adsf</div>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <h3>Add Product to Inventory</h3>
           <div>

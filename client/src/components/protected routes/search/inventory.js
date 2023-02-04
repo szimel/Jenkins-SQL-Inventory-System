@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import AuthContext from "../auth/authProvider";
-import SearchJobsite from "../create and search/searchJobsite";
-import Header from "../header";
+import AuthContext from "../../auth/authProvider";
+import SearchJobsite from "./searchJobsite";
+import Header from "../../header";
 
 
 
@@ -25,7 +25,7 @@ const Search = () => {
     <>
       <Header />
         <h2>Search</h2>
-        <p>Please select what inventory you want to view. Selecting extra, shows all the extra inventory at the warehouse. Selecting by job, will allow you to see warehouse inventory, by job. </p>
+        <p>Select the jobsite you want to view. The search is optional. Using it will search a specific jobsite for the query.</p>
 
         <div className="container container-add">
           <p onClick={(e) => handleClick(e)}>Jobsite</p>

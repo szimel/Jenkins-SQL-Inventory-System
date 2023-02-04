@@ -2,8 +2,8 @@ import * as Yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useContext } from 'react';
-import AuthContext from '../auth/authProvider';
-import { createJobsite } from '../../actions';
+import AuthContext from '../../auth/authProvider';
+import { createJobsite } from '../../../actions';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import Header from "../header";
-import CreateJobSite from "../create and search/createJobSite";
-import CreateProduct from "../create and search/createProduct";
-import AuthContext from "../auth/authProvider";
+import Header from "../../header";
+import CreateProduct from "./createProduct";
+import AuthContext from "../../auth/authProvider";
+import CreateJobSite from "./createJobSite";
 
 
 const Add = () => {

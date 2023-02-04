@@ -3,11 +3,12 @@
 import ClearanceProvider from "./components/auth/clearanceProvider";
 import Unauthorized from "./components/auth/unauthorized";
 import Home from "./components/home";
-import Pay from "./components/protected routes/pay";
+import Pay from "./components/protected routes/pay/pay";
 import LogIn from "./components/SignUp-LogIn/logIn";
 import NotExist from "./components/404";
-import Search from "./components/protected routes/inventory.js";
-import Add from "./components/protected routes/add";
+import Search from "./components/protected routes/search/inventory.js";
+import Add from "./components/protected routes/add/add.js";
+import Preview from "./components/protected routes/add/preview";
 
 const { Routes, Route, } = require("react-router-dom")
 
@@ -39,6 +40,7 @@ const App = () => {
         </Route>
         <Route element={<ClearanceProvider allowedRoles={[roles.chad]}/>}>
           <Route path='/add' element={<Add />} />
+          <Route path="/add/confirm" element={<Preview />} />
         </Route>
       </Routes>
     </>

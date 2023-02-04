@@ -6,6 +6,7 @@ import { SELECTED_JOBSITES } from "../../actions/types";
 
 
 const DisplayJobs = (props) => { 
+  console.log('ayo')
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState(null);

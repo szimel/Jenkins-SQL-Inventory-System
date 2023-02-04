@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import AuthContext from "../auth/authProvider";
+import AuthContext from "../../auth/authProvider";
 
 
 const Pay = () => {
