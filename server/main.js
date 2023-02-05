@@ -19,6 +19,7 @@ module.exports = function(app) {
   app.post('/jobsite/products', checkToken, sqlDB.getJobsiteProds);
   app.post('/product/edit', checkToken, sqlDB.editProduct);
   app.post('/product/delete', checkToken, sqlDB.deleteProduct);
+  app.get('/products/pay', checkToken, sqlDB.getPayProducts)
 }
 
 

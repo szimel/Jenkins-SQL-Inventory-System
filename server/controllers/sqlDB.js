@@ -39,9 +39,9 @@ exports.editProduct = function(req, res) {
     shape: data.shape,
     size: data.size,
     'recieved on': data['recieved on'],
-    paid: data.paid, //
+    paid: data.paid, 
     quantity: data.quantity,
-    extra_id: data.extra_id,//
+    extra_id: data.extra_id,
     status: data.status,
     job_id: data.job_id,
     'picked up': data['picked up'],
@@ -91,6 +91,20 @@ exports.getJobsites = function(req, res) {
   pool.query('SELECT * FROM jobs WHERE active = "yes"')
     .then((results) => {
       return res.status(200).json({jobsites: results})
+  })
+  .catch(error => {
+      throw error;
+  });
+};
+
+exports.getPayProducts = function(req, res) {
+
+  console.log('got to abckend')
+  //returns all products that haven't been paid
+  pool.query('SELECT * FROM products WHERE paid = 0')
+    .then(results => {
+      console.log(results)
+      res.send(results);
   })
   .catch(error => {
       throw error;

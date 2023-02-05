@@ -104,6 +104,19 @@ export async function getProduct(url, dispatch, navigate) {
   };
 };
 
+export async function getUnPaidProducts(dispatch, navigate) {
+  const wrappedConfig = checkToken(dispatch, navigate);
+
+  try {
+    const response = await axios.get('http://localhost:5000/products/pay', wrappedConfig)
+    
+
+    return response.data;
+  } catch (err) {
+    return err.response.status
+  }
+};
+
 //grabs all active jobsites
 export async function getJobsites(dispatch, navigate) {
   //auth headers for backend verification
