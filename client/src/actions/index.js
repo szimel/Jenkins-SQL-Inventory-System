@@ -76,18 +76,14 @@ export async function handleSignup(data, dispatch) {
   }
 }
 
-export async function createJobsite (data, dispatch, navigate) {
+export async function createJobsite (data, dispatch, navigate, callback) {
   //auth headers for backend verification - checks token 
   const wrappedConfig = checkToken(dispatch, navigate);
 
   try {
     //awaits backend response
-    const response = await axios.post('http://localhost:5000/jobsite', data, wrappedConfig);
-
-    //if success, return success code
-    if(!response.data.error) {
-      return 200;
-    }
+    axios.post('http://localhost:5000/jobsite', data, wrappedConfig)
+      .then(callback());
 
   //any kind of err returned to add.js
   } catch (err) {
@@ -96,12 +92,13 @@ export async function createJobsite (data, dispatch, navigate) {
 }
 
 //get latest product
-export async function getProduct(dispatch, navigate) {
+export async function getProduct(url, dispatch, navigate) {
   const wrappedConfig = checkToken(dispatch, navigate);
 
+  //uses data to either do a get to /product or /jobsite
   try {
-    const response = await axios.get('http://localhost:5000/product', wrappedConfig);
-    return response.data;
+    axios.get(`http://localhost:5000/${url}`, wrappedConfig)
+      .then((response) => response.data);
   } catch (err) {
     return err.response.status;
   };
@@ -137,12 +134,12 @@ export const getJobsiteProducts = (data, dispatch, navigate) => Dispatch => {
 
 
 //creates product on backend
-export async function createProduct(data, dispatch, navigate, callback) {
+export async function createProduct(data, urlID, dispatch, navigate, callback) {
   //auth headers for backend verification
   const wrappedConfig = checkToken(dispatch, navigate);
 
   try {
-    axios.post('http://localhost:5000/product', data, wrappedConfig)
+    axios.post(`http://localhost:5000/product?data=${urlID}`, data, wrappedConfig)
       .then(callback());
 
   //any kind of err from backend 
@@ -151,19 +148,6 @@ export async function createProduct(data, dispatch, navigate, callback) {
   }
 }
 
-// export function editProduct(data, dispatch, navigate) {
-//   //auth headers for backend verification
-//   const wrappedConfig = checkToken(dispatch, navigate);
-
-//   axios.post('http://localhost:5000/product/edit', data, wrappedConfig)
-//     .then(response => {
-//       return response;
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-
-// }
 
 export async function deleteProduct(productId, dispatch, navigate) {
   const wrappedConfig = checkToken(dispatch, navigate);

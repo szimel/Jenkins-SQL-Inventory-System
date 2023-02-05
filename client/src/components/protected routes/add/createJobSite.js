@@ -21,28 +21,22 @@ const CreateJobSite = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //so user auth can be checked before submit
-  const { updateAuth, auth } = useContext(AuthContext);
+  //hacky fix so /confirm can know whether to retrieve product or jobsite
+  const { setReRender } = useContext(AuthContext);
 
   const handleFormSubmit = async(data, event) => {
     event.preventDefault();
 
-    //prevent expired token users from submitting
-    updateAuth('');
-    if(!auth) {
-      return navigate('/', {replace: true});
+    function callback() {
+      navigate('/', {replace: true});
     };
+
+    //hacky fix that lets /confirm what data to retrieve
+    setReRender('jobsites');
 
     //backend call awaiting status from backend
-    const submitResult = await createJobsite(data, dispatch, navigate);
-
-    //what to do w status
-    if (submitResult === 200) {
-      console.log('success');
-    } else {
-      console.log(submitResult);
-    };
-  }
+    return createJobsite(data, dispatch, navigate, callback);
+  };
 
   return (
     <>

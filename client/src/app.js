@@ -9,6 +9,7 @@ import NotExist from "./components/404";
 import Search from "./components/protected routes/search/inventory.js";
 import Add from "./components/protected routes/add/add.js";
 import Preview from "./components/protected routes/add/preview";
+import Confirm from "./components/protected routes/add/confirm";
 
 const { Routes, Route, } = require("react-router-dom")
 
@@ -40,7 +41,7 @@ const App = () => {
         </Route>
         <Route element={<ClearanceProvider allowedRoles={[roles.chad]}/>}>
           <Route path='/add' element={<Add />} />
-          <Route path="/add/confirm" element={<Preview />} />
+          <Route path="/add/confirm" element={<Confirm />} />
         </Route>
       </Routes>
     </>

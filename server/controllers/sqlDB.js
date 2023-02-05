@@ -108,6 +108,17 @@ exports.getProduct = function(req, res) {
     });
 };
 
+exports.getJobsite = function(req, res) {
+  pool.query(`SELECT * FROM jobs ORDER BY idjobs DESC LIMIT 1`)
+  .then(rows => {
+    res.send(rows[0]);
+  })
+  .catch(error => {
+    console.error(error);
+    res.send(500, error);
+  });
+};
+
 
 exports.getJobsiteProds = function(req, res) {
 

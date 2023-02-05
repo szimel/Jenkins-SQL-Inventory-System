@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getProduct } from "../../../actions";
@@ -6,6 +6,7 @@ import Header from "../../header";
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { deleteProduct, editProduct } from "../../../actions";
+import AuthContext from "../../auth/authProvider";
 
 
 //yup setup
@@ -24,10 +25,15 @@ const Preview = () => {
   const dispatch = useDispatch();
   const navigate= useNavigate();
 
+  //lets this page know what data to retrieve
+  const { reRender } = useContext(AuthContext);
+
+  console.log(reRender);
+
   //stores product info
   const [product, setProduct] = useState(null);
   //lets Preview know when to reRender product card
-  const [reRender, setReRender] = useState(null);
+  const [render, setRender] = useState(null);
   //handles showing modal 
   const [showModal, setShowModal] = useState(false);
 
@@ -35,7 +41,7 @@ const Preview = () => {
   useEffect(() => {
     productData().then(res => setProduct(res[0]))
       .then(displayProduct());
-  }, [reRender]);
+  }, [render]);
 
   //gets product from database
   async function productData() {
@@ -58,11 +64,11 @@ const Preview = () => {
     }
     return (
       <div className="container mt-5">
-        <h5>Please confirm the product is correct:</h5>
+        <h5>Please confirm the {reRender} is correct:</h5>
         <div className="products" key={product.name}>
         <h4 grid-area="name">{product.name}</h4>
             <button grid-area="edit" type="button" onClick={(e) => {
-              setReRender(false);
+              setRender(false);
               setShowModal(true);
             }}>Edit</button>
             <p grid-area='size'><b>Size: </b>{product.size}</p>
@@ -88,7 +94,7 @@ const Preview = () => {
 
     //backend call to db to update product then rerenders productcards 
     await editProduct(values, dispatch, navigate)
-      .then(setReRender(true));
+      .then(setRender(true));
   };
 
   //logic for delete button
@@ -100,7 +106,7 @@ const Preview = () => {
         //closes modal
         setShowModal(false)
         //re renders product cards
-        setReRender(true);
+        setRender(true);
       });
   }
 

@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { createProduct, getJobsites } from "../../../actions";
 import { useDispatch, useSelector } from 'react-redux';
 import DisplayJobs from '../displayJobs';
+import { useContext } from 'react';
+import AuthContext from '../../auth/authProvider';
 
 
 
@@ -24,7 +26,6 @@ const userSchema = Yup.object().shape({
 
 const CreateProduct = () => {
 
-  let test = useSelector(state => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,6 +36,9 @@ const CreateProduct = () => {
 
   //sets jobsite from jsx file
   const selectedJobsite = useSelector(state => state);
+
+  //hacky fix so /confirm can know whether to retrieve product or jobsite
+  const { setReRender } = useContext(AuthContext);
 
   const handleFormSubmit = async(data, event) => {
     event.preventDefault()
@@ -50,8 +54,11 @@ const CreateProduct = () => {
 
     function callback() {
       console.log('callback');
-      navigate('/add/confirm', {replace: true});
+      navigate('/', {replace: true});
     }
+
+    //hacky fix to communicate with /confirm
+    setReRender('jobsite')
 
     //backend call w await so status can be handled
     const submitResult = await createProduct(data, dispatch, navigate, callback);
