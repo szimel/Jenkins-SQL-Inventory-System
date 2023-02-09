@@ -90,6 +90,8 @@ const ProductCards = () => {
       });
   }
 
+  //needed
+
   
   return(
     <>
