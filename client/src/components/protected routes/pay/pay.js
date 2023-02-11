@@ -58,7 +58,7 @@ const Pay = () => {
   return (
     <>
       <Header />
-      <div className="container pay-container m-5" onSubmit={idk()}>
+      <div className="container pay-container m-5" >
         <label>Search: </label>
         <input />
         <button type="submit"></button>
