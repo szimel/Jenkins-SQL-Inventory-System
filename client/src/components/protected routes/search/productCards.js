@@ -89,10 +89,6 @@ const ProductCards = () => {
         setReRender(true);
       });
   }
-
-  //needed
-
-  //asl
   
   return(
     <>

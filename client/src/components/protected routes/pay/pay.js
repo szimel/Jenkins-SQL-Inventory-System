@@ -63,7 +63,7 @@ const Pay = () => {
         <input />
         <button type="submit"></button>
       </div>
-      <div className="container-fluid">
+      <div className="container-products">
         {!search && displayAllProducts()}
       </div>
 
