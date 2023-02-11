@@ -143,7 +143,19 @@ export const getJobsiteProducts = (data, dispatch, navigate) => Dispatch => {
     }).catch(function (error) {
     return new Error (error);
   });
-}
+};
+
+export const getPayQueryProducts = (query, dispatch, navigate) => {
+  const wrappedConfig = checkToken(dispatch, navigate);
+  console.log('got to axios');
+
+  return axios.get(`http://localhost:5000/products/pay?query=${query}`, wrappedConfig)
+    .then(function (response) {
+      return response.data[0];
+    }). catch(function (error) {
+      return new Error(error);
+    })
+};
 
 
 //creates product on backend

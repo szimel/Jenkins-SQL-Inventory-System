@@ -97,18 +97,33 @@ exports.getJobsites = function(req, res) {
   });
 };
 
+//gets pay products on load and by search terms
 exports.getPayProducts = function(req, res) {
+  //sets query as a value or undefined
+  const query = req.query.query
 
-  console.log('got to abckend')
-  //returns all products that haven't been paid
-  pool.query('SELECT * FROM products WHERE paid = 0')
+  if (query) {
+    console.log('made it to query');
+    //finds unpaid products with a close match to the query
+    pool.query(`SELECT * FROM products WHERE paid = 0 AND name LIKE '%${query}%'`)
     .then(results => {
-      console.log(results)
       res.send(results);
-  })
-  .catch(error => {
+    })
+    .catch(error => {
       throw error;
   });
+
+  } else {
+    console.log('makde it to norm');
+      //returns all products that haven't been paid
+      pool.query('SELECT * FROM products WHERE paid = 0')
+      .then(results => {
+        res.send(results);
+    })
+    .catch(error => {
+        throw error;
+    });
+  }
 };
 
 exports.getProduct = function(req, res) {
