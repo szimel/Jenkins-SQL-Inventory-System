@@ -10,7 +10,7 @@ const checkToken = (dispatch, navigate) => {
   const token = localStorage.getItem('token') || undefined;
   //if no token 
   if (!token) {
-    navigate('/', {replace: true});
+    navigate('/login', {replace: true});
     throw new Error('Session not found');
   }
 
@@ -107,15 +107,28 @@ export async function getProduct(url, dispatch, navigate) {
 export async function getUnPaidProducts(dispatch, navigate) {
   const wrappedConfig = checkToken(dispatch, navigate);
 
-  try {
-    const response = await axios.get('http://localhost:5000/products/pay', wrappedConfig)
-    
-
-    return response.data;
-  } catch (err) {
-    return err.response.status
-  }
+  return axios.get('http://localhost:5000/products/pay', wrappedConfig)
+    .then(function (response) {
+      return response.data[0];
+    }).catch(function(error) {
+      return new Error(error);
+    });
 };
+
+//handles edit button on pay.js
+export async function editPaidProduct(product, dispatch, navigate) {
+  const wrappedConfig = checkToken(dispatch, navigate);
+  try {
+    return axios.post('http://localhost:5000/products/pay', {id: product}, wrappedConfig)
+      .then(response => {
+        return response
+      }).catch(function(err) {
+        return new Error(err);
+      });
+  } catch(err) {
+    return new Error(err);
+  }
+}
 
 //grabs all active jobsites
 export async function getJobsites(dispatch, navigate) {
@@ -147,24 +160,23 @@ export const getJobsiteProducts = (data, dispatch, navigate) => Dispatch => {
 
 export const getPayQueryProducts = (query, dispatch, navigate) => {
   const wrappedConfig = checkToken(dispatch, navigate);
-  console.log('got to axios');
 
   return axios.get(`http://localhost:5000/products/pay?query=${query}`, wrappedConfig)
     .then(function (response) {
       return response.data[0];
-    }). catch(function (error) {
+    }).catch(function (error) {
       return new Error(error);
     })
 };
 
 
 //creates product on backend
-export async function createProduct(data, urlID, dispatch, navigate, callback) {
+export async function createProduct(data, dispatch, navigate, callback) {
   //auth headers for backend verification
   const wrappedConfig = checkToken(dispatch, navigate);
 
   try {
-    axios.post(`http://localhost:5000/product?data=${urlID}`, data, wrappedConfig)
+    axios.post(`http://localhost:5000/product`, data, wrappedConfig)
       .then(callback());
 
   //any kind of err from backend 

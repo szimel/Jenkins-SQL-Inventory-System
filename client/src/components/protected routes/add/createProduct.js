@@ -34,11 +34,7 @@ const CreateProduct = () => {
     resolver: yupResolver(userSchema)
   });
 
-  //sets jobsite from jsx file
-  const selectedJobsite = useSelector(state => state);
-
-  //hacky fix so /confirm can know whether to retrieve product or jobsite
-  const { setReRender } = useContext(AuthContext);
+  const jobId = useSelector(state => state.jobsite);
 
   const handleFormSubmit = async(data, event) => {
     event.preventDefault()
@@ -49,16 +45,12 @@ const CreateProduct = () => {
       data['picked up'] = null
     };
 
-    //sets jobsite from other jsx file
-    data.job_id = selectedJobsite.jobsite.id;
+    data.job_id = jobId.id;
 
     function callback() {
       console.log('callback');
       navigate('/', {replace: true});
     }
-
-    //hacky fix to communicate with /confirm
-    setReRender('jobsite')
 
     //backend call w await so status can be handled
     const submitResult = await createProduct(data, dispatch, navigate, callback);
@@ -120,8 +112,8 @@ const CreateProduct = () => {
             <label>Paid:</label>
             <select {...register('paid', {required: true})}
             className='input-field'>
-              <option value="0">No</option>
-              <option value="1">Yes</option>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
             </select>
             <p className="yup-errors">{errors.paid?.message}</p>
 

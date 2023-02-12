@@ -17,7 +17,7 @@ exports.deleteProduct = function(req, res) {
     'DELETE FROM products WHERE idproducts = ?',
     [productId],
     function(error, results, fields) {
-      console.log(results);
+      // console.log(results);
       if (error) {
         return res.status(500).send({ error: error });
       }
@@ -27,10 +27,25 @@ exports.deleteProduct = function(req, res) {
   );
 }
 
+//edits product but on pay
+exports.editPayProduct = async (req, res) => {
+  const id = req.body.id;
+  const query = "UPDATE products SET paid = 'yes' WHERE idproducts = ?";
+
+  //awaits server response to send status to frontend
+  await pool.query(query, [id])
+    .then(() => {
+      res.send({ success: true });
+    }).catch(function(err) {
+      res.status(500).send({error: err})
+      return new Error(err);
+    });
+};
+
+
 
 //edits a product
 exports.editProduct = function(req, res) {
-  console.log('hot here ')
   //sets values to update db with 
   const data = req.body;
   const productId = data.id;
@@ -105,7 +120,7 @@ exports.getPayProducts = function(req, res) {
   if (query) {
     console.log('made it to query');
     //finds unpaid products with a close match to the query
-    pool.query(`SELECT * FROM products WHERE paid = 0 AND name LIKE '%${query}%'`)
+    pool.query(`SELECT * FROM products WHERE paid = 'no' AND name LIKE '%${query}%'`)
     .then(results => {
       res.send(results);
     })
@@ -116,7 +131,7 @@ exports.getPayProducts = function(req, res) {
   } else {
     console.log('makde it to norm');
       //returns all products that haven't been paid
-      pool.query('SELECT * FROM products WHERE paid = 0')
+      pool.query('SELECT * FROM products WHERE paid = "no"')
       .then(results => {
         res.send(results);
     })
