@@ -41,7 +41,7 @@ const Pay = () => {
     //maps through data that is set in axios call function
     const productElements = data.map(product => {
       return (
-        <div className="products" key={product.name}>
+        <div className="products" key={product.idproducts}>
         <h4 grid-area="name">{product.name}</h4>
         <button grid-area="edit" type="button" onClick={() => {
           //opens the modal

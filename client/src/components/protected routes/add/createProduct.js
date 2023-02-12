@@ -53,7 +53,7 @@ const CreateProduct = () => {
     }
 
     //backend call w await so status can be handled
-    const submitResult = await createProduct(data, dispatch, navigate, callback);
+    const submitResult = await createProduct(data, dispatch, navigate);
 
     if (submitResult === 200) {
       console.log('success');

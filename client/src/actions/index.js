@@ -177,7 +177,7 @@ export async function createProduct(data, dispatch, navigate, callback) {
 
   try {
     axios.post(`http://localhost:5000/product`, data, wrappedConfig)
-      .then(callback());
+      .then(null);
 
   //any kind of err from backend 
   } catch (err) {
