@@ -11,7 +11,7 @@ const checkToken = (dispatch, navigate) => {
   //if no token 
   if (!token) {
     navigate('/login', {replace: true});
-    throw new Error('Session not found');
+    return new Error('Session not found');
   }
 
   //check if token has expired
@@ -21,7 +21,7 @@ const checkToken = (dispatch, navigate) => {
     const currentTime = Date.now() / 1000;
 
     if (exp < currentTime) {
-      dispatch(handleSignOut(() => {return null}));
+      dispatch(handleSignOut());
       navigate('/login', {replace: true});
       throw new Error('Session expired');
     }
@@ -110,6 +110,7 @@ export async function getUnPaidProducts(dispatch, navigate) {
   return axios.get('http://localhost:5000/products/pay', wrappedConfig)
     .then(function (response) {
       return response.data[0];
+
     }).catch(function(error) {
       return new Error(error);
     });
@@ -146,16 +147,19 @@ export async function getJobsites(dispatch, navigate) {
 };
 
 //returns specified jobsite products to redux store
-export const getJobsiteProducts = (data, dispatch, navigate) => Dispatch => {
+export async function getJobsiteProducts(data, dispatch, navigate) {
   //auth headers for backend verification
   const wrappedConfig = checkToken(dispatch, navigate);
 
-  axios.post('http://localhost:5000/jobsite/products', data, wrappedConfig)
-    .then(function (response) {
-      Dispatch({ type: JOBSITE_PRODUCTS, payload: response.data });
-    }).catch(function (error) {
-    return new Error (error);
-  });
+  return axios.get(`http://localhost:5000/jobsite/products?jobsite=${data}`, wrappedConfig)
+    .then(function(res) {
+      //checks to make sure response was successful
+      if(res.status !== 200) return new Error('Backend failed to retrive products');
+
+      return res.data.result
+    }).catch(error => {
+      return new Error(error);
+    });
 };
 
 export const getPayQueryProducts = (query, dispatch, navigate) => {
@@ -209,6 +213,8 @@ export async function deleteProduct(productId, dispatch, navigate) {
 
 export async function editProduct(values, dispatch, navigate) {
   const wrappedConfig = checkToken(dispatch, navigate);
+
+  console.log('axios');
 
   try {
     const response = await axios.post('http://localhost:5000/product/edit', values, wrappedConfig);

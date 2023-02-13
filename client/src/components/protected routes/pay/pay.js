@@ -82,6 +82,7 @@ const Pay = () => {
       .then(response => {
         setData(response);
       }).catch(function(err) {
+        new Error('getBackendProducts error');
         return new Error(err);
       })
   };

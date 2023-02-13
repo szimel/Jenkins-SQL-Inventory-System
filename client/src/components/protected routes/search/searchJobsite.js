@@ -1,73 +1,63 @@
-import * as Yup from 'yup';
-import React, { useContext, useEffect } from 'react';
-import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
+import React, { useContext, useEffect, useState } from 'react';
 import { getJobsiteProducts } from '../../../actions';
 import { useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ProductCards from './productCards';
 import DisplayJobs from '../displayJobs';
-import AuthContext from '../../auth/authProvider';
-
-const searchSchema = Yup.object().shape({
-  jobsite: Yup.string(),
-  query: Yup.string().max(50),
-  // query: Yup.string().required('This is a required field')
-});
 
 const SearchJobsite = () => {
-  //set by productCard.js so edits are rendered again
-  const { reRender } = useContext(AuthContext);
-
   //for axios token check
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //basic yup setup
-  const { register, handleSubmit, formState: { errors }} = useForm({
-    resolver: yupResolver(searchSchema)
-  });
+  //global var that holds the products that were searched.
+  const [products, setProducts] = useState(null);
 
-  //re renders product cards on edit submit
-  useEffect(() => {
-    handleFormSubmit();
-  }, [reRender]);
+  // //re renders product cards on edit submit
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, [reRender]);
 
 
   //sets jobsite from jsx file
   const selectedJobsite = useSelector(state => state);
 
-  // gets data from backend
-  const handleFormSubmit = async() => {
+  // gets data from backend from jobsite dropdown
+  async function getProducts() {
 
     //sets jobsite from other jsx file
-    const data = {jobsite: selectedJobsite.jobsite.id};
-    // debugger;
+    const data = selectedJobsite.jobsite.id;
 
     //dispatch that returns correct jobID for products to be in redux store
-    dispatch(getJobsiteProducts(data, dispatch, navigate));
+    await getJobsiteProducts(data, dispatch, navigate)
+      .then(response => {
+        console.log('first');
+        console.log(response[0])
+        //grabs response from getjobsiteProducts and sets it as global var
+        setProducts(response);
+
+      }).catch(function(err) {
+        new Error('handleSubmit error')
+        return new Error(err);
+      })
   };
   
 
   return(
     <>
       <div className="container-fluid search-container">
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
           <DisplayJobs />
-          <p>{errors.jobsite?.message}</p>
-
-          {/* <input placeholder='This is optional'/>
-          <p>{errors.query?.message}</p> */}
-          <button type='submit' className='btn btn-dark'>Search</button>
-        </form>
+          <button type='submit' className='btn btn-dark' onClick={() => getProducts()}>Search</button>
       </div>
       <div className='container-fluid'>
         <div className='container-products'>
-          <ProductCards />
+          <ProductCards products={products} getProducts={getProducts}/>
         </div>
       </div>
     </>
   );
 };
+
+
 
 export default SearchJobsite;

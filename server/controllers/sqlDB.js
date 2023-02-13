@@ -62,17 +62,15 @@ exports.editProduct = function(req, res) {
     'picked up': data['picked up'],
   };
 
-  pool.query(
-      'UPDATE products SET ? WHERE idproducts = ?',
-      [newValues, productId],
-      function(error, results, fields) {
-        console.log(results);
-        if (error) {
-          return res.status(500).send({ error: error });
-        }
-        res.status(200).send({ message: 'Product updated successfully' });
-      }
-    );
+  const query = 'UPDATE products SET ? WHERE idproducts = ?'
+
+  pool.query(query, [newValues, productId])
+    .then(function(results) {
+      //handles an sql db error 
+      if(results.warningStatus > 0) return res.status(400).json({error: 'error editing data'});
+      
+      return res.status(200).send({status: 'Sucess'});
+    });
 }
 
 //add jobsite to db
@@ -118,7 +116,6 @@ exports.getPayProducts = function(req, res) {
   const query = req.query.query
 
   if (query) {
-    console.log('made it to query');
     //finds unpaid products with a close match to the query
     pool.query(`SELECT * FROM products WHERE paid = 'no' AND name LIKE '%${query}%'`)
     .then(results => {
@@ -166,8 +163,10 @@ exports.getJobsite = function(req, res) {
 
 exports.getJobsiteProds = function(req, res) {
 
+  console.log(req.query.jobsite);
+
   //grabs correct products for jobsite
-  pool.query('SELECT * FROM products WHERE job_id = ?', [req.body.jobsite])
+  pool.query('SELECT * FROM products WHERE job_id = ?', [req.query.jobsite])
   .then((results) => {
     
     //formatting for redux store

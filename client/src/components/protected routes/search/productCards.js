@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AuthContext from "../../auth/authProvider";
 import * as Yup from 'yup';
@@ -18,13 +18,9 @@ const editSchema = Yup.object().shape({
   job_id: Yup.string().required('This is a required field'),
 });
 
-const ProductCards = () => {
-  //from authProvider - lets this file and searchJobsite communicate
-  const { setReRender} = useContext(AuthContext);
-
+const ProductCards = ({ products, getProducts }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let Product = useSelector(state => state);
 
   //checks current use Auth level 
   const { clearance } = useContext(AuthContext);
@@ -35,17 +31,22 @@ const ProductCards = () => {
   // the product which was clicked to show the modal
   const [selectedProduct, setSelectedProduct] = useState({});
 
+
+
+
   function productCards() {
-    if(Product.products.result) {
+    //makes sure it isn't called before render
+    if(products) {
+    
 
       //format of cards 
-      const productElements = Product.products.result.map((product) => {
+      const productElements = products.map((product) => {
         return (
           <div className="products" key={product.name}>
             <h4 grid-area="name">{product.name}</h4>
-            {clearance && <button grid-area="edit" type="button" onClick={(e) => {
-              setReRender(false);
+            {clearance && <button grid-area="edit" type="button" onClick={() => {
               setShowModal(true);
+
               //sets selectedProduct to clicked product
               setSelectedProduct(product);
             }}>Edit</button>}
@@ -74,7 +75,9 @@ const ProductCards = () => {
 
     //backend call to db to update product then rerenders productcards 
     await editProduct(values, dispatch, navigate)
-      .then(setReRender(true));
+      .then(() => {
+        getProducts();
+      });
   };
 
   // logic for delete button
@@ -84,9 +87,9 @@ const ProductCards = () => {
     await deleteProduct(productId, dispatch, navigate)
       .then(() => {
         //closes modal
-        setShowModal(false)
+        setShowModal(false);
         //re renders product cards
-        setReRender(true);
+        getProducts();
       });
   }
   
