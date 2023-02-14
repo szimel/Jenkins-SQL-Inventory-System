@@ -17,11 +17,9 @@ exports.deleteProduct = function(req, res) {
     'DELETE FROM products WHERE idproducts = ?',
     [productId],
     function(error, results, fields) {
-      // console.log(results);
       if (error) {
         return res.status(500).send({ error: error });
       }
-      console.log('worked')
       res.status(200).send({ message: 'Product deleted successfully' });
     }
   );
@@ -126,7 +124,6 @@ exports.getPayProducts = function(req, res) {
   });
 
   } else {
-    console.log('makde it to norm');
       //returns all products that haven't been paid
       pool.query('SELECT * FROM products WHERE paid = "no"')
       .then(results => {
@@ -160,21 +157,37 @@ exports.getJobsite = function(req, res) {
   });
 };
 
-
+//gets jobs by jobsite or jobsite + search
 exports.getJobsiteProds = function(req, res) {
 
-  console.log(req.query.jobsite);
+  //if something was searched
+  if(req.query.search) {
+    const query = `SELECT * FROM products WHERE job_id = ? AND name LIKE '%${req.query.search}%'`
 
-  //grabs correct products for jobsite
-  pool.query('SELECT * FROM products WHERE job_id = ?', [req.query.jobsite])
-  .then((results) => {
-    
-    //formatting for redux store
-    const result = results[0];
-    return res.status(200).json({result});
-  })
-  .catch(error => {
-    return res.status(401).json({message: error});
-  });
+    pool.query(query, [req.query.jobsite])
+      .then(results => {
+        //formatting for front end
+        const result = results[0];
+        return res.status(200).json({result});
+      })
+      .catch(error => {
+        return res.status(401).json({message: error});
+      });
+  } else {
+
+    const query = 'SELECT * FROM products WHERE job_id = ?';
+
+    //grabs correct products for jobsite
+    pool.query(query, [req.query.jobsite])
+    .then((results) => {
+      
+      //formatting for front end
+      const result = results[0];
+      return res.status(200).json({result});
+    })
+    .catch(error => {
+      return res.status(401).json({message: error});
+    });
+  }
 };
 

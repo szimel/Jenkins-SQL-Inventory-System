@@ -21,8 +21,9 @@ const checkToken = (dispatch, navigate) => {
     const currentTime = Date.now() / 1000;
 
     if (exp < currentTime) {
-      dispatch(handleSignOut());
-      navigate('/login', {replace: true});
+      dispatch(handleSignOut(() => {
+        navigate('/login', {replace: true});
+      }));
       throw new Error('Session expired');
     }
     //sets config so it can be returned to const in another axios funct
@@ -145,6 +146,21 @@ export async function getJobsites(dispatch, navigate) {
     return err.response.status;
   };
 };
+
+//returns specified products based off search in searchJobsite
+export async function getSearchProducts(search, jobsite, dispatch, navigate) {
+  const wrappedConfig = checkToken(dispatch, navigate);
+
+  return axios.get(`http://localhost:5000/jobsite/products?search=${search}&jobsite=${jobsite}`, wrappedConfig)
+    .then(function(res) {
+      //checks to make sure response was successful
+      if(res.status !== 200) return new Error('Backend failed to retrive products');
+
+      return res.data.result
+    }).catch(error => {
+      return new Error(error);
+    });
+}
 
 //returns specified jobsite products to redux store
 export async function getJobsiteProducts(data, dispatch, navigate) {

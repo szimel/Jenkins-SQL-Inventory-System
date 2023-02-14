@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import AuthContext from "../../auth/authProvider";
 import * as Yup from 'yup';
 
@@ -37,7 +37,6 @@ const ProductCards = ({ products, getProducts }) => {
   function productCards() {
     //makes sure it isn't called before render
     if(products) {
-    
 
       //format of cards 
       const productElements = products.map((product) => {
