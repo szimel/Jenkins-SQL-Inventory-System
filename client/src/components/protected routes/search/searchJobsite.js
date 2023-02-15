@@ -60,19 +60,19 @@ const SearchJobsite = () => {
   }
   
 
-  return(
+  return (
     <>
       <div className="container-fluid search-container">
-          <DisplayJobs />
-          <button type='submit' className='btn btn-dark' onClick={() => getProducts()}>Search</button>
+        <DisplayJobs />
+        <button type='submit' className='btn btn-dark' onClick={() => getProducts()}>Search</button>
       </div>
-      {searchBar && (
-        <div>
-          <label>Search: </label>
-          <input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter') getSearchProduct(true)}} />
-          <button type="submit" onClick={() => getSearchProduct(true)}>Search</button>
-        </div>
-      )}
+        {searchBar && (
+          <div className='container-fluid search-container mt-2'>
+            <label>Search: </label>
+            <input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter') getSearchProduct(true)}} />
+            <button type="submit" onClick={() => getSearchProduct(true)}>Search</button>
+          </div>
+        )}
       <div className='container-fluid'>
         <div className='container-products'>
           <ProductCards products={products} getProducts={getProducts}/>
@@ -80,6 +80,7 @@ const SearchJobsite = () => {
       </div>
     </>
   );
+  
 };
 
 

@@ -35,12 +35,9 @@ const Header = () => {
             <div className="col-2 home">
               <p onClick={()=>navigateTo('')}>Home</p>
             </div>
-            <div className="col-1 database" >
+            <div className="login" >
               <p onClick={()=>navigateTo('login')}>Log In</p>
             </div>
-            {/* <div className="col-2 search" onClick={()=>navigateTo('signup')}>
-              <p>Sign Up</p>
-            </div> */}
           </div>
         </div>
       </React.Fragment>

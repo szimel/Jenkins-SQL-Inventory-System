@@ -119,7 +119,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
   margin-top: 10vh;
 }
 .search-container p {
@@ -127,6 +126,10 @@ body {
   font-size: 17px;
   color: red;
 }
+.search-container label {
+  display: block;
+}
+
 /* Search css */
 
 /* add css */
@@ -292,6 +295,12 @@ body {
 .header-container p:hover {
   background-color: #ccc;
   color: black;
+}
+.header-container .login {
+  width: 63.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 .header-container .search,
 .header-container .pay,
