@@ -42,7 +42,7 @@ const Extra = () => {
         <button className="btn btn-dark" onClick={() => getProduct()}>Search</button>
       </div>
       <div className="container-products">
-        <ProductCards products={products} />
+        <ProductCards products={products} getProducts={getProduct}/>
       </div>
     </>
   )
