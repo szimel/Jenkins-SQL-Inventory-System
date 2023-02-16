@@ -132,6 +132,21 @@ export async function editPaidProduct(product, dispatch, navigate) {
   }
 }
 
+//handles search for extra.js
+export async function getExtraProducts(search, dispatch, navigate) {
+  const wrappedConfig = checkToken(dispatch, navigate);
+
+  return axios.get(`http://localhost:5000/extra?search=${search}`, wrappedConfig)
+    .then(function(res) {
+      //checks to make sure response was successful
+      if(res.status !== 200) return new Error('Backend failed to retrive products');
+
+      return res.data.result
+    }).catch(error => {
+      return new Error(error);
+    });
+}
+
 //grabs all active jobsites
 export async function getJobsites(dispatch, navigate) {
   //auth headers for backend verification

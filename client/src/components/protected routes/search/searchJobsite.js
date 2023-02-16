@@ -45,6 +45,8 @@ const SearchJobsite = () => {
 
   //handles user searches
   async function getSearchProduct() {
+    //catches search of nothing
+    if(search === '') return null;
     //sets jobsite from <dispalyJobs>
     const data = selectedJobsite.jobsite.id;
 
@@ -69,8 +71,8 @@ const SearchJobsite = () => {
         {searchBar && (
           <div className='container-fluid search-container mt-2'>
             <label>Search: </label>
-            <input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter') getSearchProduct(true)}} />
-            <button type="submit" onClick={() => getSearchProduct(true)}>Search</button>
+            <input value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => {if(e.key === 'Enter') getSearchProduct()}} />
+            <button type="submit" onClick={() => getSearchProduct()}>Search</button>
           </div>
         )}
       <div className='container-fluid'>

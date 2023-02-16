@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../../auth/authProvider";
 import SearchJobsite from "./searchJobsite";
 import Header from "../../header";
+import Extra from "./extra";
 
 
 
@@ -42,7 +43,7 @@ const Search = () => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {null}
+            <Extra />
           </React.Fragment>
         )}
     </>

@@ -157,6 +157,35 @@ exports.getJobsite = function(req, res) {
   });
 };
 
+//handles searches in extra
+exports.getExtraProducts = function(req, res) {
+  if(req.query.search === '') {
+    const query = 'SELECT * FROM products WHERE extra_id = 1'
+
+    pool.query(query)
+      .then(results => {
+        //formatting for frond end
+        const result = results[0]
+        return res.status(200).json({result});
+      })
+      .catch(error => {
+        return res.status(401).json({message: error});
+      });
+  } else {
+    const query = `SELECT * FROM products WHERE extra_id = 1 AND name LIKE '%${req.query.search}%'`
+
+    pool.query(query)
+      .then(results => {
+        //foratting for front end
+        const result = results[0];
+        return res.status(200).json({result});
+      })
+      .catch(error => {
+        return res.status(401).json({message: error});
+      });
+  }
+}
+
 //gets jobs by jobsite or jobsite + search
 exports.getJobsiteProds = function(req, res) {
 
