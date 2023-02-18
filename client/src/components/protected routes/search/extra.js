@@ -33,7 +33,7 @@ const Extra = () => {
         return new Error(err);
       });
   }
-
+  
   return (
     <>
       <div className="container-fluid search-container">
