@@ -8,7 +8,7 @@ import jwt_decode from 'jwt-decode';
 const checkToken = (dispatch, navigate) => {
   let config = {};
   const token = localStorage.getItem('token') || undefined;
-  //if no token 
+  //if no token e
   if (!token) {
     navigate('/login', {replace: true});
     return new Error('Session not found');

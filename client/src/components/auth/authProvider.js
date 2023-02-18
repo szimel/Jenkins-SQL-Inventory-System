@@ -30,8 +30,11 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('token') || undefined;
     if (!token) {
-      return setAuth(false);
-      // return navigate('/unauthorized', {replace: true})
+      handleSignOut(() => {
+        setAuth(false)
+        new Error('No Token');
+        return navigate('/', {replace: true});
+      })
     } else {
       try {
         const decoded = jwt_decode(token);
@@ -47,6 +50,7 @@ export const AuthProvider = ({ children }) => {
           setAuth(false);
           //removes token from storage and updates redux store - empty callback function(hacky fix)
           dispatch(handleSignOut(() => {return null}));
+          new Error('Token Expired');
           return navigate('/unauthorized', {replace: true});
 
         } else {
@@ -58,8 +62,11 @@ export const AuthProvider = ({ children }) => {
         }
 
       } catch (err) {
-        console.log(err)
-        setAuth(false);
+        handleSignOut(() => {
+          setAuth(false);
+          new Error('Auth Provier Catch', err);
+          navigate('/', {replace: true});
+        })
       }
     }
   }, [Auth]);

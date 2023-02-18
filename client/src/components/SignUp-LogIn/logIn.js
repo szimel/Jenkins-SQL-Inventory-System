@@ -18,13 +18,13 @@ const userSchema = Yup.object().shape({
 const LogIn = () => {
   //run authProvider on page load
   const { updateAuth, auth } = useContext(AuthContext);
-  useEffect(() => {
-    updateAuth('');
-  });
-
 
   const [error, setError] = useState(null);
-  // const [onLoad, setOnLoad] = useState(false);
+
+  //checks if user is logged in on load of page
+  useEffect(() => {
+    if(auth) return navigate('/', {replace: true});
+  }, [auth]);
 
   //basic yup setup
   const { register, handleSubmit, formState: { errors }} = useForm({
@@ -38,12 +38,6 @@ const LogIn = () => {
   //async so it can wait on axios call 
   const handleFormSubmit = async (data, event) => {
     event.preventDefault();
-
-
-    //so a logged in user can't resubmit
-    if(auth) {
-      return navigate('/', {replace: true});
-    }
 
     //handleLogIn action returns values of backend call
     const logInResult = await handleLogIn(data, dispatch);
