@@ -1,17 +1,25 @@
 import axios from "axios";
-import { AUTH_USER, CURRENT_USER, JOBSITE_PRODUCTS, PRODUCT } from './types';
+import { AUTH_USER } from './types';
 import jwt_decode from 'jwt-decode';
 
 
 //runs before protected backend reqs. Catches token misshaps
 //to be run on all protected axios backend reqs
-const checkToken = (dispatch, navigate) => {
+const CheckToken = (authHeaders) => {
+  //all the functions I need for this code
+  const { updateAuth, auth, dispatch, navigate } = authHeaders;
+
   let config = {};
   const token = localStorage.getItem('token') || undefined;
   //if no token e
-  if (!token) {
-    navigate('/login', {replace: true});
-    return new Error('Session not found');
+  if (!token || !auth) {
+    dispatch(handleSignOut(() => {
+      //so authProvider can be updated
+      updateAuth('ay');
+
+      new Error('No Token or Bad Auth')
+      return navigate('/', {replace: true})
+    }))
   }
 
   //check if token has expired
@@ -22,9 +30,12 @@ const checkToken = (dispatch, navigate) => {
 
     if (exp < currentTime) {
       dispatch(handleSignOut(() => {
-        navigate('/login', {replace: true});
+        //so authProvider can be updated
+        updateAuth('ayo');
+
+        new Error('Token Expired');
+        return navigate('/login', {replace: true});
       }));
-      throw new Error('Session expired');
     }
     //sets config so it can be returned to const in another axios funct
     config = {
@@ -33,53 +44,58 @@ const checkToken = (dispatch, navigate) => {
       }
     }
   } catch (err) {
-    dispatch(handleSignOut(() => {return null}));
-    navigate('/unauthorized', {replace: true});
-    throw err;
+    dispatch(handleSignOut(() => {
+      //so authProvider can be updated
+      updateAuth('ao');
+
+      new Error(err);
+      return navigate('/', {replace: true});
+    }));
   }
   //gives config value to this function
   return config;
 };
 
 
-export const isLoggedIn = () => dispatch => {
-  const config = {
-    headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    }
-  };
-  axios.get('http://localhost:5000/user', config)
-    .then(function (response) {
-      dispatch({ type: CURRENT_USER, payload: response.data });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
+// export const isLoggedIn = () => dispatch => {
+//   const config = {
+//     headers: {
+//       Authorization: 'Bearer ' + localStorage.getItem('token'),
+//     }
+//   };
+//   axios.get('http://localhost:5000/user', config)
+//     .then(function (response) {
+//       dispatch({ type: CURRENT_USER, payload: response.data });
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//     });
+// }
 
-//for signing up
-export async function handleSignup(data, dispatch) {
-  try {
-      const response = await axios.post('http://localhost:5000/signup', data);
+// //for signing up
+// export async function handleSignup(data, dispatch) {
+//   try {
+//       const response = await axios.post('http://localhost:5000/signup', data);
       
-      //if success from backend
-      if (!response.data.error) {
+//       //if success from backend
+//       if (!response.data.error) {
 
-        //set token the dispatch to store
-        localStorage.setItem('token', response.data.token);
-        dispatch({ type: AUTH_USER, payload: response.data });
-        return 201;
-      }
+//         //set token the dispatch to store
+//         localStorage.setItem('token', response.data.token);
+//         dispatch({ type: AUTH_USER, payload: response.data });
+//         return 201;
+//       }
   
-  //any kind of err caught and categorized by signUp.js
-  } catch (err) {
-    return err.response.status;
-  }
-}
+//   //any kind of err caught and categorized by signUp.js
+//   } catch (err) {
+//     return err.response.status;
+//   }
+// }
 
+//gets all jobsites
 export async function createJobsite (data, dispatch, navigate, callback) {
   //auth headers for backend verification - checks token 
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken(dispatch, navigate);
 
   try {
     //awaits backend response
@@ -94,7 +110,7 @@ export async function createJobsite (data, dispatch, navigate, callback) {
 
 //get latest product
 export async function getProduct(url, dispatch, navigate) {
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken (dispatch, navigate);
 
   //uses data to either do a get to /product or /jobsite
   try {
@@ -106,7 +122,7 @@ export async function getProduct(url, dispatch, navigate) {
 };
 
 export async function getUnPaidProducts(dispatch, navigate) {
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken (dispatch, navigate);
 
   return axios.get('http://localhost:5000/products/pay', wrappedConfig)
     .then(function (response) {
@@ -119,7 +135,7 @@ export async function getUnPaidProducts(dispatch, navigate) {
 
 //handles edit button on pay.js
 export async function editPaidProduct(product, dispatch, navigate) {
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken (dispatch, navigate);
   try {
     return axios.post('http://localhost:5000/products/pay', {id: product}, wrappedConfig)
       .then(response => {
@@ -134,7 +150,7 @@ export async function editPaidProduct(product, dispatch, navigate) {
 
 //handles search for extra.js
 export async function getExtraProducts(search, dispatch, navigate) {
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken (dispatch, navigate);
 
   return axios.get(`http://localhost:5000/extra?search=${search}`, wrappedConfig)
     .then(function(res) {
@@ -148,13 +164,13 @@ export async function getExtraProducts(search, dispatch, navigate) {
 }
 
 //grabs all active jobsites
-export async function getJobsites(dispatch, navigate) {
+export async function getJobsites(AuthHeaders) {
   //auth headers for backend verification
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const headers = CheckToken(AuthHeaders);
 
   try {
     //await backend response
-    const response = await axios.get('http://localhost:5000/jobsite', wrappedConfig);
+    const response = await axios.get('http://localhost:5000/jobsite', headers);
     return response.data;
 
   } catch (err) {
@@ -164,7 +180,7 @@ export async function getJobsites(dispatch, navigate) {
 
 //returns specified products based off search in searchJobsite
 export async function getSearchProducts(search, jobsite, dispatch, navigate) {
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken (dispatch, navigate);
 
   return axios.get(`http://localhost:5000/jobsite/products?search=${search}&jobsite=${jobsite}`, wrappedConfig)
     .then(function(res) {
@@ -180,7 +196,7 @@ export async function getSearchProducts(search, jobsite, dispatch, navigate) {
 //returns specified jobsite products to redux store
 export async function getJobsiteProducts(data, dispatch, navigate) {
   //auth headers for backend verification
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken (dispatch, navigate);
 
   return axios.get(`http://localhost:5000/jobsite/products?jobsite=${data}`, wrappedConfig)
     .then(function(res) {
@@ -194,7 +210,7 @@ export async function getJobsiteProducts(data, dispatch, navigate) {
 };
 
 export const getPayQueryProducts = (query, dispatch, navigate) => {
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken (dispatch, navigate);
 
   return axios.get(`http://localhost:5000/products/pay?query=${query}`, wrappedConfig)
     .then(function (response) {
@@ -208,7 +224,7 @@ export const getPayQueryProducts = (query, dispatch, navigate) => {
 //creates product on backend
 export async function createProduct(data, dispatch, navigate, callback) {
   //auth headers for backend verification
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken (dispatch, navigate);
 
   try {
     axios.post(`http://localhost:5000/product`, data, wrappedConfig)
@@ -222,7 +238,7 @@ export async function createProduct(data, dispatch, navigate, callback) {
 
 
 export async function deleteProduct(productId, dispatch, navigate) {
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken (dispatch, navigate);
 
   productId = {
     id: productId
@@ -243,7 +259,7 @@ export async function deleteProduct(productId, dispatch, navigate) {
 }
 
 export async function editProduct(values, dispatch, navigate) {
-  const wrappedConfig = checkToken(dispatch, navigate);
+  const wrappedConfig = CheckToken (dispatch, navigate);
 
   console.log('axios');
 

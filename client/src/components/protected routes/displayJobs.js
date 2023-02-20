@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getJobsites } from "../../actions";
 import { SELECTED_JOBSITES } from "../../actions/types";
+import AuthContext from "../auth/authProvider";
 
 
 const DisplayJobs = (props) => { 
+  //the many functions authHeaders neeeds
+  const { updateAuth, auth } = useContext(AuthContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const forAuthHeaders = {updateAuth, auth, dispatch, navigate};
+
   const [data, setData] = useState(null);
+
 
 
   //lets you display what jobsite based of jobsite Id in database from parent
@@ -23,7 +29,7 @@ const DisplayJobs = (props) => {
   //makes a backend call and returns data
   const jobsites = async () => {
     try {
-      const response = await getJobsites(dispatch, navigate);
+      const response = await getJobsites(forAuthHeaders);
       if(response.jobsites === undefined) {
         return null;
       }
