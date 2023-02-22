@@ -21,6 +21,7 @@ const CheckToken = (authHeaders) => {
       return navigate('/', {replace: true})
     }))
   }
+  //asdf
 
   //check if token has expired
   try {
