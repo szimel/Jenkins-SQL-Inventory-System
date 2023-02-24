@@ -5,19 +5,12 @@ import jwt_decode from 'jwt-decode';
 
 //runs before protected backend reqs. Catches token misshaps
 //to be run on all protected axios backend reqs
-const CheckToken = (authHeaders) => {
-  //all the functions I need for this code
-  const { updateAuth, auth, dispatch, navigate } = authHeaders;
-
+const CheckToken = (dispatch, navigate) => {
   let config = {};
   const token = localStorage.getItem('token') || undefined;
-  //if no token e
-  if (!token || !auth) {
+  //if no token 
+  if (!token) {
     dispatch(handleSignOut(() => {
-      //so authProvider can be updated
-      updateAuth('ay');
-
-      new Error('No Token or Bad Auth')
       return navigate('/', {replace: true})
     }))
   }
@@ -29,12 +22,9 @@ const CheckToken = (authHeaders) => {
     const exp = decoded.exp;
     const currentTime = Date.now() / 1000;
 
+    //handles expired tokens
     if (exp < currentTime) {
       dispatch(handleSignOut(() => {
-        //so authProvider can be updated
-        updateAuth('ayo');
-
-        new Error('Token Expired');
         return navigate('/login', {replace: true});
       }));
     }
@@ -44,12 +34,9 @@ const CheckToken = (authHeaders) => {
         Authorization: 'Bearer ' + token,
       }
     }
+    //handles errors
   } catch (err) {
     dispatch(handleSignOut(() => {
-      //so authProvider can be updated
-      updateAuth('ao');
-
-      new Error(err);
       return navigate('/', {replace: true});
     }));
   }
@@ -57,41 +44,6 @@ const CheckToken = (authHeaders) => {
   return config;
 };
 
-
-// export const isLoggedIn = () => dispatch => {
-//   const config = {
-//     headers: {
-//       Authorization: 'Bearer ' + localStorage.getItem('token'),
-//     }
-//   };
-//   axios.get('http://localhost:5000/user', config)
-//     .then(function (response) {
-//       dispatch({ type: CURRENT_USER, payload: response.data });
-//     })
-//     .catch(function (error) {
-//       console.log(error);
-//     });
-// }
-
-// //for signing up
-// export async function handleSignup(data, dispatch) {
-//   try {
-//       const response = await axios.post('http://localhost:5000/signup', data);
-      
-//       //if success from backend
-//       if (!response.data.error) {
-
-//         //set token the dispatch to store
-//         localStorage.setItem('token', response.data.token);
-//         dispatch({ type: AUTH_USER, payload: response.data });
-//         return 201;
-//       }
-  
-//   //any kind of err caught and categorized by signUp.js
-//   } catch (err) {
-//     return err.response.status;
-//   }
-// }
 
 //gets all jobsites
 export async function createJobsite (data, dispatch, navigate, callback) {
@@ -108,19 +60,6 @@ export async function createJobsite (data, dispatch, navigate, callback) {
     return err.response.status;
   }
 }
-
-//get latest product
-export async function getProduct(url, dispatch, navigate) {
-  const wrappedConfig = CheckToken (dispatch, navigate);
-
-  //uses data to either do a get to /product or /jobsite
-  try {
-    axios.get(`http://localhost:5000/${url}`, wrappedConfig)
-      .then((response) => response.data);
-  } catch (err) {
-    return err.response.status;
-  };
-};
 
 export async function getUnPaidProducts(dispatch, navigate) {
   const wrappedConfig = CheckToken (dispatch, navigate);
@@ -165,9 +104,9 @@ export async function getExtraProducts(search, dispatch, navigate) {
 }
 
 //grabs all active jobsites
-export async function getJobsites(AuthHeaders) {
+export async function getJobsites(dispatch, navigate) {
   //auth headers for backend verification
-  const headers = CheckToken(AuthHeaders);
+  const headers = CheckToken(dispatch, navigate);
 
   try {
     //await backend response

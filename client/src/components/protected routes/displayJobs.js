@@ -7,11 +7,8 @@ import AuthContext from "../auth/authProvider";
 
 
 const DisplayJobs = (props) => { 
-  //the many functions authHeaders neeeds
-  const { updateAuth, auth } = useContext(AuthContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const forAuthHeaders = {updateAuth, auth, dispatch, navigate};
 
   const [data, setData] = useState(null);
 
@@ -29,7 +26,7 @@ const DisplayJobs = (props) => {
   //makes a backend call and returns data
   const jobsites = async () => {
     try {
-      const response = await getJobsites(forAuthHeaders);
+      const response = await getJobsites(dispatch, navigate);
       if(response.jobsites === undefined) {
         return null;
       }
